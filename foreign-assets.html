@@ -134,6 +134,15 @@ img{max-width:100%}
 .record-title{font-size:13px;font-weight:600;color:var(--fg);margin-bottom:6px}
 .record-desc{font-size:12px;color:var(--fg2);line-height:1.6}
 
+/* ── FAQ ── */
+.faq-item{border-bottom:1px solid var(--border);}
+.faq-q{width:100%;background:none;border:none;text-align:left;padding:18px 0;font-family:var(--sans);font-size:15px;font-weight:500;color:var(--fg);cursor:pointer;display:flex;justify-content:space-between;align-items:center;gap:16px;}
+.faq-q:hover{color:var(--accent);}
+.faq-arrow{color:var(--accent);font-size:14px;flex-shrink:0;transition:transform .25s;}
+.faq-item.open .faq-arrow{transform:rotate(90deg);}
+.faq-a{max-height:0;overflow:hidden;font-size:14px;color:var(--fg2);line-height:1.75;transition:max-height .3s ease,padding .3s;}
+.faq-item.open .faq-a{max-height:400px;padding-bottom:18px;}
+.faq-a p{margin:0;}
 /* ── CTA ── */
 .cta-box{background:var(--surface);border:1px solid var(--border2);border-radius:var(--radius2);padding:36px 32px;text-align:center;margin-top:20px}
 .cta-box h2{font-family:var(--serif);font-size:clamp(18px,3vw,22px);font-weight:600;margin-bottom:10px;text-wrap:balance}
@@ -415,6 +424,95 @@ footer a{color:var(--fg3);text-decoration:underline}
   <div class="data-notice" style="margin-top:20px">
     <strong>保存期限：</strong>相关记录建议至少保存至税表提交后5年。ATO年均汇率可在 <a href="https://www.ato.gov.au/individuals-and-families/international-tax/foreign-income-conversion-calculator" target="_blank" style="color:var(--success)">ATO官网</a> 查询。
   </div>
+</section>
+
+<!-- ── 本页常见问题 ── -->
+<section class="section" style="padding-top:48px;border-top:1px solid var(--border);">
+  <p style="font-size:11px;font-weight:700;letter-spacing:1.8px;text-transform:uppercase;color:var(--accent);margin-bottom:12px;">本页常见问题</p>
+  <h2 style="font-family:var(--serif);font-size:clamp(18px,3vw,24px);font-weight:600;margin-bottom:24px;text-wrap:balance;">关于海外资产与申报，大家最常问的</h2>
+  <div style="display:flex;flex-direction:column;border-top:1px solid var(--border);">
+
+    <div class="faq-item">
+      <button class="faq-q" onclick="this.closest('.faq-item').classList.toggle('open')">
+        <span>父母给我汇的钱需要申报吗？</span>
+        <span class="faq-arrow">▸</span>
+      </button>
+      <div class="faq-a">
+        <p>汇款本身通常不是收入，无需作为收入申报。但需注意：如果这笔钱产生利息（存入银行账户后），该利息须申报。若用于投资，日后出售时可能涉及CGT。<strong>礼物本身不征税</strong>——但产生的收益须申报。</p>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <button class="faq-q" onclick="this.closest('.faq-item').classList.toggle('open')">
+        <span>$50,000门槛是怎么计算的？是单账户还是所有海外资产合计？</span>
+        <span class="faq-arrow">▸</span>
+      </button>
+      <div class="faq-a">
+        <p>$50,000是您<strong>全部海外资产的总价值合计</strong>，不是单个账户。包括：海外银行存款、海外房产、海外股票、海外养老金账户等。只要合计超过$50,000澳元（按ATO年均汇率换算），须在税表中填写附表。</p>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <button class="faq-q" onclick="this.closest('.faq-item').classList.toggle('open')">
+        <span>CRS是什么？我在国内的存款账户会被ATO知道吗？</span>
+        <span class="faq-arrow">▸</span>
+      </button>
+      <div class="faq-a">
+        <p>CRS（共同申报准则）是经济合作与发展组织（OECD）主导的国际信息交换机制。参与国的金融机构会识别非居民客户，并向该客户税务居住地的税务机关报告账户信息。澳洲与中国均为参与国。如您是澳洲税务居民，中国金融机构原则上会将您的账户信息交换给ATO。正确申报全球收入是合规的基础。</p>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <button class="faq-q" onclick="this.closest('.faq-item').classList.toggle('open')">
+        <span>我在国内交了税，来澳洲还要再交一次吗？</span>
+        <span class="faq-arrow">▸</span>
+      </button>
+      <div class="faq-a">
+        <p>通常不需要双重缴税。澳洲提供<strong>外国税收抵免（Foreign Income Tax Offset，FITO）</strong>：在境外已缴纳的税款，可用于抵减您在澳洲对该笔收入应缴的税额。但两国税率不同，若澳洲税率更高，差额部分仍需在澳补缴。具体金额建议由注册税务师核算。</p>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <button class="faq-q" onclick="this.closest('.faq-item').classList.toggle('open')">
+        <span>我如何知道自己算不算澳洲税务居民？</span>
+        <span class="faq-arrow">▸</span>
+      </button>
+      <div class="faq-a">
+        <p>税务居民身份由ATO通过四项测试综合判断（居所测试、183天测试、Commonwealth Super测试、Domicile测试）。一般而言，如您长期生活在澳洲、家庭在此、主要资产在此，通常被视为税务居民。身份认定影响全球收入申报义务，如有不确定，建议向注册税务师咨询确认。</p>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <button class="faq-q" onclick="this.closest('.faq-item').classList.toggle('open')">
+        <span>汇率怎么算？用哪一天的汇率？</span>
+        <span class="faq-arrow">▸</span>
+      </button>
+      <div class="faq-a">
+        <p>ATO要求使用<strong>年均汇率</strong>（average annual exchange rate），而非收到收入当日的即时汇率。ATO官网每年公布各主要货币的年均汇率，也提供在线换算工具。人民币的年均汇率可在ATO外币换算计算器中直接查询。</p>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <button class="faq-q" onclick="this.closest('.faq-item').classList.toggle('open')">
+        <span>我在国内有房产但没有出租，也需要申报吗？</span>
+        <span class="faq-arrow">▸</span>
+      </button>
+      <div class="faq-a">
+        <p>自住的海外房产本身（仅持有、未产生租金收入）通常不产生年度申报义务。但需注意：若总资产超过$50,000门槛，须在税表附表中列明；<strong>出售时可能产生资本增值税（CGT）</strong>，且澳洲税务居民通常无法享受主居所豁免（该豁免仅适用于澳洲境内住所）。</p>
+      </div>
+    </div>
+
+  </div>
+  <script>
+  document.querySelectorAll('.faq-item').forEach(item=>{
+    const btn=item.querySelector('.faq-q');
+    btn&&btn.addEventListener('click',()=>{
+      const open=item.classList.contains('open');
+      document.querySelectorAll('.faq-item.open').forEach(el=>el.classList.remove('open'));
+      if(!open)item.classList.add('open');
+    });
+  });
+  </script>
 </section>
 
 <!-- ── CTA ── -->

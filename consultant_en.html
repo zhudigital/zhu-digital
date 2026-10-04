@@ -626,41 +626,118 @@ body {
 <section class="section" style="padding-top:0;" id="faq">
   <p class="section-label">Common questions</p>
   <h2 class="section-title">Things we're asked most often</h2>
-  <div class="faq">
-    <div class="faq-item">
-      <button class="faq-q" onclick="toggleFaq(this)">
-        Do I need an ABN if I'm just doing side work?
-        <svg class="faq-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
-      </button>
-      <div class="faq-a">If you're running a business — even part-time or from home — you generally need an ABN. The ATO considers you a business if you intend to make a profit and repeat your activities regularly. Sole traders can register an ABN for free at abr.gov.au. Not having one when you should can mean 47% withholding tax on your invoices.</div>
+
+  <!-- Personal Tax module -->
+  <div class="sub-section">
+    <span class="sub-label">👤 Personal Tax</span>
+    <p class="sub-desc">Common questions about rental income, capital gains, overseas assets and work deductions</p>
+    <div class="faq">
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">
+          I have savings in China — do I need to declare the interest in Australia?
+          <svg class="faq-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+        </button>
+        <div class="faq-a">Yes. As an Australian tax resident, you must declare worldwide income — including interest earned on overseas bank accounts. If tax was already withheld at source in China, you can usually claim a Foreign Income Tax Offset in your Australian return to avoid paying tax twice. Amounts need to be converted to AUD using the ATO's average annual exchange rate.</div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">
+          My investment property is negatively geared — can I offset it against my salary?
+          <svg class="faq-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+        </button>
+        <div class="faq-a">Yes — when your property expenses (loan interest, repairs, management fees, etc.) exceed your rental income, the resulting loss can generally be offset against your other income, such as salary. This is how negative gearing reduces your taxable income. Keeping thorough records of all income and expenses throughout the year is important.</div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">
+          My parents sent me money from overseas — is that taxable?
+          <svg class="faq-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+        </button>
+        <div class="faq-a">Personal gifts between individuals are generally not assessable income under Australian tax law. However, if the money is later used for investment (e.g. buying property or shares), any income or gains from those investments must be declared. It's good practice to keep records of the transfer showing its nature as a gift.</div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">
+          Do I pay CGT when I sell my home?
+          <svg class="faq-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+        </button>
+        <div class="faq-a">Your main residence is generally fully exempt from Capital Gains Tax when you sell it. However, if the property was ever rented out, or if you lived overseas while owning it, the exemption may only apply partially. Understanding your specific situation before you sell is worthwhile.</div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">
+          I work from home — what can I claim?
+          <svg class="faq-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+        </button>
+        <div class="faq-a">There are two methods: the fixed rate method ($0.70 per hour worked from home — you need to keep a log of your hours) or the actual expenses method (a proportional claim for electricity, internet, and similar costs). Your regular commute to work is not deductible, and ordinary clothing — even if worn for work — cannot be claimed.</div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">
+          How much in overseas assets triggers an ATO reporting requirement?
+          <svg class="faq-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+        </button>
+        <div class="faq-a">If the total value of all your overseas assets exceeds <strong>$50,000</strong> (bank accounts, shares, property and so on), you need to complete the Foreign Assets and Income schedule in your tax return. Completing the schedule is a reporting obligation — it doesn't mean those assets are taxed. Only income or gains they generate are included in your assessable income.</div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">
+          I held shares for more than 12 months — how is the gain taxed?
+          <svg class="faq-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+        </button>
+        <div class="faq-a">Australian tax residents who hold an asset for more than 12 months before selling are generally entitled to a 50% CGT discount — meaning only half the capital gain is added to your taxable income for that year. Assets sold within 12 months of purchase are taxed on the full gain at your marginal rate.</div>
+      </div>
     </div>
-    <div class="faq-item">
-      <button class="faq-q" onclick="toggleFaq(this)">
-        When do I have to register for GST?
-        <svg class="faq-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
-      </button>
-      <div class="faq-a">You must register for GST when your GST turnover reaches or is expected to reach A$75,000 in a 12-month period. For ride-share and taxi drivers, it's mandatory from your very first dollar of income. Once registered, you charge 10% GST on most goods and services and lodge a Business Activity Statement (BAS) — usually quarterly.</div>
-    </div>
-    <div class="faq-item">
-      <button class="faq-q" onclick="toggleFaq(this)">
-        Can I pay my staff as contractors instead of employees?
-        <svg class="faq-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
-      </button>
-      <div class="faq-a">Not automatically — the ATO and Fair Work have strict tests to determine whether someone is truly a contractor or is actually an employee. Factors include who controls the work, whether the worker can sub-contract, and whether they bring their own tools. Misclassifying an employee as a contractor can result in significant back-pay, super, and penalty obligations.</div>
-    </div>
-    <div class="faq-item">
-      <button class="faq-q" onclick="toggleFaq(this)">
-        Is 竹 Digital a licensed accountant or lawyer?
-        <svg class="faq-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
-      </button>
-      <div class="faq-a">No — we provide compliance guidance and education, not legal or tax advice. We help you understand your obligations in plain language and point you toward the right professionals when your situation needs licensed advice. Think of us as a knowledgeable friend who's done the research, not your accountant of record.</div>
-    </div>
-    <div class="faq-item">
-      <button class="faq-q" onclick="toggleFaq(this)">
-        Do you help with Chinese-language customers or WeChat businesses?
-        <svg class="faq-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
-      </button>
-      <div class="faq-a">Yes. We work with Chinese-Australian businesses across a range of industries and understand the compliance questions that come up in those contexts. We explain Australian tax and employment obligations clearly, in Mandarin, Cantonese or English.</div>
+  </div>
+
+  <!-- Small Business module -->
+  <div class="sub-section">
+    <span class="sub-label">🏢 Small Business</span>
+    <p class="sub-desc">Common questions about ABN, GST, employing staff and record-keeping</p>
+    <div class="faq">
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">
+          Do I need an ABN if I'm just doing side work?
+          <svg class="faq-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+        </button>
+        <div class="faq-a">If you're running a business — even part-time or from home — you generally need an ABN. The ATO considers you a business if you intend to make a profit and repeat your activities regularly. Sole traders can register an ABN for free at abr.gov.au. Not having one when you should can mean 47% withholding tax on your invoices.</div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">
+          When do I have to register for GST?
+          <svg class="faq-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+        </button>
+        <div class="faq-a">You must register for GST when your GST turnover reaches or is expected to reach A$75,000 in a 12-month period. For ride-share and taxi drivers, it's mandatory from your very first dollar of income. Once registered, you charge 10% GST on most goods and services and lodge a Business Activity Statement (BAS) — usually quarterly.</div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">
+          How much Super do I pay, and when?
+          <svg class="faq-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+        </button>
+        <div class="faq-a">From the 2025–26 financial year, the Super Guarantee rate is <strong>12%</strong> of an eligible employee's ordinary time earnings — the rate has now reached its final level. Super must be paid by the 28th day after each quarter ends. Late payment triggers the Superannuation Guarantee Charge, which includes the shortfall plus additional costs and is not tax-deductible.</div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">
+          Can I pay my staff as contractors instead of employees?
+          <svg class="faq-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+        </button>
+        <div class="faq-a">Not automatically — the ATO and Fair Work have strict tests to determine whether someone is truly a contractor or is actually an employee. Factors include who controls the work, whether the worker can sub-contract, and whether they bring their own tools. Misclassifying an employee as a contractor can result in significant back-pay, super, and penalty obligations.</div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">
+          What is a BAS, and how often do I lodge one?
+          <svg class="faq-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+        </button>
+        <div class="faq-a">A Business Activity Statement (BAS) is how you report and pay GST, PAYG withholding, and other tax obligations to the ATO. Most GST-registered businesses lodge quarterly, within 28 days of the end of each quarter. Some small businesses can elect to lodge annually. You can lodge through myGov, the ATO's online services, or accounting software such as Xero or MYOB.</div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">
+          Is 竹 Digital a licensed accountant or lawyer?
+          <svg class="faq-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+        </button>
+        <div class="faq-a">No — we provide compliance guidance and education, not legal or tax advice. We help you understand your obligations in plain language and point you toward the right professionals when your situation needs licensed advice. Think of us as a knowledgeable friend who's done the research, not your accountant of record.</div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">
+          Do you help with Chinese-language customers or WeChat businesses?
+          <svg class="faq-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+        </button>
+        <div class="faq-a">Yes. We work with Chinese-Australian businesses across a range of industries and understand the compliance questions that come up in those contexts. We explain Australian tax and employment obligations clearly, in Mandarin, Cantonese or English.</div>
+      </div>
     </div>
   </div>
 </section>

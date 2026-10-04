@@ -638,48 +638,125 @@ body {
 <section class="section" style="padding-top:0;" id="faq">
   <p class="section-label">常见问题</p>
   <h2 class="section-title">我们被问最多的问题</h2>
-  <div class="faq">
-    <div class="faq-item">
-      <button class="faq-q" onclick="toggleFaq(this)">
-        我只是做兼职副业，需要注册 ABN 吗？
-        <svg class="faq-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
-      </button>
-      <div class="faq-a">如果你的副业有盈利意图、重复进行——在 ATO 看来就算"经营业务"，就需要 ABN。没有 ABN 时，付款方会扣留 47% 作预扣税。ABN 注册免费，在 abr.gov.au 可以自己办。</div>
+
+  <!-- 个人税务模块 -->
+  <div class="sub-section">
+    <span class="sub-label">👤 个人税务</span>
+    <p class="sub-desc">关于租金收入、资本增值、海外资产和工作扣减的常见疑问</p>
+    <div class="faq">
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">
+          我在国内有存款利息，澳洲要申报吗？
+          <svg class="faq-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+        </button>
+        <div class="faq-a">需要。作为澳洲税务居民，您在全球范围内的收入均须申报，包括境外银行存款利息。若中国银行已预扣利息税，通常可在澳洲税表中申请外国税收抵免，避免双重征税。金额须按ATO年均汇率换算为澳元。</div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">
+          我的投资房是负扣税，可以抵其他收入吗？
+          <svg class="faq-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+        </button>
+        <div class="faq-a">可以。当投资房的持有费用（贷款利息、维修、管理费等）超过租金收入时，产生的亏损可抵扣您的其他收入，从而减少当年应税收入。这就是"负扣税"的基本原理。建议保留所有收支记录，以便准确计算。</div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">
+          父母从国内汇款给我，需要缴税吗？
+          <svg class="faq-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+        </button>
+        <div class="faq-a">个人之间的赠款通常不构成澳洲税法下的应税收入。但若款项用于投资（如购房、买股票），后续产生的收益须正常申报。建议保留汇款凭证，清楚记录款项性质。</div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">
+          卖掉自住房需要缴资本增值税（CGT）吗？
+          <svg class="faq-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+        </button>
+        <div class="faq-a">满足条件的主要住所（自住房）通常全额豁免CGT。但如果该房产曾被出租、或您不在澳洲居住期间持有，豁免可能按比例计算。建议在出售前了解您的具体情况。</div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">
+          我在家工作，可以扣减哪些费用？
+          <svg class="faq-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+        </button>
+        <div class="faq-a">居家办公可按两种方式计算：固定费率法（$0.70/小时，需记录工作时长）或实际费用法（按比例计算水电、网络等）。需注意：日常上下班通勤费用不可扣减，普通服装也不在扣减范围内。</div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">
+          海外资产超过多少需要向ATO申报？
+          <svg class="faq-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+        </button>
+        <div class="faq-a">若您所有海外资产总值超过 <strong>$50,000</strong>（含银行存款、股票、房产等），须在年度税表中填写海外资产及收入附表。申报本身不代表这些资产被征税——只有产生的收入或资本收益才计入应税范围。</div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">
+          持有股票超过12个月卖出，税怎么算？
+          <svg class="faq-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+        </button>
+        <div class="faq-a">澳洲税务居民持有资产超过12个月后出售，通常可享有50% CGT折扣——即只有一半的资本收益计入应税收入，再按您当年的边际税率缴税。持有12个月以内则须就全额收益缴税。</div>
+      </div>
     </div>
-    <div class="faq-item">
-      <button class="faq-q" onclick="toggleFaq(this)">
-        什么时候必须注册 GST？
-        <svg class="faq-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
-      </button>
-      <div class="faq-a">当你过去或未来 12 个月的 GST 营业额达到或预计达到 <strong>$75,000</strong> 时，必须注册 GST。如果你开 Uber、DiDi 等网约车，则从第一笔收入起就必须注册，没有门槛。注册后要向客户收取 10% GST，并定期申报 BAS（商业活动报表）。</div>
-    </div>
-    <div class="faq-item">
-      <button class="faq-q" onclick="toggleFaq(this)">
-        我在微信上卖东西，要向 ATO 申报吗？
-        <svg class="faq-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
-      </button>
-      <div class="faq-a">是的。不管通过什么平台收款——微信支付、支付宝还是银行转账——只要你在澳洲运营、有营业行为，就适用澳洲税法。ATO 对现金和电子支付都有完整的数据比对机制，澳洲税法适用于所有符合条件的收入来源。</div>
-    </div>
-    <div class="faq-item">
-      <button class="faq-q" onclick="toggleFaq(this)">
-        请了帮工，要签什么合同？
-        <svg class="faq-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
-      </button>
-      <div class="faq-a">雇员和独立承包商的法律地位不同，不是你选哪种、就是哪种——Fair Work 和 ATO 都有判断标准。分类不准确可能须补缴工资差额和 Super，建议在聘用前先确认清楚。我们可以帮你理清你的具体情况适用哪种关系。</div>
-    </div>
-    <div class="faq-item">
-      <button class="faq-q" onclick="toggleFaq(this)">
-        竹 Digital 是会计师或律师事务所吗？
-        <svg class="faq-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
-      </button>
-      <div class="faq-a">不是。我们提供合规教育和指导，不提供法律意见或税务建议。把我们理解成"懂行的朋友"——帮你搞清楚规定，指引你去找合适的专业人士，而不是代替那些专业人士。我们明确告诉你什么时候你需要一个注册会计师或律师。</div>
-    </div>
-    <div class="faq-item">
-      <button class="faq-q" onclick="toggleFaq(this)">
-        收费多少？
-        <svg class="faq-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
-      </button>
-      <div class="faq-a">现阶段免费。我们正在收集用户反馈、打磨服务内容。15 分钟初步咨询完全免费，线上工具和指引也全部免费提供。</div>
+  </div>
+
+  <!-- 中小型企业模块 -->
+  <div class="sub-section">
+    <span class="sub-label">🏢 中小型企业</span>
+    <p class="sub-desc">关于ABN、GST、雇员管理和记录保存的常见疑问</p>
+    <div class="faq">
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">
+          我只是做兼职副业，需要注册 ABN 吗？
+          <svg class="faq-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+        </button>
+        <div class="faq-a">如果你的副业有盈利意图、重复进行——在 ATO 看来就算"经营业务"，就需要 ABN。没有 ABN 时，付款方会扣留 47% 作预扣税。ABN 注册免费，在 abr.gov.au 可以自己办。</div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">
+          什么时候必须注册 GST？
+          <svg class="faq-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+        </button>
+        <div class="faq-a">当你过去或未来 12 个月的 GST 营业额达到或预计达到 <strong>$75,000</strong> 时，必须注册 GST。如果你开 Uber、DiDi 等网约车，则从第一笔收入起就必须注册，没有门槛。注册后要向客户收取 10% GST，并定期申报 BAS（商业活动报表）。</div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">
+          Super 要交多少？什么时候交？
+          <svg class="faq-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+        </button>
+        <div class="faq-a">2025-26财年起，雇主须为符合条件的雇员缴纳工资总额 <strong>12%</strong> 的Super，这一比率已达最终标准。Super须在每季度结束后28天内缴清，逾期将触发超级年金保障附加费（SGC），届时须补缴本金及相关附加费用，且该部分不可抵扣税款。</div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">
+          我在微信上卖东西，要向 ATO 申报吗？
+          <svg class="faq-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+        </button>
+        <div class="faq-a">是的。不管通过什么平台收款——微信支付、支付宝还是银行转账——只要你在澳洲运营、有营业行为，就适用澳洲税法。ATO 对现金和电子支付都有完整的数据比对机制，澳洲税法适用于所有符合条件的收入来源。</div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">
+          请了帮工，要签什么合同？
+          <svg class="faq-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+        </button>
+        <div class="faq-a">雇员和独立承包商的法律地位不同，不是你选哪种、就是哪种——Fair Work 和 ATO 都有判断标准。分类不准确可能须补缴工资差额和 Super，建议在聘用前先确认清楚。我们可以帮你理清你的具体情况适用哪种关系。</div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">
+          BAS 是什么？我要多久申报一次？
+          <svg class="faq-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+        </button>
+        <div class="faq-a">BAS（商业活动报表）是向ATO汇报GST、PAYG扣税等税务信息的申报表。已注册GST的企业通常每季度申报一次，部分小企业可选择每年一次。申报截止日一般在季度结束后28天内。ATO在线服务或记账软件（如Xero、MYOB）均可申报。</div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">
+          竹 Digital 是会计师或律师事务所吗？
+          <svg class="faq-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+        </button>
+        <div class="faq-a">不是。我们提供合规教育和指导，不提供法律意见或税务建议。把我们理解成"懂行的朋友"——帮你搞清楚规定，指引你去找合适的专业人士，而不是代替那些专业人士。我们明确告诉你什么时候你需要一个注册会计师或律师。</div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">
+          收费多少？
+          <svg class="faq-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+        </button>
+        <div class="faq-a">现阶段免费。我们正在收集用户反馈、打磨服务内容。15 分钟初步咨询完全免费，线上工具和指引也全部免费提供。</div>
+      </div>
     </div>
   </div>
 </section>

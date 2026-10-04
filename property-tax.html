@@ -164,6 +164,19 @@ body{font-family:var(--sans);background:var(--bg);color:var(--fg);min-height:100
 .footer{border-top:1px solid var(--border);padding:24px;text-align:center;font-size:12px;color:var(--fg3);line-height:1.8;margin-top:0;}
 .footer a{color:var(--fg3);text-decoration:none;}
 .footer a:hover{color:var(--accent);}
+/* ── Page FAQ ── */
+.page-faq{margin-top:56px;border-top:1px solid var(--border);padding-top:48px;}
+.page-faq .faq-label{font-size:11px;font-weight:700;letter-spacing:1.8px;text-transform:uppercase;color:var(--accent);margin-bottom:12px;}
+.page-faq h2{font-family:var(--serif);font-size:clamp(18px,3vw,24px);font-weight:600;margin-bottom:24px;text-wrap:balance;}
+.faq-list{display:flex;flex-direction:column;gap:0;}
+.faq-item{border-bottom:1px solid var(--border);}
+.faq-item:first-child{border-top:1px solid var(--border);}
+.faq-q{width:100%;background:none;border:none;text-align:left;font-family:var(--sans);font-size:14px;font-weight:600;color:var(--fg);padding:18px 0;cursor:pointer;display:flex;justify-content:space-between;align-items:center;gap:12px;line-height:1.5;}
+.faq-q:hover{color:var(--accent);}
+.faq-icon{font-size:18px;color:var(--accent);flex-shrink:0;transition:transform .25s;}
+.faq-item.open .faq-icon{transform:rotate(45deg);}
+.faq-a{max-height:0;overflow:hidden;font-size:13px;color:var(--fg2);line-height:1.8;transition:max-height .3s ease,padding .3s;}
+.faq-item.open .faq-a{max-height:300px;padding-bottom:18px;}
 </style>
 
 <nav class="nav">
@@ -415,6 +428,42 @@ body{font-family:var(--sans);background:var(--bg);color:var(--fg);min-height:100
     官方来源：<a href="https://www.ato.gov.au/individuals-and-families/investments-and-assets/residential-rental-properties" target="_blank">ATO 投资房指引 →</a>
   </div>
 
+  <!-- ── 本页常见问题 ── -->
+  <div class="page-faq">
+    <p class="faq-label">本页常见问题</p>
+    <h2>关于投资房与租金收入，大家最常问的</h2>
+    <div class="faq-list">
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">我的出租房偶尔自己住，租金收入怎么申报？<span class="faq-icon">+</span></button>
+        <div class="faq-a">若房产并非全年全时间出租，只有出租期间产生的收入须申报；费用也须按出租比例分摊，不能全额扣减。建议记录出租天数和自用天数，以便准确计算。</div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">Airbnb短租的收入要申报吗？<span class="faq-icon">+</span></button>
+        <div class="faq-a">是的。通过Airbnb或其他短租平台收取的租金均须申报为收入。相关费用（清洁、平台佣金、水电等）可按出租比例扣减。ATO与多家共享经济平台有数据共享安排。</div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">贷款利息可以全额扣减吗？<span class="faq-icon">+</span></button>
+        <div class="faq-a">仅限于投资用途的贷款部分。若同一笔贷款部分用于自住、部分用于投资，须按比例分摊，只有投资用途部分的利息可扣减。若曾用自住房再融资为投资房，建议咨询注册会计师确认可扣减比例。</div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">维修费和装修费有什么区别？<span class="faq-icon">+</span></button>
+        <div class="faq-a">维修和保养（恢复原状，如修漏水、换损坏的门锁）通常可在当年即时扣减。而提升性装修（增加价值，如翻新厨房、加建）属于资本性支出，须按折旧方式逐年扣减，不能即时全额扣减。</div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">房产空置期间的费用还能扣吗？<span class="faq-icon">+</span></button>
+        <div class="faq-a">若空置期间房产确实处于出租状态（例如正在寻找租客），相关费用通常仍可扣减。若长期空置且没有出租意图，则可能无法扣减。建议保留寻租记录（如挂牌广告截图）作为证明。</div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">我需要请折旧评估师吗？<span class="faq-icon">+</span></button>
+        <div class="faq-a">并非强制，但对于较新的房产（1987年9月后建造），请合格的数量测量师（QS）出具折旧报告，往往能为您找出显著的可扣减折旧金额。报告费用本身也可作为出租费用扣减。</div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">我在国内有一套房产出租，澳洲要申报吗？<span class="faq-icon">+</span></button>
+        <div class="faq-a">是的。作为澳洲税务居民，境外房产的租金收入须在澳洲申报。若已在当地缴税，通常可申请外国税收抵免。出售境外房产时，还可能产生CGT义务，建议提前了解。</div>
+      </div>
+    </div>
+  </div>
+
   <div class="cta-box">
     <h2>您的投资房情况有些复杂？</h2>
     <p>部分自住、多套房产、海外物业、Airbnb——我们帮您理清申报思路，用中文说清楚，再引导您找合适的注册会计师处理。</p>
@@ -425,6 +474,14 @@ body{font-family:var(--sans);background:var(--bg);color:var(--fg);min-height:100
   </div>
 
 </main>
+<script>
+function toggleFaq(btn){
+  const item=btn.closest('.faq-item');
+  const isOpen=item.classList.contains('open');
+  document.querySelectorAll('.faq-item.open').forEach(el=>el.classList.remove('open'));
+  if(!isOpen)item.classList.add('open');
+}
+</script>
 
 <footer class="footer">
   <div>🎋 竹 Digital · 墨尔本，维多利亚州 · ABN 29 919 594 996</div>
