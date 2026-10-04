@@ -260,6 +260,19 @@ body {
 }
 .card-link:hover { opacity: 1; text-decoration: underline; }
 
+/* ── Sub-section divider ─────────────────────────────────────── */
+.sub-section { margin-top: 52px; }
+.sub-section:first-child { margin-top: 36px; }
+.sub-label {
+  display: inline-flex; align-items: center; gap: 8px;
+  font-size: 11px; font-weight: 700; letter-spacing: 1.5px;
+  color: var(--accent); background: rgba(96,165,250,.08);
+  border: 1px solid rgba(96,165,250,.2); border-radius: 20px;
+  padding: 5px 14px; margin-bottom: 20px; text-transform: uppercase;
+}
+.sub-title { font-family: var(--serif); font-size: clamp(18px,3vw,22px); font-weight: 600; margin-bottom: 6px; color: var(--fg); }
+.sub-desc { font-size: 13px; color: var(--fg2); margin-bottom: 20px; line-height: 1.75; max-width: 600px; }
+
 /* ── Who we help ─────────────────────────────────────────────── */
 .who-grid {
   display: grid;
@@ -437,52 +450,97 @@ body {
 <!-- ── Services ────────────────────────────────────────────────── -->
 <section class="section" id="services">
   <p class="section-label">What we cover</p>
-  <h2 class="section-title">Core compliance areas for small business</h2>
-  <p class="section-body">Whether you're just starting out or already operating, these are the areas where Chinese-Australian businesses most often need clarity.</p>
-  <div class="cards">
-    <div class="card">
-      <span class="card-icon">📋</span>
-      <div class="card-title">ABN &amp; Business Structure</div>
-      <div class="card-body">Sole trader, company, partnership or trust — choosing the right structure affects your tax, liability and how you're paid. We explain the differences before you register.</div>
-      <span class="card-tag">Starting out</span>
-      <a href="abn-structure.html" class="card-link">Read the guide →</a>
-    </div>
-    <div class="card">
-      <span class="card-icon">🧾</span>
-      <div class="card-title">GST &amp; BAS Obligations</div>
-      <div class="card-body">Once your turnover exceeds A$75,000 you must register for GST. We walk you through registration, when to charge GST, and how BAS lodgement works quarterly.</div>
-      <span class="card-tag">Tax</span>
-      <a href="gst-bas.html" class="card-link">Read the guide →</a>
-    </div>
-    <div class="card">
-      <span class="card-icon">👥</span>
-      <div class="card-title">Fair Work &amp; Employment</div>
-      <div class="card-body">Hiring staff? Understand minimum wage, pay slips, leave entitlements, and casual vs part-time rules under the Fair Work Act — before you sign anyone on.</div>
-      <span class="card-tag">Employees</span>
-      <a href="fair-work.html" class="card-link">Read the guide →</a>
-    </div>
-    <div class="card">
-      <span class="card-icon">🏦</span>
-      <div class="card-title">Superannuation</div>
-      <div class="card-body">Employers must contribute 11.5% super for eligible workers. We clarify who qualifies, when payments are due, and how to avoid the Superannuation Guarantee Charge.</div>
-      <span class="card-tag">Employees</span>
-      <a href="super.html" class="card-link">Read the guide →</a>
-    </div>
-    <div class="card">
-      <span class="card-icon">🔄</span>
-      <div class="card-title">Record Keeping</div>
-      <div class="card-body">The ATO requires you to keep most business records for 5 years. We help you set up simple systems — digital receipts, invoicing standards, and payroll records.</div>
-      <span class="card-tag">Ongoing</span>
-      <a href="record-keeping.html" class="card-link">Read the guide →</a>
-    </div>
-    <div class="card">
-      <span class="card-icon">🌏</span>
-      <div class="card-title">Overseas Income &amp; Importing</div>
-      <div class="card-body">Receiving income from China or importing goods? Australian tax rules on foreign income, GST on imported services, and customs duty explained clearly.</div>
-      <span class="card-tag">Cross-border</span>
-      <a href="overseas-income.html" class="card-link">Read the guide →</a>
+  <h2 class="section-title">Two sections — find your question</h2>
+  <p class="section-body">Whether you run a business or manage personal investments, Australian compliance rules apply. Pick the section that fits your situation.</p>
+
+  <!-- Small Business -->
+  <div class="sub-section">
+    <div class="sub-label">🏢 Small Business Compliance</div>
+    <div class="sub-title">For Chinese-Australian business owners</div>
+    <p class="sub-desc">From registering an ABN to hiring staff — the key obligations explained in plain language.</p>
+    <div class="cards">
+      <div class="card">
+        <span class="card-icon">📋</span>
+        <div class="card-title">ABN &amp; Business Structure</div>
+        <div class="card-body">Sole trader, company, partnership or trust — choosing the right structure affects your tax, liability and how you're paid. We explain the differences before you register.</div>
+        <span class="card-tag">Starting out</span>
+        <a href="abn-structure.html" class="card-link">Read the guide →</a>
+      </div>
+      <div class="card">
+        <span class="card-icon">🧾</span>
+        <div class="card-title">GST &amp; BAS Obligations</div>
+        <div class="card-body">Once your turnover reaches A$75,000 you must register for GST. We walk you through registration, when to charge GST, and how BAS lodgement works each quarter.</div>
+        <span class="card-tag">Tax</span>
+        <a href="gst-bas.html" class="card-link">Read the guide →</a>
+      </div>
+      <div class="card">
+        <span class="card-icon">👥</span>
+        <div class="card-title">Fair Work &amp; Employment</div>
+        <div class="card-body">Hiring staff? Understand minimum wage, pay slips, leave entitlements, and casual vs part-time rules under the Fair Work Act — before you sign anyone on.</div>
+        <span class="card-tag">Employees</span>
+        <a href="fair-work.html" class="card-link">Read the guide →</a>
+      </div>
+      <div class="card">
+        <span class="card-icon">🏦</span>
+        <div class="card-title">Superannuation</div>
+        <div class="card-body">Employers must contribute 11.5% super for eligible workers. We clarify who qualifies, when payments are due, and how the Superannuation Guarantee Charge works.</div>
+        <span class="card-tag">Employees</span>
+        <a href="super.html" class="card-link">Read the guide →</a>
+      </div>
+      <div class="card">
+        <span class="card-icon">🔄</span>
+        <div class="card-title">Record Keeping</div>
+        <div class="card-body">The ATO requires you to keep most business records for 5 years. We help you set up simple systems — digital receipts, invoicing standards, and payroll records.</div>
+        <span class="card-tag">Ongoing</span>
+        <a href="record-keeping.html" class="card-link">Read the guide →</a>
+      </div>
+      <div class="card">
+        <span class="card-icon">🌏</span>
+        <div class="card-title">Overseas Income &amp; Importing</div>
+        <div class="card-body">Receiving income from China or importing goods? Australian tax rules on foreign income, GST on imported services, and customs duty explained clearly.</div>
+        <span class="card-tag">Cross-border</span>
+        <a href="overseas-income.html" class="card-link">Read the guide →</a>
+      </div>
     </div>
   </div>
+
+  <!-- Personal Tax -->
+  <div class="sub-section">
+    <div class="sub-label">👤 Personal Tax</div>
+    <div class="sub-title">For Chinese-Australians with investments or overseas assets</div>
+    <p class="sub-desc">Investment properties, selling assets, work deductions and overseas holdings — your obligations as an Australian resident, explained clearly.</p>
+    <div class="cards">
+      <div class="card">
+        <span class="card-icon">🏠</span>
+        <div class="card-title">Investment Property &amp; Rental Income</div>
+        <div class="card-body">Rental income must be declared as personal income. Negative gearing, depreciation, loan interest deductions — we explain what applies to your property and what records to keep.</div>
+        <span class="card-tag">Property</span>
+        <a href="property-tax.html" class="card-link">Read the guide → <span style="font-size:10px;opacity:.6">(coming soon)</span></a>
+      </div>
+      <div class="card">
+        <span class="card-icon">📈</span>
+        <div class="card-title">Capital Gains Tax (CGT)</div>
+        <div class="card-body">Selling a property, shares or crypto may result in a capital gain. The main residence exemption, 50% discount for assets held over 12 months, and different rules for foreign residents — all covered here.</div>
+        <span class="card-tag">Selling assets</span>
+        <a href="cgt.html" class="card-link">Read the guide → <span style="font-size:10px;opacity:.6">(coming soon)</span></a>
+      </div>
+      <div class="card">
+        <span class="card-icon">💼</span>
+        <div class="card-title">Work-Related Deductions</div>
+        <div class="card-body">Working from home, travel, equipment, self-education — eligible work expenses can be claimed at tax time. The ATO publishes occupation-specific guidance; we help you match it to your situation.</div>
+        <span class="card-tag">Personal tax return</span>
+        <a href="deductions.html" class="card-link">Read the guide → <span style="font-size:10px;opacity:.6">(coming soon)</span></a>
+      </div>
+      <div class="card">
+        <span class="card-icon">🌐</span>
+        <div class="card-title">Foreign Assets &amp; Reporting</div>
+        <div class="card-body">Australian residents and citizens must declare worldwide income — including Chinese property, bank accounts and investment portfolios. What to report, which forms to use, and how the China–Australia tax treaty applies.</div>
+        <span class="card-tag">Cross-border personal</span>
+        <a href="foreign-assets.html" class="card-link">Read the guide → <span style="font-size:10px;opacity:.6">(coming soon)</span></a>
+      </div>
+    </div>
+  </div>
+
 </section>
 
 <!-- ── Who we help ─────────────────────────────────────────────── -->
@@ -602,7 +660,7 @@ body {
         Do you help with Chinese-language customers or WeChat businesses?
         <svg class="faq-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
       </button>
-      <div class="faq-a">Yes. We specifically understand the compliance questions that arise for businesses serving Chinese-Australian communities — selling through WeChat Mini Programs, receiving payments via Alipay or WeChat Pay, sourcing from China, and operating in communities where English-language ATO guidance is hard to follow.</div>
+      <div class="faq-a">Yes. We work with Chinese-Australian businesses across a range of industries and understand the compliance questions that come up in those contexts. We explain Australian tax and employment obligations clearly, in Mandarin, Cantonese or English.</div>
     </div>
   </div>
 </section>
