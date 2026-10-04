@@ -1,0 +1,984 @@
+<!--
+  竹 Digital — 工作相关扣减
+  DATA_UPDATE_SCHEDULE: 每年7月1日后更新
+  LAST_UPDATED: 2026-10
+  FISCAL_YEAR: 2026-27
+  KEY_FIGURES:
+  - 洗衣自行计算上限: 无收据时，每次洗涤$1（混洗）或$0.50（手洗），年度上限$150
+  - 车辆费用-标准里程法: 2024-25每公里$0.88; 2025-26待ATO公布
+  - 居家办公: 固定费率法每小时$0.70（2023-24起）
+  - 工具$300以下: 可即时扣减
+  SOURCES:
+  - https://www.ato.gov.au/individuals-and-families/income-deductions-offsets-and-records/deductions-you-can-claim
+  - https://www.ato.gov.au/individuals-and-families/income-deductions-offsets-and-records/deductions-you-can-claim/working-from-home-expenses
+-->
+<title>工作相关扣减</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;700&family=Noto+Sans+SC:wght@300;400;500;700&display=swap">
+
+<style>
+/* ── 竹 Digital design system ── dark-first ── */
+:root {
+  --bg:#0D1B2A;--bg2:#0F1F30;--surface:#152233;--surface2:#1A2B3F;
+  --border:rgba(59,130,246,.13);--border2:rgba(59,130,246,.22);
+  --fg:#F1F5F9;--fg2:#94A3B8;--fg3:#475569;--accent:#60A5FA;
+  --accent2:#3B82F6;--success:#10B981;--warn:#F59E0B;
+  --sans:'Noto Sans SC',system-ui,sans-serif;
+  --serif:'Noto Serif SC',Georgia,serif;
+  --radius:10px;--radius2:16px;
+  color-scheme: dark;
+}
+
+@media(prefers-color-scheme:light){:root:not([data-theme="dark"]){
+  --bg:#F8FAFC;--bg2:#F1F5F9;--surface:#FFFFFF;--surface2:#F8FAFC;
+  --border:rgba(59,130,246,.15);--border2:rgba(59,130,246,.3);
+  --fg:#0F172A;--fg2:#334155;--fg3:#64748B;--accent:#1D4ED8;
+  --accent2:#2563EB;color-scheme:light;
+}}
+:root[data-theme="light"]{
+  --bg:#F8FAFC;--bg2:#F1F5F9;--surface:#FFFFFF;--surface2:#F8FAFC;
+  --border:rgba(59,130,246,.15);--border2:rgba(59,130,246,.3);
+  --fg:#0F172A;--fg2:#334155;--fg3:#64748B;--accent:#1D4ED8;
+  --accent2:#2563EB;color-scheme:light;
+}
+
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+
+body {
+  background: var(--bg);
+  color: var(--fg);
+  font-family: var(--sans);
+  font-size: 15px;
+  line-height: 1.7;
+  min-height: 100%;
+}
+
+/* ── NAV ── */
+.site-nav {
+  position: sticky;
+  top: env(safe-area-inset-top, 0px);
+  z-index: 100;
+  background: var(--bg);
+  border-bottom: 1px solid var(--border);
+  padding: 0 24px;
+}
+.nav-inner {
+  max-width: 860px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  height: 56px;
+}
+.brand {
+  font-family: var(--serif);
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--fg);
+  text-decoration: none;
+  letter-spacing: .02em;
+  flex-shrink: 0;
+}
+.brand:hover { color: var(--accent); }
+.nav-sep { color: var(--fg3); font-size: 13px; }
+.breadcrumb {
+  font-size: 12px;
+  color: var(--fg3);
+  letter-spacing: .04em;
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.breadcrumb span { color: var(--fg2); }
+.nav-back {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 13px;
+  color: var(--accent);
+  text-decoration: none;
+  padding: 6px 12px;
+  border: 1px solid var(--border2);
+  border-radius: var(--radius);
+  transition: background .15s, border-color .15s;
+  flex-shrink: 0;
+  white-space: nowrap;
+}
+.nav-back:hover { background: var(--surface2); border-color: var(--accent); }
+
+/* ── PAGE WRAPPER ── */
+.page {
+  max-width: 860px;
+  margin: 0 auto;
+  padding: 48px 24px 80px;
+}
+
+/* ── HERO ── */
+.hero {
+  padding: 52px 0 44px;
+  border-bottom: 1px solid var(--border);
+  margin-bottom: 52px;
+}
+.hero-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 11px;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: var(--accent);
+  font-weight: 500;
+  margin-bottom: 18px;
+}
+.hero-eyebrow::before {
+  content: '';
+  display: block;
+  width: 24px;
+  height: 1px;
+  background: var(--accent);
+}
+.hero h1 {
+  font-family: var(--serif);
+  font-size: clamp(2rem, 5vw, 3rem);
+  font-weight: 700;
+  line-height: 1.2;
+  text-wrap: balance;
+  color: var(--fg);
+  margin-bottom: 20px;
+  letter-spacing: -.01em;
+}
+.hero-lead {
+  font-size: 16px;
+  color: var(--fg2);
+  max-width: 620px;
+  line-height: 1.8;
+}
+.hero-lead strong { color: var(--fg); }
+.fy-badge {
+  display: inline-block;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: .06em;
+  padding: 3px 10px;
+  border-radius: 20px;
+  border: 1px solid var(--border2);
+  color: var(--accent);
+  background: color-mix(in srgb, var(--accent) 8%, transparent);
+  margin-top: 20px;
+}
+
+/* ── SECTION TITLE ── */
+.section-title {
+  font-family: var(--serif);
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: var(--fg);
+  margin-bottom: 24px;
+  text-wrap: balance;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.section-title::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: var(--border);
+}
+
+section { margin-bottom: 60px; }
+
+/* ── RULE CARDS ── */
+.rules-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 16px;
+}
+.rule-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius2);
+  padding: 24px 22px;
+  position: relative;
+  overflow: hidden;
+}
+.rule-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 3px;
+  background: var(--accent2);
+}
+.rule-num {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: .1em;
+  color: var(--accent);
+  margin-bottom: 10px;
+  font-variant-numeric: tabular-nums;
+}
+.rule-card p {
+  font-size: 14px;
+  color: var(--fg2);
+  line-height: 1.65;
+}
+.rule-card p strong { color: var(--fg); }
+
+.data-notice {
+  margin-top: 20px;
+  background: color-mix(in srgb, var(--success) 8%, transparent);
+  border: 1px solid color-mix(in srgb, var(--success) 30%, transparent);
+  border-radius: var(--radius);
+  padding: 14px 18px;
+  font-size: 13px;
+  color: var(--fg2);
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+}
+.data-notice .icon { color: var(--success); flex-shrink: 0; font-size: 15px; margin-top: 1px; }
+.data-notice strong { color: var(--fg); }
+
+/* ── DEDUCTION CATEGORIES ── */
+.cat-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.cat-item {
+  border: 1px solid var(--border);
+  border-radius: var(--radius2);
+  background: var(--surface);
+  overflow: hidden;
+}
+.cat-header {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 18px 22px;
+  cursor: pointer;
+  user-select: none;
+  list-style: none;
+  transition: background .15s;
+}
+.cat-header:hover { background: var(--surface2); }
+.cat-header::-webkit-details-marker { display: none; }
+.cat-icon {
+  font-size: 20px;
+  flex-shrink: 0;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--surface2);
+  border-radius: 10px;
+  border: 1px solid var(--border);
+}
+.cat-title-wrap { flex: 1; min-width: 0; }
+.cat-title-wrap strong {
+  display: block;
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--fg);
+  letter-spacing: .01em;
+}
+.cat-title-wrap span {
+  font-size: 12px;
+  color: var(--fg3);
+}
+.cat-chevron {
+  color: var(--fg3);
+  font-size: 13px;
+  transition: transform .2s;
+  flex-shrink: 0;
+}
+details[open] .cat-chevron { transform: rotate(90deg); }
+
+.cat-body {
+  padding: 0 22px 22px 76px;
+  border-top: 1px solid var(--border);
+}
+@media(max-width:520px){
+  .cat-body { padding: 0 16px 18px 16px; }
+}
+.cat-body ul {
+  list-style: none;
+  margin-top: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.cat-body ul li {
+  font-size: 14px;
+  color: var(--fg2);
+  padding-left: 18px;
+  position: relative;
+  line-height: 1.6;
+}
+.cat-body ul li::before {
+  content: '›';
+  position: absolute;
+  left: 0;
+  color: var(--accent);
+  font-weight: 700;
+}
+.cat-body ul li strong { color: var(--fg); }
+.cat-note {
+  margin-top: 14px;
+  font-size: 12px;
+  color: var(--fg3);
+  background: var(--surface2);
+  border-left: 3px solid var(--border2);
+  padding: 8px 12px;
+  border-radius: 0 6px 6px 0;
+  line-height: 1.6;
+}
+.cat-note strong { color: var(--fg2); }
+
+.src-tag {
+  display: inline-block;
+  font-size: 10px;
+  letter-spacing: .06em;
+  font-weight: 600;
+  padding: 2px 7px;
+  border-radius: 4px;
+  background: color-mix(in srgb, var(--accent) 10%, transparent);
+  color: var(--accent);
+  border: 1px solid color-mix(in srgb, var(--accent) 25%, transparent);
+  vertical-align: middle;
+  margin-left: 6px;
+  text-transform: uppercase;
+}
+
+/* ── WARN NOTICE (cannot claim) ── */
+.warn-notice {
+  background: color-mix(in srgb, var(--warn) 8%, transparent);
+  border: 1px solid color-mix(in srgb, var(--warn) 28%, transparent);
+  border-radius: var(--radius2);
+  padding: 24px 26px;
+}
+.warn-notice-head {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 18px;
+}
+.warn-notice-head .warn-icon { font-size: 18px; color: var(--warn); }
+.warn-notice-head strong {
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--fg);
+  font-family: var(--serif);
+}
+.warn-notice ul {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.warn-notice ul li {
+  font-size: 14px;
+  color: var(--fg2);
+  padding-left: 22px;
+  position: relative;
+  line-height: 1.6;
+}
+.warn-notice ul li::before {
+  content: '✕';
+  position: absolute;
+  left: 0;
+  color: var(--warn);
+  font-size: 12px;
+  font-weight: 700;
+  top: 3px;
+}
+
+/* ── RECORD CARDS (4-grid) ── */
+.records-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 14px;
+}
+.record-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius2);
+  padding: 22px 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.record-icon {
+  font-size: 22px;
+  width: 44px;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: color-mix(in srgb, var(--accent) 10%, transparent);
+  border-radius: 10px;
+}
+.record-card strong {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--fg);
+  display: block;
+}
+.record-card p {
+  font-size: 13px;
+  color: var(--fg2);
+  line-height: 1.6;
+}
+
+/* ── TIP BOX ── */
+.tip-box {
+  background: var(--surface);
+  border: 1px solid var(--border2);
+  border-radius: var(--radius2);
+  padding: 26px 28px;
+  display: flex;
+  gap: 20px;
+}
+.tip-icon-col {
+  flex-shrink: 0;
+  width: 44px;
+  height: 44px;
+  background: color-mix(in srgb, var(--accent) 12%, transparent);
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+}
+.tip-content strong {
+  display: block;
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--fg);
+  margin-bottom: 12px;
+}
+.tip-content ul {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
+}
+.tip-content ul li {
+  font-size: 14px;
+  color: var(--fg2);
+  padding-left: 18px;
+  position: relative;
+  line-height: 1.6;
+}
+.tip-content ul li::before {
+  content: '·';
+  position: absolute;
+  left: 0;
+  color: var(--accent);
+  font-size: 18px;
+  line-height: 1.2;
+}
+@media(max-width:480px){
+  .tip-box { flex-direction: column; gap: 14px; }
+}
+
+/* ── CHECKLIST ── */
+.checklist {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius2);
+  overflow: hidden;
+}
+.checklist-head {
+  padding: 18px 24px;
+  border-bottom: 1px solid var(--border);
+  font-family: var(--serif);
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--fg);
+}
+.checklist-items {
+  padding: 12px 0;
+}
+.check-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  padding: 12px 24px;
+  cursor: pointer;
+  transition: background .12s;
+}
+.check-item:hover { background: var(--surface2); }
+.check-item input[type="checkbox"] {
+  width: 18px;
+  height: 18px;
+  accent-color: var(--accent2);
+  flex-shrink: 0;
+  margin-top: 2px;
+  cursor: pointer;
+}
+.check-item label {
+  font-size: 14px;
+  color: var(--fg2);
+  line-height: 1.6;
+  cursor: pointer;
+}
+.check-item label strong { color: var(--fg); }
+.check-item input:checked + label { color: var(--fg3); text-decoration: line-through; }
+
+/* ── CTA ── */
+.cta-box {
+  background: var(--surface);
+  border: 1px solid var(--border2);
+  border-radius: var(--radius2);
+  padding: 36px 32px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+.cta-box::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, var(--accent2), var(--success));
+}
+.cta-box h3 {
+  font-family: var(--serif);
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: var(--fg);
+  margin-bottom: 12px;
+  text-wrap: balance;
+}
+.cta-box p {
+  font-size: 14px;
+  color: var(--fg2);
+  margin-bottom: 24px;
+  max-width: 480px;
+  margin-left: auto;
+  margin-right: auto;
+}
+.email-display {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 22px;
+  background: var(--bg2);
+  border: 1px solid var(--border2);
+  border-radius: var(--radius);
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--accent);
+  letter-spacing: .01em;
+}
+.copy-btn {
+  background: color-mix(in srgb, var(--accent) 12%, transparent);
+  border: 1px solid color-mix(in srgb, var(--accent) 30%, transparent);
+  color: var(--accent);
+  border-radius: 6px;
+  padding: 4px 10px;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  font-family: var(--sans);
+  letter-spacing: .04em;
+  transition: background .15s;
+}
+.copy-btn:hover { background: color-mix(in srgb, var(--accent) 20%, transparent); }
+
+/* ── FOOTER ── */
+.site-footer {
+  border-top: 1px solid var(--border);
+  padding: 32px 24px;
+  text-align: center;
+}
+.footer-inner {
+  max-width: 860px;
+  margin: 0 auto;
+}
+.footer-brand {
+  font-family: var(--serif);
+  font-size: 17px;
+  font-weight: 700;
+  color: var(--fg2);
+  margin-bottom: 10px;
+}
+.footer-meta {
+  font-size: 12px;
+  color: var(--fg3);
+  line-height: 1.8;
+}
+.footer-meta a {
+  color: var(--accent);
+  text-decoration: none;
+}
+.footer-meta a:hover { text-decoration: underline; }
+.footer-sep { margin: 0 8px; }
+
+/* ── UTILITY ── */
+@media(max-width:600px){
+  .page { padding: 32px 16px 60px; }
+  .hero { padding: 36px 0 32px; }
+  .hero h1 { font-size: 1.8rem; }
+  .records-grid { grid-template-columns: repeat(2, 1fr); }
+  .rules-grid { grid-template-columns: 1fr; }
+}
+@media(max-width:400px){
+  .records-grid { grid-template-columns: 1fr; }
+}
+@media(prefers-reduced-motion:reduce){ * { transition: none !important; } }
+</style>
+
+<!-- ── NAV ── -->
+<nav class="site-nav">
+  <div class="nav-inner">
+    <a class="brand" href="consultant_cn.html">竹 Digital</a>
+    <span class="nav-sep">·</span>
+    <div class="breadcrumb">带你读懂 · 个人税务 &rsaquo; <span>工作相关扣减</span></div>
+    <a class="nav-back" href="consultant_cn.html">← 返回首页</a>
+  </div>
+</nav>
+
+<!-- ── PAGE ── -->
+<main class="page">
+
+  <!-- HERO -->
+  <header class="hero">
+    <div class="hero-eyebrow">带你读懂 · 个人税务</div>
+    <h1>工作相关扣减</h1>
+    <p class="hero-lead">
+      ATO允许纳税人扣减与工作<strong>直接相关</strong>的必要支出，前提是您自费承担、未获报销，并保留凭证。了解您有权申报的扣减项目，有助于准确完成年度税表。
+    </p>
+    <div class="fy-badge">适用年度：2026–27 &nbsp;·&nbsp; 每年7月更新</div>
+  </header>
+
+  <!-- 三条黄金规则 -->
+  <section>
+    <h2 class="section-title">三条黄金规则</h2>
+    <div class="rules-grid">
+      <div class="rule-card">
+        <div class="rule-num">规则 01</div>
+        <p><strong>费用由您本人承担</strong>，且雇主未予报销</p>
+      </div>
+      <div class="rule-card">
+        <div class="rule-num">规则 02</div>
+        <p>支出与您的<strong>工作收入直接相关</strong></p>
+      </div>
+      <div class="rule-card">
+        <div class="rule-num">规则 03</div>
+        <p>保留相关<strong>凭证</strong>（收据、账单、日志）</p>
+      </div>
+    </div>
+    <div class="data-notice">
+      <span class="icon">✓</span>
+      <span><strong>满足三条规则后</strong>，该支出通常可合法扣减。<span class="src-tag">ATO</span></span>
+    </div>
+  </section>
+
+  <!-- 常见可扣减项目 -->
+  <section>
+    <h2 class="section-title">常见可扣减项目</h2>
+    <div class="cat-list">
+
+      <details class="cat-item" open>
+        <summary class="cat-header">
+          <div class="cat-icon">🚗</div>
+          <div class="cat-title-wrap">
+            <strong>车辆与交通</strong>
+            <span>工作地点间行程、客户拜访</span>
+          </div>
+          <span class="cat-chevron">›</span>
+        </summary>
+        <div class="cat-body">
+          <ul>
+            <li>工作地点之间的行程（非日常上下班通勤）</li>
+            <li>前往客户处、工地或其他工作场所的行程</li>
+            <li><strong>标准里程法：</strong>$0.88/km（2024–25年度），最多5,000 km <span class="src-tag">ATO</span></li>
+            <li><strong>实际费用法：</strong>按行驶比例计算油费、保险、维修等</li>
+          </ul>
+          <div class="cat-note"><strong>注意：</strong>日常从家到固定工作地点的上下班通勤，一般不可扣减。</div>
+        </div>
+      </details>
+
+      <details class="cat-item">
+        <summary class="cat-header">
+          <div class="cat-icon">🏠</div>
+          <div class="cat-title-wrap">
+            <strong>居家办公</strong>
+            <span>固定费率法或实际费用法</span>
+          </div>
+          <span class="cat-chevron">›</span>
+        </summary>
+        <div class="cat-body">
+          <ul>
+            <li><strong>固定费率法：</strong>每工作小时 $0.70，涵盖水电、网络、电话等（2023–24年度起）<span class="src-tag">ATO</span></li>
+            <li>须记录每日工作时长（日志或日历记录均可）</li>
+            <li><strong>实际费用法：</strong>按办公空间占比分摊水电、网络、折旧等</li>
+          </ul>
+          <div class="cat-note"><strong>注意：</strong>选择固定费率法时，无需单独保留水电账单，但须保留工作时长记录。专用工作房间可能适用不同规则，建议向注册税务代理确认。</div>
+        </div>
+      </details>
+
+      <details class="cat-item">
+        <summary class="cat-header">
+          <div class="cat-icon">📚</div>
+          <div class="cat-title-wrap">
+            <strong>自我教育</strong>
+            <span>与当前职位直接相关的学习</span>
+          </div>
+          <span class="cat-chevron">›</span>
+        </summary>
+        <div class="cat-body">
+          <ul>
+            <li>与<strong>当前工作</strong>直接相关的课程学费、培训费</li>
+            <li>教材、参考书、考试报名费</li>
+            <li>相关差旅费（前往上课地点）</li>
+          </ul>
+          <div class="cat-note"><strong>注意：</strong>纯粹为获取新工作或跨行业转行的学习，通常不可扣减——课程须与您目前的收入来源相关。</div>
+        </div>
+      </details>
+
+      <details class="cat-item">
+        <summary class="cat-header">
+          <div class="cat-icon">👔</div>
+          <div class="cat-title-wrap">
+            <strong>工作服与防护装备</strong>
+            <span>制服、防护服及洗护费用</span>
+          </div>
+          <span class="cat-chevron">›</span>
+        </summary>
+        <div class="cat-body">
+          <ul>
+            <li>注册商标或雇主专属工作制服</li>
+            <li>防护服及安全装备（钢头鞋、手套、高可视背心、安全帽）</li>
+            <li>制服或防护服的洗涤及维护费用<span class="src-tag">ATO</span></li>
+            <li>无收据时：每次洗涤 $1（混洗）或 $0.50（仅工作服），年度上限 $150</li>
+          </ul>
+          <div class="cat-note"><strong>注意：</strong>普通商务服装（如西装、衬衫）即使主要在工作中穿着，一般也不可扣减，除非带有公司标志。</div>
+        </div>
+      </details>
+
+      <details class="cat-item">
+        <summary class="cat-header">
+          <div class="cat-icon">🛠️</div>
+          <div class="cat-title-wrap">
+            <strong>工具与设备</strong>
+            <span>即时扣减或折旧扣减</span>
+          </div>
+          <span class="cat-chevron">›</span>
+        </summary>
+        <div class="cat-body">
+          <ul>
+            <li><strong>$300以下：</strong>可在当年度即时全额扣减 <span class="src-tag">ATO</span></li>
+            <li><strong>$300及以上：</strong>须按有效使用寿命逐年折旧扣减</li>
+            <li>同时用于私人用途的设备，须按工作使用比例分摊</li>
+          </ul>
+          <div class="cat-note"><strong>提示：</strong>若您的设备（如笔记本电脑、相机）工作用途占70%，则可扣减70%的费用或折旧额。</div>
+        </div>
+      </details>
+
+      <details class="cat-item">
+        <summary class="cat-header">
+          <div class="cat-icon">📱</div>
+          <div class="cat-title-wrap">
+            <strong>电话与网络</strong>
+            <span>仅工作用途部分可扣减</span>
+          </div>
+          <span class="cat-chevron">›</span>
+        </summary>
+        <div class="cat-body">
+          <ul>
+            <li>手机、座机通话费用中，工作用途占比部分</li>
+            <li>家庭宽带费用中，与居家办公相关的比例</li>
+            <li>建议保留一个月完整通话记录，作为估算全年比例的依据</li>
+          </ul>
+          <div class="cat-note"><strong>注意：</strong>若已选用居家办公固定费率法（$0.70/小时），网络费用已包含在内，不可另行扣减。</div>
+        </div>
+      </details>
+
+      <details class="cat-item">
+        <summary class="cat-header">
+          <div class="cat-icon">📋</div>
+          <div class="cat-title-wrap">
+            <strong>其他常见项目</strong>
+            <span>会费、执照、专业订阅</span>
+          </div>
+          <span class="cat-chevron">›</span>
+        </summary>
+        <div class="cat-body">
+          <ul>
+            <li>工会会费及专业协会年费</li>
+            <li>职业执照更新费、注册年费</li>
+            <li>与工作相关的期刊、行业杂志及订阅服务</li>
+            <li>工作相关的专业书籍及参考资料</li>
+          </ul>
+          <div class="cat-note"><strong>提示：</strong>年度会员费若跨越两个财年，须按比例分摊至对应年度。</div>
+        </div>
+      </details>
+
+    </div>
+  </section>
+
+  <!-- 通常不可扣减 -->
+  <section>
+    <h2 class="section-title">通常不可扣减的项目</h2>
+    <div class="warn-notice">
+      <div class="warn-notice-head">
+        <span class="warn-icon">⚠</span>
+        <strong>以下支出通常无法在税表中申报扣减</strong>
+      </div>
+      <ul>
+        <li>日常从家到固定工作地点的<strong>上下班通勤</strong></li>
+        <li>普通服装，即使主要在工作中穿着（无品牌标志）</li>
+        <li>与工作收入无直接关联的个人支出</li>
+        <li>没有凭证支持的支出（超过$300的项目必须有收据）</li>
+        <li>已由雇主<strong>全额报销</strong>的费用</li>
+        <li>纯为转行或获取新职位而产生的学习费用</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- 记录保存 -->
+  <section>
+    <h2 class="section-title">记录保存</h2>
+    <div class="records-grid">
+      <div class="record-card">
+        <div class="record-icon">🧾</div>
+        <strong>收据与发票</strong>
+        <p>纸质或电子版均可，需包含日期、金额及购买内容。</p>
+      </div>
+      <div class="record-card">
+        <div class="record-icon">📓</div>
+        <strong>工作日志</strong>
+        <p>车辆行驶记录、居家办公时长记录，电子或手写均可。</p>
+      </div>
+      <div class="record-card">
+        <div class="record-icon">🏦</div>
+        <strong>银行对账单</strong>
+        <p>可作辅助证明，但不能替代正式收据，适合作为交叉核对依据。</p>
+      </div>
+      <div class="record-card">
+        <div class="record-icon">📅</div>
+        <strong>保留5年</strong>
+        <p>记录须保存至税表提交后满5年，以备ATO核查。<span class="src-tag">ATO</span></p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 小技巧 -->
+  <section>
+    <h2 class="section-title">小技巧：全年记录，而非临时拼凑</h2>
+    <div class="tip-box">
+      <div class="tip-icon-col">💡</div>
+      <div class="tip-content">
+        <strong>养成全年记录的习惯，报税时轻松有据可查</strong>
+        <ul>
+          <li>收到收据后立即拍照存档，存入专用相册或记账App</li>
+          <li>使用车辆时，随手记录出行日期、起止地点及公里数</li>
+          <li>居家办公时，每日记录工作时长（日历打卡即可）</li>
+          <li>保留一个月完整的手机通话记录，用于估算全年工作用途比例</li>
+          <li>年底前整理一次，避免6月30日前的仓促准备</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- 自查清单 -->
+  <section>
+    <h2 class="section-title">报税前自查清单</h2>
+    <div class="checklist">
+      <div class="checklist-head">提交税表前，请逐项确认</div>
+      <div class="checklist-items">
+        <label class="check-item">
+          <input type="checkbox" id="chk1">
+          <label for="chk1">每项申报支出均<strong>满足ATO三条黄金规则</strong></label>
+        </label>
+        <label class="check-item">
+          <input type="checkbox" id="chk2">
+          <label for="chk2">所有收据及凭证已整理齐备，电子版已备份</label>
+        </label>
+        <label class="check-item">
+          <input type="checkbox" id="chk3">
+          <label for="chk3">混合用途支出（私人与工作共用）已<strong>按比例分摊</strong>，仅申报工作部分</label>
+        </label>
+        <label class="check-item">
+          <input type="checkbox" id="chk4">
+          <label for="chk4">已将日常<strong>上下班通勤</strong>排除在车辆扣减之外</label>
+        </label>
+        <label class="check-item">
+          <input type="checkbox" id="chk5">
+          <label for="chk5">居家办公方式（固定费率法 / 实际费用法）已选定，不重复申报</label>
+        </label>
+        <label class="check-item">
+          <input type="checkbox" id="chk6">
+          <label for="chk6">雇主已报销的费用<strong>未</strong>列入扣减申报</label>
+        </label>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section>
+    <div class="cta-box">
+      <h3>不确定某项费用是否可以扣减？</h3>
+      <p>每个人的工作情况不同，具体申报方式也因职业而异。欢迎联系我们，进行个性化咨询。</p>
+      <div class="email-display">
+        <span>hello@zhudigital.com.au</span>
+        <button class="copy-btn" id="copyBtn" onclick="copyEmail()">复制</button>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<!-- ── FOOTER ── -->
+<footer class="site-footer">
+  <div class="footer-inner">
+    <div class="footer-brand">竹 Digital</div>
+    <div class="footer-meta">
+      本页信息仅供参考，不构成税务建议。具体申报事宜请咨询注册税务代理（Registered Tax Agent）。
+      <br>
+      数据来源：<a href="https://www.ato.gov.au/individuals-and-families/income-deductions-offsets-and-records/deductions-you-can-claim" target="_blank" rel="noopener">ATO — 可申报扣减</a>
+      <span class="footer-sep">·</span>
+      <a href="https://www.ato.gov.au/individuals-and-families/income-deductions-offsets-and-records/deductions-you-can-claim/working-from-home-expenses" target="_blank" rel="noopener">居家办公扣减</a>
+      <br>
+      最后更新：2026年10月
+    </div>
+  </div>
+</footer>
+
+<script>
+function copyEmail() {
+  const email = 'hello@zhudigital.com.au';
+  const btn = document.getElementById('copyBtn');
+  if (navigator.clipboard && navigator.clipboard.writeText) {
+    navigator.clipboard.writeText(email).then(() => {
+      btn.textContent = '已复制';
+      setTimeout(() => { btn.textContent = '复制'; }, 2000);
+    }).catch(() => fallbackCopy(email, btn));
+  } else {
+    fallbackCopy(email, btn);
+  }
+}
+
+function fallbackCopy(text, btn) {
+  const el = document.createElement('textarea');
+  el.value = text;
+  el.style.position = 'absolute';
+  el.style.left = '-9999px';
+  document.body.appendChild(el);
+  el.select();
+  try {
+    document.execCommand('copy');
+    btn.textContent = '已复制';
+    setTimeout(() => { btn.textContent = '复制'; }, 2000);
+  } catch(e) {
+    btn.textContent = '请手动复制';
+  }
+  document.body.removeChild(el);
+}
+</script>

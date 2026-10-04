@@ -1,0 +1,1266 @@
+<!--
+  竹 Digital — 资本增值税（CGT）
+  DATA_UPDATE_SCHEDULE: 每年7月1日后更新
+  LAST_UPDATED: 2026-10
+  FISCAL_YEAR: 2026-27
+  KEY_FIGURES:
+  - CGT折扣: 持有超过12个月的资产，个人享有50%折扣
+  - 主要住所豁免: 自住房一般全额豁免CGT
+  - 海外居民: 从2012年5月8日起不享有50%折扣
+  - 记录保存: 出售后最少5年
+  SOURCES:
+  - https://www.ato.gov.au/individuals-and-families/investments-and-assets/capital-gains-tax
+-->
+<title>资本增值税（CGT）</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;600;700&family=Noto+Serif+SC:wght@400;600;700&display=swap">
+
+<style>
+/* ── Token System ─────────────────────────────────────────── */
+/* Layout: sticky nav → full-width hero → max-width content column */
+:root {
+  /* Dark-first palette — matches existing 竹 Digital design system */
+  --bg: #0D1B2A;
+  --bg2: #0F1F30;
+  --surface: #152233;
+  --surface2: #1A2B3F;
+  --border: rgba(59,130,246,.13);
+  --border2: rgba(59,130,246,.22);
+  --fg: #F1F5F9;
+  --fg2: #94A3B8;
+  --fg3: #475569;
+  --accent: #60A5FA;
+  --accent2: #3B82F6;
+  --success: #10B981;
+  --warn: #F59E0B;
+  --sans: 'Noto Sans SC', system-ui, sans-serif;
+  --serif: 'Noto Serif SC', Georgia, serif;
+  --radius: 10px;
+  --radius2: 16px;
+  color-scheme: dark;
+}
+
+@media (prefers-color-scheme: light) {
+  :root:not([data-theme="dark"]) {
+    --bg: #F8FAFC;
+    --bg2: #F1F5F9;
+    --surface: #FFFFFF;
+    --surface2: #F8FAFC;
+    --border: rgba(59,130,246,.15);
+    --border2: rgba(59,130,246,.3);
+    --fg: #0F172A;
+    --fg2: #334155;
+    --fg3: #64748B;
+    --accent: #1D4ED8;
+    --accent2: #2563EB;
+    color-scheme: light;
+  }
+}
+
+:root[data-theme="light"] {
+  --bg: #F8FAFC;
+  --bg2: #F1F5F9;
+  --surface: #FFFFFF;
+  --surface2: #F8FAFC;
+  --border: rgba(59,130,246,.15);
+  --border2: rgba(59,130,246,.3);
+  --fg: #0F172A;
+  --fg2: #334155;
+  --fg3: #64748B;
+  --accent: #1D4ED8;
+  --accent2: #2563EB;
+  color-scheme: light;
+}
+
+/* ── Reset & Base ─────────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { font-size: 16px; }
+body {
+  font-family: var(--sans);
+  background: var(--bg);
+  color: var(--fg);
+  line-height: 1.7;
+  padding-inline: 0;
+  min-height: 100vh;
+}
+img { max-width: 100%; display: block; }
+
+/* ── Typography ───────────────────────────────────────────── */
+h1, h2, h3, h4 {
+  font-family: var(--serif);
+  text-wrap: balance;
+  line-height: 1.3;
+}
+h1 { font-size: clamp(1.75rem, 4vw, 2.75rem); font-weight: 700; }
+h2 { font-size: clamp(1.25rem, 2.5vw, 1.75rem); font-weight: 600; }
+h3 { font-size: 1.1rem; font-weight: 600; }
+p { color: var(--fg2); }
+a { color: var(--accent); text-decoration: none; }
+a:hover { text-decoration: underline; }
+
+/* ── Nav ──────────────────────────────────────────────────── */
+.site-nav {
+  position: sticky;
+  top: env(safe-area-inset-top, 0px);
+  z-index: 100;
+  background: var(--bg2);
+  border-bottom: 1px solid var(--border2);
+  padding: 0 clamp(16px, 4vw, 48px);
+}
+
+.nav-inner {
+  max-width: 960px;
+  margin: 0 auto;
+  height: 56px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.nav-brand {
+  font-family: var(--serif);
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: var(--fg);
+  letter-spacing: .02em;
+  white-space: nowrap;
+}
+.nav-brand:hover { text-decoration: none; color: var(--accent); }
+
+.nav-brand span {
+  color: var(--accent);
+  margin-right: 2px;
+}
+
+.nav-breadcrumb {
+  font-size: .8rem;
+  color: var(--fg3);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+.nav-breadcrumb a { color: var(--fg3); }
+.nav-breadcrumb a:hover { color: var(--accent); text-decoration: none; }
+.nav-breadcrumb .sep { color: var(--fg3); opacity: .5; }
+.nav-breadcrumb .current { color: var(--fg2); }
+
+.nav-back {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: .8rem;
+  color: var(--fg2);
+  padding: 6px 14px;
+  border: 1px solid var(--border2);
+  border-radius: 6px;
+  white-space: nowrap;
+  transition: color .15s, border-color .15s, background .15s;
+}
+.nav-back:hover {
+  color: var(--accent);
+  border-color: var(--accent);
+  background: rgba(96,165,250,.07);
+  text-decoration: none;
+}
+
+/* ── Page Content Wrapper ─────────────────────────────────── */
+.page {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 0 clamp(16px, 4vw, 48px);
+}
+
+/* ── Hero ─────────────────────────────────────────────────── */
+.hero {
+  padding: 56px 0 48px;
+  border-bottom: 1px solid var(--border);
+}
+
+.hero-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: .78rem;
+  font-weight: 600;
+  color: var(--accent);
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  margin-bottom: 16px;
+}
+
+.hero-eyebrow::before {
+  content: '';
+  display: block;
+  width: 24px;
+  height: 2px;
+  background: var(--accent);
+  border-radius: 2px;
+}
+
+.hero h1 {
+  margin-bottom: 20px;
+  color: var(--fg);
+}
+
+.hero-intro {
+  max-width: 640px;
+  font-size: 1.05rem;
+  color: var(--fg2);
+  line-height: 1.8;
+}
+
+.fiscal-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 24px;
+  font-size: .75rem;
+  color: var(--fg3);
+  padding: 4px 10px;
+  border: 1px solid var(--border);
+  border-radius: 20px;
+}
+.fiscal-badge .dot {
+  width: 6px; height: 6px;
+  background: var(--success);
+  border-radius: 50%;
+}
+
+/* ── Sections ─────────────────────────────────────────────── */
+.section {
+  padding: 48px 0;
+  border-bottom: 1px solid var(--border);
+}
+.section:last-of-type { border-bottom: none; }
+
+.section-header {
+  margin-bottom: 28px;
+}
+.section-header h2 { color: var(--fg); }
+.section-header p {
+  margin-top: 8px;
+  font-size: .95rem;
+}
+
+/* ── Source Tag ───────────────────────────────────────────── */
+.src-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: .7rem;
+  font-weight: 500;
+  color: var(--accent);
+  background: rgba(96,165,250,.1);
+  border: 1px solid rgba(96,165,250,.2);
+  border-radius: 4px;
+  padding: 2px 7px;
+  vertical-align: middle;
+  margin-left: 6px;
+  letter-spacing: .02em;
+  white-space: nowrap;
+}
+
+/* ── Data Notice ──────────────────────────────────────────── */
+.data-notice {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  background: rgba(16,185,129,.08);
+  border: 1px solid rgba(16,185,129,.25);
+  border-left: 3px solid var(--success);
+  border-radius: var(--radius);
+  padding: 14px 16px;
+  margin-top: 24px;
+}
+
+.data-notice-icon {
+  flex-shrink: 0;
+  width: 20px; height: 20px;
+  color: var(--success);
+  margin-top: 1px;
+}
+
+.data-notice p {
+  font-size: .9rem;
+  color: var(--fg2);
+  margin: 0;
+}
+
+.data-notice strong { color: var(--success); }
+
+/* ── Warning Notice ───────────────────────────────────────── */
+.warn-notice {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  background: rgba(245,158,11,.07);
+  border: 1px solid rgba(245,158,11,.22);
+  border-left: 3px solid var(--warn);
+  border-radius: var(--radius);
+  padding: 14px 16px;
+  margin-top: 24px;
+}
+
+.warn-notice-icon {
+  flex-shrink: 0;
+  color: var(--warn);
+  margin-top: 1px;
+}
+
+.warn-notice p {
+  font-size: .9rem;
+  color: var(--fg2);
+  margin: 0;
+}
+.warn-notice strong { color: var(--warn); }
+
+/* ── Trigger Cards Grid ───────────────────────────────────── */
+.trigger-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 14px;
+  margin-bottom: 8px;
+}
+
+.trigger-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 18px 20px;
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  transition: border-color .15s;
+}
+
+.trigger-card:hover { border-color: var(--border2); }
+
+.trigger-icon {
+  flex-shrink: 0;
+  width: 36px; height: 36px;
+  background: rgba(96,165,250,.1);
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.1rem;
+}
+
+.trigger-card h3 {
+  font-size: .92rem;
+  font-family: var(--sans);
+  font-weight: 600;
+  color: var(--fg);
+  margin-bottom: 3px;
+}
+
+.trigger-card p {
+  font-size: .8rem;
+  color: var(--fg3);
+  margin: 0;
+}
+
+/* ── Discount Boxes ───────────────────────────────────────── */
+.discount-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+  margin-bottom: 28px;
+}
+
+@media (max-width: 580px) {
+  .discount-grid { grid-template-columns: 1fr; }
+}
+
+.discount-box {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius2);
+  padding: 24px;
+}
+
+.discount-box.featured {
+  border-color: rgba(96,165,250,.35);
+  background: linear-gradient(135deg, rgba(96,165,250,.07) 0%, var(--surface) 60%);
+}
+
+.discount-label {
+  font-size: .72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: .1em;
+  color: var(--fg3);
+  margin-bottom: 8px;
+}
+
+.discount-heading {
+  font-family: var(--sans);
+  font-size: .95rem;
+  font-weight: 600;
+  color: var(--fg);
+  margin-bottom: 16px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid var(--border);
+}
+
+.discount-figure {
+  font-family: var(--serif);
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--accent);
+  line-height: 1;
+  margin-bottom: 4px;
+  font-variant-numeric: tabular-nums;
+}
+
+.discount-sublabel {
+  font-size: .78rem;
+  color: var(--fg3);
+  margin-bottom: 16px;
+}
+
+.discount-formula {
+  background: var(--surface2);
+  border-radius: 8px;
+  padding: 12px 14px;
+  font-size: .85rem;
+  color: var(--fg2);
+  line-height: 1.6;
+}
+
+.discount-formula .formula-line {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 4px;
+}
+.discount-formula .formula-line:last-child { margin-bottom: 0; }
+
+.formula-arrow { color: var(--accent); font-size: .8rem; }
+
+/* ── Worked Example ───────────────────────────────────────── */
+.worked-example {
+  background: var(--surface2);
+  border: 1px solid var(--border2);
+  border-radius: var(--radius2);
+  padding: 24px 28px;
+  margin-top: 8px;
+}
+
+.worked-example h3 {
+  font-family: var(--sans);
+  font-size: .82rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: .1em;
+  color: var(--accent);
+  margin-bottom: 18px;
+}
+
+.calc-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: .9rem;
+  font-variant-numeric: tabular-nums;
+}
+
+.calc-table tr + tr td { border-top: 1px solid var(--border); }
+
+.calc-table td {
+  padding: 8px 4px;
+  color: var(--fg2);
+  vertical-align: top;
+}
+
+.calc-table td:last-child {
+  text-align: right;
+  color: var(--fg);
+  font-weight: 500;
+}
+
+.calc-table tr.highlight td {
+  color: var(--accent);
+  font-weight: 600;
+}
+
+.calc-table tr.total td {
+  border-top: 2px solid var(--border2);
+  color: var(--warn);
+  font-weight: 700;
+  padding-top: 12px;
+}
+
+.calc-note {
+  margin-top: 14px;
+  font-size: .8rem;
+  color: var(--fg3);
+  font-style: italic;
+}
+
+/* ── Cost Base List ───────────────────────────────────────── */
+.cost-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 16px;
+}
+
+.cost-list li {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 14px 16px;
+}
+
+.cost-list-bullet {
+  flex-shrink: 0;
+  width: 22px; height: 22px;
+  background: rgba(96,165,250,.12);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: .75rem;
+  font-weight: 700;
+  color: var(--accent);
+  margin-top: 1px;
+}
+
+.cost-list span { color: var(--fg2); font-size: .92rem; }
+
+/* ── Main Residence Section ───────────────────────────────── */
+.exemption-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 14px;
+  margin-bottom: 20px;
+}
+
+.exemption-item {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 16px 18px;
+}
+
+.exemption-item .ex-icon {
+  font-size: 1.4rem;
+  margin-bottom: 8px;
+}
+
+.exemption-item h3 {
+  font-family: var(--sans);
+  font-size: .85rem;
+  font-weight: 600;
+  color: var(--fg);
+  margin-bottom: 4px;
+}
+
+.exemption-item p {
+  font-size: .8rem;
+  color: var(--fg3);
+  margin: 0;
+}
+
+/* ── Records Grid ─────────────────────────────────────────── */
+.records-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 14px;
+  margin-bottom: 20px;
+}
+
+.record-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 20px;
+  text-align: center;
+}
+
+.record-icon {
+  font-size: 1.6rem;
+  margin-bottom: 10px;
+}
+
+.record-card h3 {
+  font-family: var(--sans);
+  font-size: .88rem;
+  font-weight: 600;
+  color: var(--fg);
+  margin-bottom: 4px;
+}
+
+.record-card p {
+  font-size: .78rem;
+  color: var(--fg3);
+  margin: 0;
+}
+
+.records-duration {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  background: var(--surface2);
+  border-radius: var(--radius);
+  padding: 14px 20px;
+  text-align: center;
+}
+
+.records-duration .big-num {
+  font-family: var(--serif);
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--accent);
+  font-variant-numeric: tabular-nums;
+  line-height: 1;
+}
+
+.records-duration p {
+  font-size: .85rem;
+  color: var(--fg2);
+  margin: 0;
+  text-align: left;
+}
+
+/* ── Steps ────────────────────────────────────────────────── */
+.steps {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  position: relative;
+}
+
+.step {
+  display: flex;
+  align-items: flex-start;
+  gap: 20px;
+  padding: 20px 0;
+  position: relative;
+}
+
+.step-left {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex-shrink: 0;
+  width: 40px;
+}
+
+.step-num {
+  width: 40px; height: 40px;
+  border-radius: 50%;
+  background: var(--surface);
+  border: 2px solid var(--accent2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--serif);
+  font-size: .9rem;
+  font-weight: 700;
+  color: var(--accent);
+  z-index: 1;
+  flex-shrink: 0;
+}
+
+.step-connector {
+  flex: 1;
+  width: 2px;
+  background: var(--border2);
+  min-height: 24px;
+  margin-top: 4px;
+}
+
+.step:last-child .step-connector { display: none; }
+
+.step-content {
+  padding-bottom: 4px;
+  min-width: 0;
+}
+
+.step-content h3 {
+  font-family: var(--sans);
+  font-size: .95rem;
+  font-weight: 600;
+  color: var(--fg);
+  margin-bottom: 4px;
+}
+
+.step-content p {
+  font-size: .88rem;
+  color: var(--fg3);
+  margin: 0;
+}
+
+/* ── CTA ──────────────────────────────────────────────────── */
+.cta-section {
+  padding: 48px 0;
+  text-align: center;
+}
+
+.cta-box {
+  background: var(--surface);
+  border: 1px solid var(--border2);
+  border-radius: var(--radius2);
+  padding: 40px 32px;
+  max-width: 560px;
+  margin: 0 auto;
+}
+
+.cta-box h2 {
+  font-size: 1.3rem;
+  margin-bottom: 12px;
+  color: var(--fg);
+}
+
+.cta-box p {
+  font-size: .92rem;
+  color: var(--fg2);
+  margin-bottom: 24px;
+}
+
+.cta-email {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--accent2);
+  color: #fff;
+  font-weight: 600;
+  font-size: .92rem;
+  padding: 12px 24px;
+  border-radius: 8px;
+  cursor: default;
+  margin-bottom: 12px;
+}
+
+.cta-copy-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.email-text {
+  font-family: 'Courier New', monospace;
+  font-size: .9rem;
+  color: var(--fg);
+  background: var(--surface2);
+  border: 1px solid var(--border2);
+  border-radius: 6px;
+  padding: 8px 14px;
+  user-select: all;
+}
+
+.copy-btn {
+  background: transparent;
+  border: 1px solid var(--border2);
+  border-radius: 6px;
+  color: var(--fg2);
+  font-size: .82rem;
+  padding: 8px 14px;
+  cursor: pointer;
+  font-family: var(--sans);
+  transition: color .15s, border-color .15s, background .15s;
+}
+.copy-btn:hover {
+  color: var(--accent);
+  border-color: var(--accent);
+  background: rgba(96,165,250,.07);
+}
+
+/* ── Footer ───────────────────────────────────────────────── */
+.site-footer {
+  background: var(--bg2);
+  border-top: 1px solid var(--border);
+  padding: 28px clamp(16px, 4vw, 48px);
+}
+
+.footer-inner {
+  max-width: 960px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.footer-brand {
+  font-family: var(--serif);
+  font-size: .9rem;
+  font-weight: 700;
+  color: var(--fg2);
+}
+.footer-brand span { color: var(--accent); }
+
+.footer-meta {
+  font-size: .75rem;
+  color: var(--fg3);
+  text-align: right;
+  line-height: 1.6;
+}
+
+.footer-meta a { color: var(--fg3); }
+.footer-meta a:hover { color: var(--accent); }
+
+/* ── Misc ─────────────────────────────────────────────────── */
+.inline-note {
+  font-size: .82rem;
+  color: var(--fg3);
+  font-style: italic;
+  margin-top: 12px;
+}
+
+@media (max-width: 480px) {
+  .footer-inner { flex-direction: column; align-items: flex-start; }
+  .footer-meta { text-align: left; }
+  .trigger-grid { grid-template-columns: 1fr; }
+}
+</style>
+
+<!-- ── Navigation ──────────────────────────────────────────── -->
+<nav class="site-nav">
+  <div class="nav-inner">
+    <a class="nav-brand" href="consultant_cn.html"><span>竹</span>Digital</a>
+    <div class="nav-breadcrumb">
+      <a href="consultant_cn.html">带你读懂 · 个人税务</a>
+      <span class="sep">›</span>
+      <span class="current">资本增值税（CGT）</span>
+    </div>
+    <a class="nav-back" href="consultant_cn.html">← 返回首页</a>
+  </div>
+</nav>
+
+<!-- ── Page Content ────────────────────────────────────────── -->
+<div class="page">
+
+  <!-- Hero -->
+  <header class="hero">
+    <div class="hero-eyebrow">带你读懂 · 个人税务</div>
+    <h1>资本增值税（CGT）</h1>
+    <p class="hero-intro">
+      CGT 是出售资产时产生的税务义务，不是一种单独的税种，而是并入您的所得税计算。
+      了解 CGT 的基本规则，有助于您清楚掌握资产出售时的相关义务。
+    </p>
+    <div class="fiscal-badge">
+      <span class="dot"></span>
+      信息适用于 2026–27 财政年度 · 数据来源：ATO
+    </div>
+  </header>
+
+  <!-- Section 1: 什么时候会产生CGT -->
+  <section class="section">
+    <div class="section-header">
+      <h2>什么时候会产生 CGT<span class="src-tag">ATO</span></h2>
+      <p>以下情形通常会触发 CGT 事件，需要在年度税表中申报。</p>
+    </div>
+
+    <div class="trigger-grid">
+      <div class="trigger-card">
+        <div class="trigger-icon">🏘️</div>
+        <div>
+          <h3>出售投资房产</h3>
+          <p>不包括满足条件的主要住所</p>
+        </div>
+      </div>
+      <div class="trigger-card">
+        <div class="trigger-icon">📈</div>
+        <div>
+          <h3>出售股票或基金份额</h3>
+          <p>澳交所上市股票及管理基金</p>
+        </div>
+      </div>
+      <div class="trigger-card">
+        <div class="trigger-icon">₿</div>
+        <div>
+          <h3>出售加密货币</h3>
+          <p>ATO 将加密货币视为资产，出售、交换或使用均可能触发 CGT</p>
+        </div>
+      </div>
+      <div class="trigger-card">
+        <div class="trigger-icon">🏢</div>
+        <div>
+          <h3>出售商业资产</h3>
+          <p>经营性资产或商誉的转让</p>
+        </div>
+      </div>
+      <div class="trigger-card">
+        <div class="trigger-icon">🌏</div>
+        <div>
+          <h3>海外资产转让</h3>
+          <p>澳洲税务居民出售境外资产同样须申报</p>
+        </div>
+      </div>
+      <div class="trigger-card">
+        <div class="trigger-icon">🎁</div>
+        <div>
+          <h3>赠予或低于市值转让</h3>
+          <p>按市值计算资本收益，而非实际收取金额</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="data-notice">
+      <svg class="data-notice-icon" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+        <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
+      </svg>
+      <p><strong>主要住所豁免：</strong>主要住所（自住房）在满足条件时通常<strong>全额豁免 CGT</strong>。具体适用条件请参阅下方"主要住所豁免"章节。</p>
+    </div>
+  </section>
+
+  <!-- Section 2: CGT计算方式 -->
+  <section class="section">
+    <div class="section-header">
+      <h2>CGT 计算方式<span class="src-tag">ATO</span></h2>
+      <p>持有资产的时长直接影响您需要申报的应税收益金额。</p>
+    </div>
+
+    <div class="discount-grid">
+      <!-- 持有超过12个月 -->
+      <div class="discount-box featured">
+        <div class="discount-label">持有超过 12 个月</div>
+        <div class="discount-heading">享有个人 CGT 折扣</div>
+        <div class="discount-figure">50%</div>
+        <div class="discount-sublabel">资本收益可享 50% 折扣（个人）</div>
+        <div class="discount-formula">
+          <div class="formula-line">
+            <span>资本收益 × 50%</span>
+            <span class="formula-arrow">→</span>
+            <span>应税收益</span>
+          </div>
+          <div class="formula-line">
+            <span>应税收益并入当年总收入</span>
+          </div>
+          <div class="formula-line">
+            <span>按个人边际税率纳税</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- 持有12个月或以下 -->
+      <div class="discount-box">
+        <div class="discount-label">持有 12 个月或以下</div>
+        <div class="discount-heading">无折扣，全额计入收入</div>
+        <div class="discount-figure" style="color:var(--fg2);">全额</div>
+        <div class="discount-sublabel">不享有折扣优惠</div>
+        <div class="discount-formula">
+          <div class="formula-line">
+            <span>全额资本收益</span>
+            <span class="formula-arrow">→</span>
+            <span>应税收益</span>
+          </div>
+          <div class="formula-line">
+            <span>并入当年总收入</span>
+          </div>
+          <div class="formula-line">
+            <span>按个人边际税率纳税</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Worked Example -->
+    <div class="worked-example">
+      <h3>计算示例 — 投资房产（持有超 12 个月）</h3>
+      <div style="overflow-x:auto;">
+        <table class="calc-table">
+          <tr>
+            <td>购入价格</td>
+            <td>$400,000</td>
+          </tr>
+          <tr>
+            <td>购入相关费用（印花税、法律费等）</td>
+            <td>+ $5,000</td>
+          </tr>
+          <tr class="highlight">
+            <td>成本基础合计</td>
+            <td>$405,000</td>
+          </tr>
+          <tr>
+            <td>出售价格</td>
+            <td>$600,000</td>
+          </tr>
+          <tr>
+            <td>出售费用（中介、法律等）</td>
+            <td>− $8,000</td>
+          </tr>
+          <tr class="highlight">
+            <td>出售净得</td>
+            <td>$592,000</td>
+          </tr>
+          <tr>
+            <td>资本收益（$592,000 − $405,000）</td>
+            <td>$187,000</td>
+          </tr>
+          <tr>
+            <td>持有超 12 个月 → 享 50% 折扣</td>
+            <td>× 50%</td>
+          </tr>
+          <tr class="highlight">
+            <td>应税资本收益</td>
+            <td>$93,500</td>
+          </tr>
+          <tr class="total">
+            <td>若边际税率 37%，额外税负约</td>
+            <td>$34,595</td>
+          </tr>
+        </table>
+      </div>
+      <p class="calc-note">※ 以上为简化示例，实际税负因个人总收入、可用抵扣及个人情况而有所不同。建议就具体情况咨询注册税务师。</p>
+    </div>
+  </section>
+
+  <!-- Section 3: 成本基础包含哪些 -->
+  <section class="section">
+    <div class="section-header">
+      <h2>成本基础（Cost Base）包含哪些<span class="src-tag">ATO</span></h2>
+      <p>准确计算成本基础，有助于您正确申报应税收益，避免多缴税款。</p>
+    </div>
+
+    <ul class="cost-list" role="list">
+      <li>
+        <div class="cost-list-bullet">1</div>
+        <span>购入价格——合同成交价</span>
+      </li>
+      <li>
+        <div class="cost-list-bullet">2</div>
+        <span>购入时的印花税及法律费用</span>
+      </li>
+      <li>
+        <div class="cost-list-bullet">3</div>
+        <span>改建或装修费用（属资本性质，非日常维修）</span>
+      </li>
+      <li>
+        <div class="cost-list-bullet">4</div>
+        <span>出售时的中介佣金及法律费用</span>
+      </li>
+      <li>
+        <div class="cost-list-bullet">5</div>
+        <span>持有期间为维护所有权而发生的相关费用（特定条件适用）</span>
+      </li>
+    </ul>
+
+    <div class="data-notice">
+      <svg class="data-notice-icon" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+        <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd"/>
+      </svg>
+      <p><strong>请注意：</strong>日常维修和保养费用通常属于可扣减的出租费用，<strong>不计入成本基础</strong>。资本性装修（如加建、扩建）才可计入。如不确定某项费用的性质，建议咨询专业人士。</p>
+    </div>
+  </section>
+
+  <!-- Section 4: 主要住所豁免 -->
+  <section class="section">
+    <div class="section-header">
+      <h2>主要住所豁免<span class="src-tag">ATO</span></h2>
+      <p>若该房产是您的主要住所（自住房），在满足一定条件时可享受全额或部分 CGT 豁免。</p>
+    </div>
+
+    <div class="exemption-grid">
+      <div class="exemption-item">
+        <div class="ex-icon">🏡</div>
+        <h3>全额豁免</h3>
+        <p>满足条件时，出售自住房通常不需缴纳 CGT</p>
+      </div>
+      <div class="exemption-item">
+        <div class="ex-icon">📊</div>
+        <h3>部分豁免</h3>
+        <p>若曾出租或兼作商业用途，豁免可能按居住比例计算</p>
+      </div>
+      <div class="exemption-item">
+        <div class="ex-icon">📅</div>
+        <h3>6 年规则</h3>
+        <p>离开自住房后出租，最多可在 6 年内仍视为主要住所（需满足条件）</p>
+      </div>
+      <div class="exemption-item">
+        <div class="ex-icon">🔑</div>
+        <h3>一次只能有一处</h3>
+        <p>在同一时期，您只能将一处房产认定为主要住所</p>
+      </div>
+    </div>
+
+    <div class="warn-notice">
+      <svg class="warn-notice-icon" width="20" height="20" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+        <path fill-rule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" clip-rule="evenodd"/>
+      </svg>
+      <p><strong>重要提示：</strong>主要住所豁免的适用条件较为具体，包括居住时长、是否产生出租收入等因素均可能影响豁免金额。建议在出售自住房前充分了解相关规定。</p>
+    </div>
+  </section>
+
+  <!-- Section 5: 海外居民的特殊规定 -->
+  <section class="section">
+    <div class="section-header">
+      <h2>海外居民的特殊规定<span class="src-tag">ATO</span></h2>
+      <p>税务居民身份对 CGT 义务有重要影响，尤其是 2012 年以来的政策调整。</p>
+    </div>
+
+    <div class="warn-notice">
+      <svg class="warn-notice-icon" width="20" height="20" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+        <path fill-rule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" clip-rule="evenodd"/>
+      </svg>
+      <div>
+        <p><strong>2012 年 5 月 8 日起的规定：</strong>非澳洲税务居民出售澳洲房产时，通常<strong>不享有 50% CGT 折扣</strong>，须按全额资本收益申报纳税。</p>
+        <p style="margin-top:8px;">此外，非税务居民一般也不能申请主要住所豁免。若您在持有资产期间曾有税务居民身份变化，折扣及豁免的计算可能按比例调整。</p>
+        <p style="margin-top:8px;">如您近年有居住地变更或税务身份变化，建议在出售资产前咨询注册税务师，充分了解自身义务。</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Section 6: 记录保存要求 -->
+  <section class="section">
+    <div class="section-header">
+      <h2>记录保存要求<span class="src-tag">ATO</span></h2>
+      <p>完整的记录是正确计算 CGT 的基础，也是满足 ATO 要求的必要条件。</p>
+    </div>
+
+    <div class="records-grid">
+      <div class="record-card">
+        <div class="record-icon">📄</div>
+        <h3>购入文件</h3>
+        <p>买卖合同、印花税收据、过户文件</p>
+      </div>
+      <div class="record-card">
+        <div class="record-icon">🔨</div>
+        <h3>改建/装修发票</h3>
+        <p>所有资本性改建的承包商发票及付款记录</p>
+      </div>
+      <div class="record-card">
+        <div class="record-icon">📋</div>
+        <h3>出售文件</h3>
+        <p>出售合同、中介协议、结算单</p>
+      </div>
+      <div class="record-card">
+        <div class="record-icon">🗂️</div>
+        <h3>持有期间费用</h3>
+        <p>可计入成本基础的所有相关费用收据</p>
+      </div>
+    </div>
+
+    <div class="records-duration">
+      <div>
+        <div class="big-num">5 年</div>
+      </div>
+      <p>ATO 要求将所有 CGT 相关记录<br>至少保存至<strong>出售后 5 年</strong>。<br>若涉及税务争议，可能需要更长时间。</p>
+    </div>
+  </section>
+
+  <!-- Section 7: 申报流程 -->
+  <section class="section">
+    <div class="section-header">
+      <h2>四步申报流程<span class="src-tag">ATO</span></h2>
+      <p>每年度税表中，您需要按以下步骤处理 CGT 申报义务。</p>
+    </div>
+
+    <div class="steps">
+      <div class="step">
+        <div class="step-left">
+          <div class="step-num">1</div>
+          <div class="step-connector"></div>
+        </div>
+        <div class="step-content">
+          <h3>确认是否触发 CGT 事件</h3>
+          <p>核查本财政年度内是否有资产出售、赠予或其他可能触发 CGT 的行为。</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-left">
+          <div class="step-num">2</div>
+          <div class="step-connector"></div>
+        </div>
+        <div class="step-content">
+          <h3>计算成本基础（含所有相关费用）</h3>
+          <p>汇总购入价格、印花税、法律费、资本性装修等费用，准确计算成本基础。</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-left">
+          <div class="step-num">3</div>
+          <div class="step-connector"></div>
+        </div>
+        <div class="step-content">
+          <h3>确认是否适用折扣或豁免</h3>
+          <p>核查资产持有时长（是否超过 12 个月），以及主要住所豁免、海外居民规定等是否适用。</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-left">
+          <div class="step-num">4</div>
+          <div class="step-connector"></div>
+        </div>
+        <div class="step-content">
+          <h3>在税表中申报资本收益净额</h3>
+          <p>将应税资本收益净额并入您的年度所得税申报表，按个人边际税率缴纳相应税款。</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="cta-section">
+    <div class="cta-box">
+      <h2>计划出售资产？</h2>
+      <p>
+        如果您正在计划出售房产、股票或其他资产，建议提前了解 CGT 影响，
+        以便在税务申报时清楚掌握自身义务。如有具体疑问，欢迎联系专业人士咨询。
+      </p>
+      <div class="cta-copy-row">
+        <span class="email-text" id="email-addr">hello@zhudigital.com.au</span>
+        <button class="copy-btn" id="copy-email-btn" onclick="copyEmail()">复制邮箱</button>
+      </div>
+      <p style="margin-top:14px;font-size:.78rem;color:var(--fg3);">
+        或直接发送邮件至 hello@zhudigital.com.au
+      </p>
+    </div>
+  </section>
+
+</div><!-- /.page -->
+
+<!-- Footer -->
+<footer class="site-footer">
+  <div class="footer-inner">
+    <div class="footer-brand"><span>竹</span> Digital</div>
+    <div class="footer-meta">
+      本页信息仅供参考，不构成税务建议。<br>
+      数据来源：<a href="https://www.ato.gov.au/individuals-and-families/investments-and-assets/capital-gains-tax" target="_blank" rel="noopener">ATO — 资本增值税</a> · 适用于 2026–27 财政年度 · 每年 7 月 1 日后更新
+    </div>
+  </div>
+</footer>
+
+<script>
+function copyEmail() {
+  const email = 'hello@zhudigital.com.au';
+  const btn = document.getElementById('copy-email-btn');
+  if (navigator.clipboard && navigator.clipboard.writeText) {
+    navigator.clipboard.writeText(email).then(function() {
+      btn.textContent = '已复制 ✓';
+      setTimeout(function() { btn.textContent = '复制邮箱'; }, 2000);
+    }).catch(function() {
+      fallbackCopy(email, btn);
+    });
+  } else {
+    fallbackCopy(email, btn);
+  }
+}
+
+function fallbackCopy(text, btn) {
+  try {
+    var el = document.getElementById('email-addr');
+    var range = document.createRange();
+    range.selectNode(el);
+    window.getSelection().removeAllRanges();
+    window.getSelection().addRange(range);
+    btn.textContent = '请手动复制';
+    setTimeout(function() { btn.textContent = '复制邮箱'; }, 2500);
+  } catch(e) {}
+}
+</script>

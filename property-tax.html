@@ -1,0 +1,432 @@
+<!--
+  竹 Digital — 投资房与租金收入
+  ════════════════════════════════════════════════════════
+  DATA_UPDATE_SCHEDULE: 每年7月1日后更新（税率阶梯、折旧规则每年可能调整）
+  LAST_UPDATED: 2026-10
+  FISCAL_YEAR: 2026-27
+
+  KEY_FIGURES (核实这些数据是否有变化):
+  - 个人所得税阶梯: 0–$18,200免税; $18,201–$45,000: 19%; $45,001–$120,000: 32.5%;
+    $120,001–$180,000: 37%; $180,001+: 45% → 来源: ATO
+  - 负扣税: 租金收入 < 租房支出，亏损可抵扣其他收入 → 来源: ATO
+  - 折旧: 建筑折旧2.5%/年（1987年9月后建造）; 设备加速折旧 → 来源: ATO
+  - 贷款利息: 全额扣减（投资用途部分）
+  - 记录保存: 持有期间全程 + 出售后5年 → 来源: ATO
+  - 房产记录: 购买合同、贷款文件、所有维修收据、租约、租金收据
+
+  SOURCES:
+  - ATO租金收入: https://www.ato.gov.au/individuals-and-families/investments-and-assets/residential-rental-properties
+  - ATO负扣税: https://www.ato.gov.au/individuals-and-families/investments-and-assets/residential-rental-properties/negative-gearing
+  - ATO折旧: https://www.ato.gov.au/individuals-and-families/investments-and-assets/residential-rental-properties/rental-expenses-you-can-claim
+  ════════════════════════════════════════════════════════
+-->
+<title>投资房与租金收入</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;700&family=Noto+Sans+SC:wght@300;400;500;600&display=swap">
+<style>
+/* ── 竹 Digital 设计系统 · 深色优先 ── */
+:root {
+  --bg:#0D1B2A;--bg2:#0F1F30;--surface:#152233;--surface2:#1A2B3F;
+  --border:rgba(59,130,246,.13);--border2:rgba(59,130,246,.22);
+  --fg:#F1F5F9;--fg2:#94A3B8;--fg3:#475569;--accent:#60A5FA;
+  --blue:#1D4ED8;--blue-lit:#2563EB;
+  --green:#34D399;--green-bg:rgba(52,211,153,.08);
+  --yellow:#FCD34D;--yellow-bg:rgba(252,211,77,.08);
+  --red:#F87171;--red-bg:rgba(248,113,113,.08);
+  --orange:#FB923C;--orange-bg:rgba(251,146,60,.08);
+  --serif:"Noto Serif SC",Georgia,serif;
+  --sans:"Noto Sans SC",system-ui,sans-serif;
+  color-scheme:dark;
+}
+@media(prefers-color-scheme:light){
+  :root:not([data-theme="dark"]){
+    --bg:#F0F4FA;--bg2:#E4EBF7;--surface:#FFFFFF;--surface2:#F8FAFC;
+    --border:rgba(37,99,235,.13);--border2:rgba(37,99,235,.25);
+    --fg:#0F172A;--fg2:#334155;--fg3:#64748B;--accent:#1D4ED8;
+    --blue:#1D4ED8;--blue-lit:#2563EB;
+    --green:#059669;--green-bg:rgba(5,150,105,.07);
+    --yellow:#B45309;--yellow-bg:rgba(180,83,9,.06);
+    --red:#DC2626;--red-bg:rgba(220,38,38,.06);
+    --orange:#C2410C;--orange-bg:rgba(194,65,12,.06);
+    color-scheme:light;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#0D1B2A;--bg2:#0F1F30;--surface:#152233;--surface2:#1A2B3F;
+  --border:rgba(59,130,246,.13);--border2:rgba(59,130,246,.22);
+  --fg:#F1F5F9;--fg2:#94A3B8;--fg3:#475569;--accent:#60A5FA;
+  --green:#34D399;--green-bg:rgba(52,211,153,.08);
+  --yellow:#FCD34D;--yellow-bg:rgba(252,211,77,.08);
+  --red:#F87171;--red-bg:rgba(248,113,113,.08);
+  --orange:#FB923C;--orange-bg:rgba(251,146,60,.08);
+  color-scheme:dark;
+}
+.src-tag{display:inline-block;font-size:10px;color:var(--fg3);background:var(--surface);border:1px solid var(--border);border-radius:4px;padding:1px 5px;margin-left:4px;font-family:var(--sans);vertical-align:middle;letter-spacing:.2px;text-decoration:none;}
+.src-tag:hover{color:var(--accent);}
+.data-notice{background:var(--surface);border:1px solid var(--border2,var(--border));border-radius:10px;padding:12px 18px;font-size:12px;color:var(--fg2);margin-top:28px;line-height:1.8;}
+.data-notice strong{color:var(--accent);}
+.data-notice a{color:var(--accent);text-decoration:none;}
+.data-notice a:hover{text-decoration:underline;}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:var(--sans);background:var(--bg);color:var(--fg);min-height:100vh;font-size:15px;line-height:1.7;}
+.nav{position:sticky;top:env(safe-area-inset-top,0px);z-index:100;background:rgba(13,27,42,.92);backdrop-filter:blur(12px);border-bottom:1px solid var(--border);padding:14px 24px;display:flex;align-items:center;gap:12px;}
+@media(prefers-color-scheme:light){:root:not([data-theme="dark"]) .nav{background:rgba(240,244,250,.92);}}
+:root[data-theme="light"] .nav{background:rgba(240,244,250,.92);}
+.nav-back{font-size:13px;color:var(--fg2);text-decoration:none;}
+.nav-back:hover{color:var(--accent);}
+.nav-sep{color:var(--fg3);}
+.nav-title{font-size:13px;color:var(--fg);font-weight:500;}
+.hero{padding:56px 24px 40px;max-width:860px;margin:0 auto;}
+.breadcrumb{font-size:12px;color:var(--fg3);letter-spacing:.08em;text-transform:uppercase;margin-bottom:16px;}
+.hero-title{font-family:var(--serif);font-size:clamp(28px,5vw,44px);font-weight:700;line-height:1.2;text-wrap:balance;margin-bottom:16px;}
+.hero-sub{font-size:16px;color:var(--fg2);max-width:600px;line-height:1.8;}
+.hero-tags{display:flex;flex-wrap:wrap;gap:8px;margin-top:20px;}
+.hero-tag{font-size:12px;padding:4px 12px;border-radius:20px;font-weight:500;border:1px solid var(--border2);}
+.tag-blue{background:rgba(96,165,250,.1);color:var(--accent);border-color:rgba(96,165,250,.25);}
+.tag-green{background:var(--green-bg);color:var(--green);border-color:rgba(52,211,153,.25);}
+.tag-yellow{background:var(--yellow-bg);color:var(--yellow);border-color:rgba(252,211,77,.25);}
+.page{max-width:860px;margin:0 auto;padding:0 24px 80px;}
+.section{margin-top:56px;}
+.section-label{font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);font-weight:600;margin-bottom:8px;}
+.section-title{font-family:var(--serif);font-size:clamp(20px,3.5vw,28px);font-weight:700;margin-bottom:12px;text-wrap:balance;}
+.section-body{color:var(--fg2);line-height:1.85;font-size:15px;}
+
+/* ── Income / Expense cards ── */
+.ie-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:20px;}
+@media(max-width:560px){.ie-grid{grid-template-columns:1fr;}}
+.ie-card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:22px;}
+.ie-header{display:flex;align-items:center;gap:10px;margin-bottom:14px;}
+.ie-icon{font-size:22px;}
+.ie-title{font-weight:700;font-size:15px;}
+.ie-list{list-style:none;display:flex;flex-direction:column;gap:7px;}
+.ie-list li{font-size:13px;color:var(--fg2);padding-left:16px;position:relative;line-height:1.5;}
+.ie-list li::before{content:"✓";position:absolute;left:0;color:var(--green);font-size:11px;font-weight:700;top:2px;}
+.ie-card.expense .ie-list li::before{color:var(--accent);}
+
+/* ── Negative gearing explainer ── */
+.ng-box{background:var(--surface);border:1px solid var(--border2);border-radius:14px;padding:26px;margin-top:20px;}
+.ng-title{font-weight:700;font-size:16px;margin-bottom:16px;display:flex;align-items:center;gap:8px;}
+.ng-row{display:flex;justify-content:space-between;align-items:center;padding:10px 0;border-bottom:1px solid var(--border);font-size:14px;gap:12px;}
+.ng-row:last-child{border-bottom:none;padding-bottom:0;}
+.ng-label{color:var(--fg2);}
+.ng-val{font-weight:700;font-variant-numeric:tabular-nums;}
+.ng-val.income{color:var(--green);}
+.ng-val.expense{color:var(--accent);}
+.ng-val.loss{color:var(--yellow);}
+.ng-val.saving{color:var(--green);}
+.ng-note{background:var(--yellow-bg);border:1px solid rgba(252,211,77,.2);border-radius:8px;padding:12px 16px;margin-top:16px;font-size:13px;color:var(--fg2);line-height:1.7;}
+.ng-note strong{color:var(--yellow);}
+
+/* ── Depreciation table ── */
+.dep-wrap{overflow-x:auto;border:1px solid var(--border);border-radius:10px;margin-top:20px;}
+.dep-table{width:100%;border-collapse:collapse;font-size:14px;}
+.dep-table th{text-align:left;padding:10px 16px;font-size:11px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--fg2);background:var(--surface);border-bottom:1px solid var(--border2);}
+.dep-table td{padding:13px 16px;border-bottom:1px solid var(--border);vertical-align:top;color:var(--fg2);}
+.dep-table tr:last-child td{border-bottom:none;}
+.dep-table tr:hover td{background:var(--surface);}
+.dep-table td:first-child{color:var(--fg);font-weight:500;}
+
+/* ── Record checklist ── */
+.rec-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:14px;margin-top:20px;}
+.rec-card{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:18px 20px;}
+.rec-icon{font-size:22px;margin-bottom:10px;}
+.rec-title{font-weight:600;font-size:14px;margin-bottom:8px;}
+.rec-list{list-style:none;display:flex;flex-direction:column;gap:5px;}
+.rec-list li{font-size:12px;color:var(--fg2);padding-left:14px;position:relative;}
+.rec-list li::before{content:"·";position:absolute;left:0;color:var(--accent);}
+
+/* ── Scenario cards ── */
+.sc-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:14px;margin-top:20px;}
+.sc-card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:20px;}
+.sc-label{font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;margin-bottom:8px;}
+.sc-title{font-weight:600;font-size:15px;margin-bottom:8px;}
+.sc-body{font-size:13px;color:var(--fg2);line-height:1.65;}
+.sc-blue{border-left:3px solid var(--accent);}
+.sc-green{border-left:3px solid var(--green);}
+.sc-yellow{border-left:3px solid var(--yellow);}
+.sc-orange{border-left:3px solid var(--orange);}
+
+/* ── Checklist steps ── */
+.checklist{display:flex;flex-direction:column;gap:10px;margin-top:20px;}
+.check-item{display:flex;align-items:flex-start;gap:12px;background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:14px 16px;}
+.check-num{width:24px;height:24px;border-radius:50%;background:var(--accent);color:#fff;font-size:11px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px;}
+.check-body{font-size:14px;color:var(--fg2);line-height:1.6;}
+.check-body strong{color:var(--fg);}
+
+/* ── CTA ── */
+.cta-box{background:var(--surface2);border:1px solid var(--border);border-radius:14px;padding:32px;text-align:center;margin-top:56px;}
+.cta-box h2{font-family:var(--serif);font-size:clamp(20px,3.5vw,26px);margin-bottom:10px;text-wrap:balance;}
+.cta-box p{font-size:14px;color:var(--fg2);max-width:480px;margin:0 auto 24px;line-height:1.85;}
+.cta-btns{display:flex;justify-content:center;gap:12px;flex-wrap:wrap;}
+.btn-primary{background:var(--accent);color:#fff;padding:11px 24px;border-radius:8px;text-decoration:none;font-size:14px;font-weight:600;}
+.btn-primary:hover{opacity:.9;}
+.btn-ghost{border:1px solid var(--border2);color:var(--fg2);padding:11px 24px;border-radius:8px;text-decoration:none;font-size:14px;}
+.btn-ghost:hover{color:var(--accent);}
+.footer{border-top:1px solid var(--border);padding:24px;text-align:center;font-size:12px;color:var(--fg3);line-height:1.8;margin-top:0;}
+.footer a{color:var(--fg3);text-decoration:none;}
+.footer a:hover{color:var(--accent);}
+</style>
+
+<nav class="nav">
+  <a href="consultant_cn.html" class="nav-back">← 竹 Digital</a>
+  <span class="nav-sep">·</span>
+  <span class="nav-title">投资房与租金收入</span>
+</nav>
+
+<header class="hero">
+  <p class="breadcrumb">带你读懂 · 个人税务</p>
+  <h1 class="hero-title">投资房与租金收入<br><em style="color:var(--accent)">你需要申报什么</em></h1>
+  <p class="hero-sub">在澳洲持有投资房，租金收入须作为个人所得申报。但同时，很多相关支出也可以用来抵税——关键是知道哪些能申报、哪些不能，以及记录怎么保存。</p>
+  <div class="hero-tags">
+    <span class="hero-tag tag-blue">个人税务</span>
+    <span class="hero-tag tag-yellow">负扣税</span>
+    <span class="hero-tag tag-green">折旧抵税</span>
+  </div>
+</header>
+
+<main class="page">
+
+  <!-- 租金收入必须申报 -->
+  <section class="section">
+    <p class="section-label">第一步了解</p>
+    <h2 class="section-title">租金收入：必须申报为个人所得</h2>
+    <p class="section-body">只要您在澳洲或海外持有房产并出租，所收取的租金须在当年的个人所得税申报表（Tax Return）中申报。这包括长期租约、短期出租（如 Airbnb）、房间分租，以及部分自住部分出租的情况。<a href="https://www.ato.gov.au/individuals-and-families/investments-and-assets/residential-rental-properties" target="_blank" class="src-tag">ATO</a></p>
+
+    <div class="ie-grid">
+      <div class="ie-card">
+        <div class="ie-header">
+          <span class="ie-icon">💰</span>
+          <span class="ie-title">须申报的收入</span>
+        </div>
+        <ul class="ie-list">
+          <li>每周或每月收到的租金</li>
+          <li>租客支付的水电费（若由租客付给您再转交）</li>
+          <li>提前终止租约的赔偿金</li>
+          <li>保险赔款（用于弥补租金损失部分）</li>
+          <li>押金（若最终用于弥补损失而非退还）</li>
+        </ul>
+      </div>
+      <div class="ie-card expense">
+        <div class="ie-header">
+          <span class="ie-icon">📋</span>
+          <span class="ie-title">可申报的扣减支出</span>
+        </div>
+        <ul class="ie-list">
+          <li>贷款利息（投资用途部分）</li>
+          <li>房产管理费（中介佣金）</li>
+          <li>维修和保养费用</li>
+          <li>市政费（Council rates）、水费</li>
+          <li>保险费</li>
+          <li>折旧（建筑及设备）</li>
+          <li>广告招租费用</li>
+          <li>会计和税务代理费</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- 负扣税 -->
+  <section class="section">
+    <p class="section-label">重要概念</p>
+    <h2 class="section-title">负扣税（Negative Gearing）是什么</h2>
+    <p class="section-body">当您的租金收入低于持有房产的总支出（利息、管理费、折旧等），产生的亏损可以用来抵扣您当年的其他收入（如工资），从而减少需缴纳的所得税。<a href="https://www.ato.gov.au/individuals-and-families/investments-and-assets/residential-rental-properties/negative-gearing" target="_blank" class="src-tag">ATO</a></p>
+
+    <div class="ng-box">
+      <div class="ng-title">🏠 示例：负扣税如何运作</div>
+      <div class="ng-row">
+        <span class="ng-label">全年租金收入</span>
+        <span class="ng-val income">$24,000</span>
+      </div>
+      <div class="ng-row">
+        <span class="ng-label">贷款利息</span>
+        <span class="ng-val expense">−$28,000</span>
+      </div>
+      <div class="ng-row">
+        <span class="ng-label">管理费、维修、保险等</span>
+        <span class="ng-val expense">−$6,000</span>
+      </div>
+      <div class="ng-row">
+        <span class="ng-label">折旧（建筑 + 设备）</span>
+        <span class="ng-val expense">−$4,000</span>
+      </div>
+      <div class="ng-row" style="border-top:1px solid var(--border2);margin-top:4px;padding-top:14px;">
+        <span class="ng-label" style="color:var(--fg);font-weight:600;">净租金亏损（可抵扣其他收入）</span>
+        <span class="ng-val loss">−$14,000</span>
+      </div>
+      <div class="ng-row" style="padding-bottom:0;">
+        <span class="ng-label">若您的边际税率为 37%，可少缴所得税约</span>
+        <span class="ng-val saving">$5,180</span>
+      </div>
+      <div class="ng-note"><strong>注意：</strong>负扣税的实际效益取决于您的个人所得税税率。净亏损越大、税率越高，抵税效果越明显。建议在报税前与注册会计师确认您的具体情况。</div>
+    </div>
+  </section>
+
+  <!-- 折旧 -->
+  <section class="section">
+    <p class="section-label">抵税工具</p>
+    <h2 class="section-title">折旧：您可能忽略的抵税项目</h2>
+    <p class="section-body">折旧是指房产本身及其内部设备随时间磨损的价值，ATO 允许投资房业主将这部分折旧作为支出申报，无须实际发生现金支出。通常需要由注册数量测量师（Quantity Surveyor）出具折旧报告。</p>
+
+    <div class="dep-wrap">
+      <table class="dep-table">
+        <thead>
+          <tr>
+            <th>折旧类别</th>
+            <th>适用范围</th>
+            <th>折旧方式</th>
+            <th>备注</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>建筑折旧（Division 43）</td>
+            <td>1987年9月16日后建造的建筑结构</td>
+            <td>2.5%/年，固定</td>
+            <td>40年内全额摊销</td>
+          </tr>
+          <tr>
+            <td>设备折旧（Division 40）</td>
+            <td>热水器、空调、地毯、炉灶等</td>
+            <td>按ATO规定有效寿命计算</td>
+            <td>可选直线法或递减法</td>
+          </tr>
+          <tr>
+            <td>低价值资产</td>
+            <td>单件购买价低于 $300 的设备</td>
+            <td>当年一次性全额扣减</td>
+            <td>无需折旧报告</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="data-notice">
+      <strong>💡 专业建议：</strong>折旧报告由注册数量测量师出具，费用通常在 $500–$800 之间，且该费用本身也可作为投资房支出抵税。对于较新的房产，折旧金额通常远超报告费用。
+    </div>
+  </section>
+
+  <!-- 常见情景 -->
+  <section class="section">
+    <p class="section-label">常见情况</p>
+    <h2 class="section-title">四种常见场景</h2>
+    <div class="sc-grid">
+      <div class="sc-card sc-blue">
+        <div class="sc-label" style="color:var(--accent);">场景一</div>
+        <div class="sc-title">自住 + 出租（部分出租）</div>
+        <div class="sc-body">若您将自住房的一部分（如一间卧室）出租，仅出租部分的收入须申报，支出也仅可按出租面积比例申报。出售时，出租部分可能产生部分 CGT。</div>
+      </div>
+      <div class="sc-card sc-green">
+        <div class="sc-label" style="color:var(--green);">场景二</div>
+        <div class="sc-title">Airbnb 短租</div>
+        <div class="sc-body">短租收入同样须全额申报。可申报的支出须按实际出租天数占全年天数的比例计算。同时须留意，短租可能影响自住房主要住所（Main Residence）豁免。</div>
+      </div>
+      <div class="sc-card sc-yellow">
+        <div class="sc-label" style="color:var(--yellow);">场景三</div>
+        <div class="sc-title">房产空置期间</div>
+        <div class="sc-body">房产真实空置（正在修缮或积极寻找租客）期间，维修费和利息仍可申报扣减。若空置原因是用于私人目的，则不可申报该期间的支出。</div>
+      </div>
+      <div class="sc-card sc-orange">
+        <div class="sc-label" style="color:var(--orange);">场景四</div>
+        <div class="sc-title">海外房产出租</div>
+        <div class="sc-body">澳洲永居和公民持有的海外房产租金须在澳洲申报为全球收入。若在中国已缴纳租金税，可通过外国税收抵免（Foreign Tax Credit）避免双重缴税。</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 记录保存 -->
+  <section class="section">
+    <p class="section-label">记录要求</p>
+    <h2 class="section-title">必须保存的文件</h2>
+    <p class="section-body">ATO 要求投资房的相关记录保存至房产出售后 5 年。部分记录（如购买合同）须从购房之日起保存至出售后 5 年。</p>
+    <div class="rec-grid">
+      <div class="rec-card">
+        <div class="rec-icon">🏠</div>
+        <div class="rec-title">购房文件</div>
+        <ul class="rec-list">
+          <li>购买合同</li>
+          <li>过户结算单（Settlement Statement）</li>
+          <li>印花税收据</li>
+          <li>贷款合同</li>
+          <li>房产估值报告</li>
+        </ul>
+      </div>
+      <div class="rec-card">
+        <div class="rec-icon">💰</div>
+        <div class="rec-title">收入记录</div>
+        <ul class="rec-list">
+          <li>租约合同</li>
+          <li>每笔租金收款记录</li>
+          <li>押金收据及退还记录</li>
+          <li>房产中介月结单</li>
+        </ul>
+      </div>
+      <div class="rec-card">
+        <div class="rec-icon">🧾</div>
+        <div class="rec-title">支出凭证</div>
+        <ul class="rec-list">
+          <li>所有维修和保养收据</li>
+          <li>保险费收据</li>
+          <li>Council rates 通知单</li>
+          <li>物业管理费发票</li>
+          <li>贷款利息对账单</li>
+        </ul>
+      </div>
+      <div class="rec-card">
+        <div class="rec-icon">📊</div>
+        <div class="rec-title">折旧相关</div>
+        <ul class="rec-list">
+          <li>折旧报告（数量测量师出具）</li>
+          <li>设备购买收据</li>
+          <li>改建/装修合同和发票</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- 报税清单 -->
+  <section class="section">
+    <p class="section-label">每年报税前</p>
+    <h2 class="section-title">投资房报税五步清单</h2>
+    <div class="checklist">
+      <div class="check-item">
+        <div class="check-num">1</div>
+        <div class="check-body"><strong>汇总全年租金收入</strong>——可向房产中介索取年度租金结算报告，或自行整理银行流水。</div>
+      </div>
+      <div class="check-item">
+        <div class="check-num">2</div>
+        <div class="check-body"><strong>整理所有支出凭证</strong>——包括利息、管理费、保险、维修、市政费等，每笔均须有收据或银行记录支撑。</div>
+      </div>
+      <div class="check-item">
+        <div class="check-num">3</div>
+        <div class="check-body"><strong>确认折旧金额</strong>——对照折旧报告，填入当年可申报的建筑折旧和设备折旧金额。</div>
+      </div>
+      <div class="check-item">
+        <div class="check-num">4</div>
+        <div class="check-body"><strong>计算出租比例（如部分自用）</strong>——若房产非全年全部出租，须按实际出租天数或面积比例分摊收入和支出。</div>
+      </div>
+      <div class="check-item">
+        <div class="check-num">5</div>
+        <div class="check-body"><strong>向注册会计师（Tax Agent）提交</strong>——投资房税务较为复杂，建议使用注册税务代理（Registered Tax Agent）代为申报，费用本身也可扣税。</div>
+      </div>
+    </div>
+  </section>
+
+  <div class="data-notice">
+    <strong>数据来源与更新说明：</strong>
+    本页信息参考 2026–27 财年规则。折旧率、税率阶梯每年可能调整，请于每年 7 月后核实最新数据。
+    官方来源：<a href="https://www.ato.gov.au/individuals-and-families/investments-and-assets/residential-rental-properties" target="_blank">ATO 投资房指引 →</a>
+  </div>
+
+  <div class="cta-box">
+    <h2>您的投资房情况有些复杂？</h2>
+    <p>部分自住、多套房产、海外物业、Airbnb——我们帮您理清申报思路，用中文说清楚，再引导您找合适的注册会计师处理。</p>
+    <div class="cta-btns">
+      <a href="mailto:hello@zhudigital.com.au" class="btn-primary">发邮件咨询 →</a>
+      <a href="consultant_cn.html" class="btn-ghost">返回首页</a>
+    </div>
+  </div>
+
+</main>
+
+<footer class="footer">
+  <div>🎋 竹 Digital · 墨尔本，维多利亚州 · ABN 29 919 594 996</div>
+  <div style="margin-top:6px;">本页提供合规教育资讯，不构成税务或法律建议 · <a href="consultant_cn.html">返回首页</a></div>
+</footer>

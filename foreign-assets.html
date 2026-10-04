@@ -1,0 +1,439 @@
+<!--
+  竹 Digital — 海外资产与申报
+  ════════════════════════════════════════════════════════
+  DATA_UPDATE_SCHEDULE: 每年7月1日后更新（税率、申报门槛）
+  LAST_UPDATED: 2026-10
+  FISCAL_YEAR: 2026-27
+
+  KEY_FIGURES:
+  - 海外资产申报门槛: 所有海外资产总值超过$50,000须填写附表
+  - 澳洲税务居民: 全球收入均须在澳洲申报
+  - 外国税收抵免: 已在境外缴纳的税款通常可申请抵免，避免双重征税
+  - CRS: 澳洲参与共同申报准则，与90多个国家自动交换金融账户信息
+  - 汇率: 使用ATO公布的年均汇率换算外币收入
+
+  SOURCES:
+  - ATO海外收入: https://www.ato.gov.au/individuals-and-families/international-tax/foreign-income-and-assets
+  - ATO外国税收抵免: https://www.ato.gov.au/individuals-and-families/income-deductions-offsets-and-records/offsets-and-rebates/foreign-income-tax-offset
+  - ATO CRS: https://www.ato.gov.au/businesses-and-organisations/international-tax-for-business/exchange-of-information/common-reporting-standard
+  ════════════════════════════════════════════════════════
+-->
+<title>海外资产与申报</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;700&family=Noto+Sans+SC:wght@300;400;500;600&display=swap">
+<style>
+/* ── 竹 Digital 设计系统 · 深色优先 ── */
+:root {
+  --bg:#0D1B2A;--bg2:#0F1F30;--surface:#152233;--surface2:#1A2B3F;
+  --border:rgba(59,130,246,.13);--border2:rgba(59,130,246,.22);
+  --fg:#F1F5F9;--fg2:#94A3B8;--fg3:#475569;--accent:#60A5FA;
+  --accent2:#3B82F6;--success:#10B981;--warn:#F59E0B;
+  --sans:'Noto Sans SC',system-ui,sans-serif;
+  --serif:'Noto Serif SC',Georgia,serif;
+  --radius:10px;--radius2:16px;
+  color-scheme:dark;
+}
+@media(prefers-color-scheme:light){:root:not([data-theme="dark"]){
+  --bg:#F8FAFC;--bg2:#F1F5F9;--surface:#FFFFFF;--surface2:#F8FAFC;
+  --border:rgba(59,130,246,.15);--border2:rgba(59,130,246,.3);
+  --fg:#0F172A;--fg2:#334155;--fg3:#64748B;--accent:#1D4ED8;
+  --accent2:#2563EB;color-scheme:light;
+}}
+:root[data-theme="light"]{
+  --bg:#F8FAFC;--bg2:#F1F5F9;--surface:#FFFFFF;--surface2:#F8FAFC;
+  --border:rgba(59,130,246,.15);--border2:rgba(59,130,246,.3);
+  --fg:#0F172A;--fg2:#334155;--fg3:#64748B;--accent:#1D4ED8;
+  --accent2:#2563EB;color-scheme:light;
+}
+
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{font-family:var(--sans);background:var(--bg);color:var(--fg);font-size:15px;line-height:1.7;padding-inline:16px}
+img{max-width:100%}
+
+/* ── Nav ── */
+.nav{position:sticky;top:0;z-index:50;background:rgba(13,27,42,.92);backdrop-filter:blur(12px);border-bottom:1px solid var(--border);padding:0 24px;display:flex;align-items:center;gap:12px;height:52px}
+.nav-brand{font-family:var(--serif);font-weight:700;font-size:15px;color:var(--accent);text-decoration:none;white-space:nowrap}
+.nav-sep{color:var(--fg3);font-size:12px}
+.nav-crumb{font-size:12px;color:var(--fg2);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.nav-back{margin-left:auto;font-size:12px;color:var(--accent);text-decoration:none;border:1px solid var(--border2);border-radius:20px;padding:4px 14px;white-space:nowrap;transition:background .2s}
+.nav-back:hover{background:rgba(96,165,250,.1)}
+
+/* ── Hero ── */
+.hero{max-width:780px;margin:0 auto;padding:56px 0 40px}
+.eyebrow{font-size:11px;font-weight:700;letter-spacing:1.8px;text-transform:uppercase;color:var(--accent);margin-bottom:14px}
+.hero h1{font-family:var(--serif);font-size:clamp(28px,5vw,42px);font-weight:700;line-height:1.25;text-wrap:balance;margin-bottom:18px}
+.hero-lead{font-size:16px;color:var(--fg2);line-height:1.8;max-width:640px}
+.fy-badge{display:inline-block;margin-top:18px;font-size:11px;font-weight:600;letter-spacing:.8px;color:var(--accent);background:rgba(96,165,250,.08);border:1px solid var(--border2);border-radius:20px;padding:5px 14px}
+
+/* ── Sections ── */
+.section{max-width:780px;margin:0 auto;padding:48px 0}
+.section+.section{border-top:1px solid var(--border)}
+.section-label{font-size:11px;font-weight:700;letter-spacing:1.8px;text-transform:uppercase;color:var(--accent);margin-bottom:16px}
+.section h2{font-family:var(--serif);font-size:clamp(20px,3vw,26px);font-weight:600;margin-bottom:12px;text-wrap:balance}
+.section-intro{font-size:14px;color:var(--fg2);line-height:1.8;margin-bottom:28px;max-width:640px}
+
+/* ── Cards ── */
+.card-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:14px}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius2);padding:20px 18px}
+.card-icon{font-size:22px;margin-bottom:10px}
+.card-title{font-size:13px;font-weight:600;color:var(--fg);margin-bottom:6px}
+.card-desc{font-size:12px;color:var(--fg2);line-height:1.65}
+
+/* ── Notices ── */
+.data-notice{background:rgba(16,185,129,.06);border:1px solid rgba(16,185,129,.25);border-radius:var(--radius);padding:16px 18px;font-size:13px;color:var(--fg2);line-height:1.7;margin:20px 0}
+.data-notice strong{color:var(--success)}
+.warn-notice{background:rgba(245,158,11,.06);border:1px solid rgba(245,158,11,.25);border-radius:var(--radius);padding:16px 18px;font-size:13px;color:var(--fg2);line-height:1.7;margin:20px 0}
+.warn-notice strong{color:var(--warn)}
+.info-notice{background:rgba(96,165,250,.06);border:1px solid rgba(96,165,250,.2);border-radius:var(--radius);padding:16px 18px;font-size:13px;color:var(--fg2);line-height:1.7;margin:20px 0}
+.info-notice strong{color:var(--accent)}
+
+/* ── Residency tests ── */
+.test-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(170px,1fr));gap:12px;margin-bottom:20px}
+.test-card{background:var(--surface2);border:1px solid var(--border);border-radius:var(--radius);padding:16px;font-size:13px}
+.test-num{font-size:11px;font-weight:700;color:var(--accent);letter-spacing:1px;text-transform:uppercase;margin-bottom:6px}
+.test-name{font-weight:600;color:var(--fg);font-size:13px;margin-bottom:4px}
+.test-desc{color:var(--fg2);font-size:12px;line-height:1.6}
+
+/* ── Two-column explainer ── */
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:20px}
+@media(max-width:560px){.two-col{grid-template-columns:1fr}}
+.col-box{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius2);padding:22px 20px}
+.col-box h3{font-family:var(--serif);font-size:15px;font-weight:600;margin-bottom:12px;color:var(--fg)}
+.col-box ul{list-style:none;display:flex;flex-direction:column;gap:8px}
+.col-box ul li{font-size:13px;color:var(--fg2);line-height:1.6;padding-left:18px;position:relative}
+.col-box ul li::before{content:"·";position:absolute;left:0;color:var(--accent);font-weight:700}
+
+/* ── Threshold box ── */
+.threshold-box{background:var(--surface);border:1px solid var(--border2);border-radius:var(--radius2);padding:28px;margin:20px 0}
+.threshold-amount{font-family:var(--serif);font-size:clamp(32px,6vw,48px);font-weight:700;color:var(--accent);line-height:1;margin-bottom:8px}
+.threshold-label{font-size:13px;color:var(--fg2)}
+.threshold-items{margin-top:20px;display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:10px}
+.threshold-item{background:var(--surface2);border-radius:var(--radius);padding:12px 14px;font-size:12px;color:var(--fg2)}
+.threshold-item strong{display:block;color:var(--fg);font-size:13px;margin-bottom:3px}
+
+/* ── Scenarios ── */
+.scenario-list{display:flex;flex-direction:column;gap:14px;margin-top:20px}
+.scenario{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius2);padding:20px 22px;display:grid;grid-template-columns:auto 1fr;gap:14px;align-items:start}
+.scenario-num{width:32px;height:32px;border-radius:50%;background:rgba(96,165,250,.12);border:1px solid var(--border2);display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;color:var(--accent);flex-shrink:0}
+.scenario-title{font-weight:600;font-size:14px;color:var(--fg);margin-bottom:6px}
+.scenario-desc{font-size:13px;color:var(--fg2);line-height:1.65}
+.scenario-tag{display:inline-block;margin-top:8px;font-size:11px;font-weight:600;color:var(--success);background:rgba(16,185,129,.08);border:1px solid rgba(16,185,129,.2);border-radius:12px;padding:2px 10px}
+
+/* ── CRS box ── */
+.crs-box{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius2);padding:28px;margin-top:20px}
+.crs-box h3{font-family:var(--serif);font-size:17px;font-weight:600;margin-bottom:16px}
+.crs-stat{font-size:clamp(26px,4vw,36px);font-weight:700;color:var(--accent);font-family:var(--serif);margin-bottom:4px;font-variant-numeric:tabular-nums}
+.crs-stat-label{font-size:12px;color:var(--fg2);margin-bottom:20px}
+.crs-steps{display:flex;flex-direction:column;gap:10px}
+.crs-step{display:grid;grid-template-columns:24px 1fr;gap:10px;font-size:13px;color:var(--fg2);line-height:1.6}
+.crs-step-n{color:var(--accent);font-weight:700;font-size:12px;padding-top:2px}
+
+/* ── Record keeping ── */
+.record-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:14px;margin-top:20px}
+.record-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius2);padding:20px 16px}
+.record-icon{font-size:20px;margin-bottom:10px}
+.record-title{font-size:13px;font-weight:600;color:var(--fg);margin-bottom:6px}
+.record-desc{font-size:12px;color:var(--fg2);line-height:1.6}
+
+/* ── CTA ── */
+.cta-box{background:var(--surface);border:1px solid var(--border2);border-radius:var(--radius2);padding:36px 32px;text-align:center;margin-top:20px}
+.cta-box h2{font-family:var(--serif);font-size:clamp(18px,3vw,22px);font-weight:600;margin-bottom:10px;text-wrap:balance}
+.cta-box p{font-size:14px;color:var(--fg2);margin-bottom:24px;max-width:480px;margin-inline:auto}
+.email-display{font-size:15px;font-weight:600;color:var(--accent);background:rgba(96,165,250,.08);border:1px solid var(--border2);border-radius:var(--radius);padding:10px 20px;display:inline-block;margin-bottom:10px;user-select:all}
+.copy-btn{display:block;margin:8px auto 0;font-size:12px;color:var(--fg2);background:none;border:none;cursor:pointer;text-decoration:underline}
+
+/* ── src-tag ── */
+.src-tag{display:inline-flex;align-items:center;font-size:10px;font-weight:600;letter-spacing:.5px;color:var(--accent);background:rgba(96,165,250,.08);border:1px solid rgba(96,165,250,.2);border-radius:10px;padding:2px 8px;margin-left:6px;text-decoration:none;vertical-align:middle;white-space:nowrap}
+.src-tag:hover{background:rgba(96,165,250,.16)}
+
+/* ── Footer ── */
+footer{border-top:1px solid var(--border);padding:32px 0;max-width:780px;margin:0 auto;font-size:12px;color:var(--fg3);line-height:1.9}
+footer a{color:var(--fg3);text-decoration:underline}
+</style>
+
+<!-- ── Nav ── -->
+<nav class="nav">
+  <a class="nav-brand" href="consultant_cn.html">竹 Digital</a>
+  <span class="nav-sep">›</span>
+  <span class="nav-crumb">带你读懂 · 个人税务 › 海外资产与申报</span>
+  <a class="nav-back" href="consultant_cn.html">← 返回首页</a>
+</nav>
+
+<!-- ── Hero ── -->
+<header class="hero">
+  <p class="eyebrow">带你读懂 · 个人税务</p>
+  <h1>海外资产与申报</h1>
+  <p class="hero-lead">作为澳洲税务居民，您在全球范围内的收入和资产均适用澳洲税法。了解相关申报要求，有助于您清楚掌握自身的合规义务。</p>
+  <span class="fy-badge">适用财年：2026–27</span>
+</header>
+
+<!-- ── Section 1: 居民身份 ── -->
+<section class="section">
+  <p class="section-label">第一步</p>
+  <h2>我是否是澳洲税务居民？</h2>
+  <p class="section-intro">居民身份是判断申报义务的起点。澳洲税法有四项居民测试，满足其中一项即视为税务居民。</p>
+
+  <div class="test-grid">
+    <div class="test-card">
+      <div class="test-num">测试一</div>
+      <div class="test-name">居住测试</div>
+      <div class="test-desc">实际在澳洲居住，被视为澳洲居民</div>
+    </div>
+    <div class="test-card">
+      <div class="test-num">测试二</div>
+      <div class="test-name">183天测试</div>
+      <div class="test-desc">一个收入年度内在澳洲实际停留超过183天</div>
+    </div>
+    <div class="test-card">
+      <div class="test-num">测试三</div>
+      <div class="test-name">公务员测试</div>
+      <div class="test-desc">澳洲政府雇员在境外执行公务</div>
+    </div>
+    <div class="test-card">
+      <div class="test-num">测试四</div>
+      <div class="test-name">超级年金测试</div>
+      <div class="test-desc">参与特定联邦超级年金计划</div>
+    </div>
+  </div>
+
+  <div class="info-notice">
+    <strong>注意：</strong>居民与非居民的税务义务差异较大。如果您近年有在澳洲与其他国家之间移居的情况，建议提前核实自己的居民身份。
+    <a class="src-tag" href="https://www.ato.gov.au/individuals-and-families/international-tax/coming-to-australia/working-out-your-tax-residency" target="_blank">ATO</a>
+  </div>
+</section>
+
+<!-- ── Section 2: 须申报收入类型 ── -->
+<section class="section">
+  <p class="section-label">申报范围</p>
+  <h2>税务居民须申报的海外收入类型</h2>
+  <p class="section-intro">以下类型的境外收入，均须在澳洲年度税表中申报。</p>
+
+  <div class="card-grid">
+    <div class="card">
+      <div class="card-icon">🏦</div>
+      <div class="card-title">海外银行存款利息</div>
+      <div class="card-desc">包括在中国、香港或其他国家银行账户产生的利息收入</div>
+    </div>
+    <div class="card">
+      <div class="card-icon">🏠</div>
+      <div class="card-title">海外房产租金收入</div>
+      <div class="card-desc">在境外持有并出租的房产，租金收入须按澳洲税法申报</div>
+    </div>
+    <div class="card">
+      <div class="card-icon">📈</div>
+      <div class="card-title">海外股票股息</div>
+      <div class="card-desc">在境外证券账户持有的股票所派发的股息或分红</div>
+    </div>
+    <div class="card">
+      <div class="card-icon">💼</div>
+      <div class="card-title">海外工资/薪酬</div>
+      <div class="card-desc">在澳洲以外赚取的工资、顾问费或其他劳务报酬</div>
+    </div>
+    <div class="card">
+      <div class="card-icon">💰</div>
+      <div class="card-title">出售海外资产的收益</div>
+      <div class="card-desc">出售境外房产、股票或其他资产时产生的资本收益</div>
+    </div>
+    <div class="card">
+      <div class="card-icon">🏢</div>
+      <div class="card-title">海外信托或商业收入</div>
+      <div class="card-desc">来自境外信托、合伙企业或自营业务的收益</div>
+    </div>
+  </div>
+
+  <div class="data-notice">
+    <strong>外国税收抵免：</strong>若您已在境外就同一收入缴纳税款，通常可在澳洲税表中申请外国税收抵免（Foreign Income Tax Offset），避免就同一收入在两个国家重复缴税。
+    <a class="src-tag" href="https://www.ato.gov.au/individuals-and-families/income-deductions-offsets-and-records/offsets-and-rebates/foreign-income-tax-offset" target="_blank">ATO</a>
+  </div>
+</section>
+
+<!-- ── Section 3: 申报门槛 ── -->
+<section class="section">
+  <p class="section-label">海外资产附表</p>
+  <h2>何时须填写海外资产附表？</h2>
+  <p class="section-intro">若您持有的海外资产达到一定规模，须在年度税表中附上《海外资产及收入》附表。</p>
+
+  <div class="threshold-box">
+    <div class="threshold-amount">$50,000</div>
+    <div class="threshold-label">所有海外资产总值超过此门槛，须填写附表 <a class="src-tag" href="https://www.ato.gov.au/individuals-and-families/international-tax/foreign-income-and-assets" target="_blank">ATO</a></div>
+    <div class="threshold-items">
+      <div class="threshold-item">
+        <strong>银行账户</strong>
+        年末账户余额（按ATO汇率换算）
+      </div>
+      <div class="threshold-item">
+        <strong>股票或基金</strong>
+        年末市值（按ATO汇率换算）
+      </div>
+      <div class="threshold-item">
+        <strong>海外房产</strong>
+        评估价值（非贷款余额）
+      </div>
+      <div class="threshold-item">
+        <strong>借给他人的款项</strong>
+        未偿还的贷款金额
+      </div>
+    </div>
+  </div>
+
+  <div class="info-notice">
+    <strong>重要说明：</strong>填写附表是申报义务，不代表这些资产本身被征税。只有资产产生的收入（如利息、租金）或资本收益（如出售所得），才计入应税范围。
+  </div>
+</section>
+
+<!-- ── Section 4: 外国税收抵免 ── -->
+<section class="section">
+  <p class="section-label">避免双重征税</p>
+  <h2>外国税收抵免</h2>
+  <p class="section-intro">澳洲与多个国家签有税收协定（包括中国），允许纳税人就已在境外缴纳的税款申请抵免。</p>
+
+  <div class="two-col">
+    <div class="col-box">
+      <h3>什么是外国税收抵免？</h3>
+      <ul>
+        <li>若已在境外就同一收入缴税，可向ATO申请等额抵免</li>
+        <li>最多抵免至澳洲应缴税额，不可退款</li>
+        <li>适用于大多数与澳洲有税收协定的国家</li>
+        <li>中国与澳洲签有税收协定，中国预扣税通常可申请抵免</li>
+      </ul>
+    </div>
+    <div class="col-box">
+      <h3>如何申请？</h3>
+      <ul>
+        <li>在澳洲税表的"外国收入税抵免"部分填写</li>
+        <li>需提供境外缴税证明（扣税单、银行记录等）</li>
+        <li>外币金额须按ATO公布的年均汇率换算为澳元</li>
+        <li>建议保留所有境外缴税凭证</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ── Section 5: CRS ── -->
+<section class="section">
+  <p class="section-label">国际信息交换</p>
+  <h2>共同申报准则（CRS）</h2>
+  <p class="section-intro">澳洲是国际自动信息交换体系的参与国之一。了解这一机制有助于您掌握现行的国际合规环境。</p>
+
+  <div class="crs-box">
+    <h3>CRS 是什么？</h3>
+    <div class="crs-stat">90+</div>
+    <div class="crs-stat-label">澳洲与之自动交换金融账户信息的国家和地区数量</div>
+
+    <div class="crs-steps">
+      <div class="crs-step">
+        <div class="crs-step-n">①</div>
+        <div>金融机构（银行、券商等）识别非本国居民账户，并向本国税务机关报告相关信息</div>
+      </div>
+      <div class="crs-step">
+        <div class="crs-step-n">②</div>
+        <div>各国税务机关依据CRS协议，将信息自动发送给账户持有人的居住国税务机关</div>
+      </div>
+      <div class="crs-step">
+        <div class="crs-step-n">③</div>
+        <div>ATO可能收到关于澳洲税务居民在境外持有金融账户的相关信息</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="info-notice">
+    <strong>说明：</strong>CRS是国际社会为支持各国税务合规而建立的信息共享框架。了解这一机制，有助于您在申报海外收入和资产时保持准确完整。
+    <a class="src-tag" href="https://www.ato.gov.au/businesses-and-organisations/international-tax-for-business/exchange-of-information/common-reporting-standard" target="_blank">ATO</a>
+  </div>
+</section>
+
+<!-- ── Section 6: 常见场景 ── -->
+<section class="section">
+  <p class="section-label">实际场景</p>
+  <h2>四种常见情况</h2>
+  <p class="section-intro">以下是中澳背景人士常见的海外资产场景及相应的申报要点。</p>
+
+  <div class="scenario-list">
+    <div class="scenario">
+      <div class="scenario-num">1</div>
+      <div>
+        <div class="scenario-title">在中国有银行存款，每年产生利息</div>
+        <div class="scenario-desc">利息收入须申报为海外利息收入。若中国银行已预扣利息税，可在澳洲税表中申请外国税收抵免，避免双重征税。金额须按ATO年均汇率换算为澳元。</div>
+        <span class="scenario-tag">可申请外国税收抵免</span>
+      </div>
+    </div>
+    <div class="scenario">
+      <div class="scenario-num">2</div>
+      <div>
+        <div class="scenario-title">在中国有投资房产并收取租金</div>
+        <div class="scenario-desc">租金收入须申报。与澳洲投资房类似，相关费用（维修、管理费等）可按比例扣减。出售时可能产生资本收益税（CGT），注意非澳洲居民出售澳洲房产适用不同规则。</div>
+        <span class="scenario-tag">租金须申报，出售时注意CGT</span>
+      </div>
+    </div>
+    <div class="scenario">
+      <div class="scenario-num">3</div>
+      <div>
+        <div class="scenario-title">父母或家人赠款汇入澳洲</div>
+        <div class="scenario-desc">个人之间的赠款通常不构成澳洲税法下的应税收入。但如金额较大，建议保留汇款凭证，清楚说明款项性质（赠款而非收入）。若款项用于投资，后续产生的收益须正常申报。</div>
+        <span class="scenario-tag">赠款本身通常不属于应税收入</span>
+      </div>
+    </div>
+    <div class="scenario">
+      <div class="scenario-num">4</div>
+      <div>
+        <div class="scenario-title">在境外持有股票账户</div>
+        <div class="scenario-desc">股息须申报为海外股息收入；出售股票所得的资本收益须申报。所有金额须按交易发生时或ATO年均汇率换算为澳元。若持有超过12个月，通常可享有50% CGT折扣（适用于澳洲税务居民）。</div>
+        <span class="scenario-tag">股息与资本收益均须申报</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── Section 7: 记录保存 ── -->
+<section class="section">
+  <p class="section-label">记录保存</p>
+  <h2>建议保存的凭证</h2>
+  <p class="section-intro">完整的记录有助于准确完成申报，并在需要时提供支持材料。</p>
+
+  <div class="record-grid">
+    <div class="record-card">
+      <div class="record-icon">🏦</div>
+      <div class="record-title">海外账户对账单</div>
+      <div class="record-desc">各境外银行及券商账户的年度对账单，显示余额和收益</div>
+    </div>
+    <div class="record-card">
+      <div class="record-icon">🧾</div>
+      <div class="record-title">境外缴税凭证</div>
+      <div class="record-desc">银行扣税单、税务局完税证明，用于申请外国税收抵免</div>
+    </div>
+    <div class="record-card">
+      <div class="record-icon">📄</div>
+      <div class="record-title">资产买卖合同</div>
+      <div class="record-desc">海外房产、股票等资产的购买和出售合同及相关费用收据</div>
+    </div>
+    <div class="record-card">
+      <div class="record-icon">💱</div>
+      <div class="record-title">汇率换算记录</div>
+      <div class="record-desc">使用ATO公布的年均汇率，并保存换算计算依据</div>
+    </div>
+  </div>
+
+  <div class="data-notice" style="margin-top:20px">
+    <strong>保存期限：</strong>相关记录建议至少保存至税表提交后5年。ATO年均汇率可在 <a href="https://www.ato.gov.au/individuals-and-families/international-tax/foreign-income-conversion-calculator" target="_blank" style="color:var(--success)">ATO官网</a> 查询。
+  </div>
+</section>
+
+<!-- ── CTA ── -->
+<section class="section">
+  <div class="cta-box">
+    <h2>每个人的海外资产情况不同</h2>
+    <p>如您想了解自己具体的申报义务，欢迎联系我们。我们以中文提供清晰、专业的解释。</p>
+    <div class="email-display">hello@zhudigital.com.au</div>
+    <button class="copy-btn" onclick="(async()=>{try{await navigator.clipboard.writeText('hello@zhudigital.com.au');this.textContent='已复制 ✓'}catch{const r=document.createRange();r.selectNode(this.previousElementSibling);window.getSelection().removeAllRanges();window.getSelection().addRange(r);this.textContent='请手动复制'}setTimeout(()=>this.textContent='复制邮箱',2000)}).call(this)">复制邮箱</button>
+  </div>
+</section>
+
+<!-- ── Footer ── -->
+<footer>
+  <p>竹 Digital · 信息仅供参考，不构成税务建议。具体情况请咨询注册税务师。</p>
+  <p style="margin-top:8px">数据截至：2026年10月 · 适用财年：2026–27（2026年7月1日起）· 来源：
+    <a href="https://www.ato.gov.au/individuals-and-families/international-tax/foreign-income-and-assets" target="_blank">ATO（海外收入）</a>、
+    <a href="https://www.ato.gov.au/individuals-and-families/income-deductions-offsets-and-records/offsets-and-rebates/foreign-income-tax-offset" target="_blank">ATO（外国税收抵免）</a>、
+    <a href="https://www.ato.gov.au/businesses-and-organisations/international-tax-for-business/exchange-of-information/common-reporting-standard" target="_blank">ATO（CRS）</a>
+    · ⚡ 建议每年7月1日后核查最新要求
+  </p>
+</footer>
