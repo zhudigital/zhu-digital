@@ -65,15 +65,16 @@ body {
   position: sticky;
   top: env(safe-area-inset-top, 0px);
   z-index: 100;
-  background: rgba(13,27,42,.9);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
+  background: rgba(13,27,42,.92);
+  backdrop-filter: blur(16px) saturate(1.4);
+  -webkit-backdrop-filter: blur(16px) saturate(1.4);
   border-bottom: 1px solid var(--border);
-  padding: 14px 24px;
+  padding: 13px 24px;
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 16px;
+  box-shadow: 0 1px 0 rgba(96,165,250,.08);
 }
 @media (prefers-color-scheme: light) {
   :root:not([data-theme="dark"]) .nav { background: rgba(240,244,250,.93); }
@@ -102,39 +103,64 @@ body {
 
 /* ── Hero ────────────────────────────────────────────────────── */
 .hero {
-  padding: 72px 24px 56px;
+  padding: 80px 24px 64px;
   text-align: center;
-  max-width: 680px;
+  max-width: 720px;
   margin: 0 auto;
+  position: relative;
+}
+.hero::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 50%; transform: translateX(-50%);
+  width: 1px; height: 48px;
+  background: linear-gradient(to bottom, transparent, var(--accent));
+  opacity: .4;
 }
 .hero-flag {
   font-size: 11px;
-  letter-spacing: 2px;
+  letter-spacing: 2.5px;
   text-transform: uppercase;
   color: var(--accent);
   font-weight: 600;
-  margin-bottom: 20px;
+  margin-bottom: 24px;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(96,165,250,.08);
+  border: 1px solid rgba(96,165,250,.18);
+  padding: 5px 16px 5px 12px;
+  border-radius: 20px;
 }
 .hero h1 {
   font-family: var(--serif);
-  font-size: clamp(28px, 5.5vw, 48px);
+  font-size: clamp(30px, 5.5vw, 52px);
   line-height: 1.2;
   text-wrap: balance;
-  margin-bottom: 20px;
+  margin-bottom: 24px;
   color: var(--fg);
+  letter-spacing: -.5px;
 }
 .hero h1 em {
   font-style: normal;
   color: var(--accent);
-  border-bottom: 2px solid var(--accent);
-  padding-bottom: 1px;
+  position: relative;
+  white-space: nowrap;
+}
+.hero h1 em::after {
+  content: '';
+  position: absolute;
+  bottom: -2px; left: 0; right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, var(--accent), transparent);
+  border-radius: 1px;
 }
 .hero-sub {
   font-size: 15px;
   color: var(--fg2);
   max-width: 520px;
-  margin: 0 auto 36px;
-  line-height: 1.85;
+  margin: 0 auto 40px;
+  line-height: 1.9;
 }
 .hero-cta {
   display: inline-flex;
@@ -145,24 +171,25 @@ body {
   font-family: var(--sans);
   font-size: 15px;
   font-weight: 600;
-  padding: 14px 28px;
-  border-radius: 12px;
+  padding: 15px 32px;
+  border-radius: 40px;
   text-decoration: none;
   border: none;
   cursor: pointer;
-  transition: background .2s, transform .15s;
+  transition: background .2s, transform .15s, box-shadow .2s;
+  box-shadow: 0 4px 20px rgba(29,78,216,.35);
 }
-.hero-cta:hover { background: var(--blue-lit); transform: translateY(-2px); }
+.hero-cta:hover { background: var(--blue-lit); transform: translateY(-2px); box-shadow: 0 8px 28px rgba(29,78,216,.45); }
 
 /* ── Trust bar ───────────────────────────────────────────────── */
 .trust-bar {
   border-top: 1px solid var(--border);
   border-bottom: 1px solid var(--border);
   background: var(--bg2);
-  padding: 18px 24px;
+  padding: 20px 24px;
   display: flex;
   justify-content: center;
-  gap: 40px;
+  gap: 0;
   flex-wrap: wrap;
 }
 .trust-item {
@@ -170,9 +197,18 @@ body {
   color: var(--fg3);
   display: flex;
   align-items: center;
-  gap: 6px;
+  gap: 7px;
+  padding: 4px 24px;
+  position: relative;
 }
-.trust-item strong { color: var(--fg2); font-weight: 500; }
+.trust-item + .trust-item::before {
+  content: '';
+  position: absolute;
+  left: 0; top: 50%; transform: translateY(-50%);
+  height: 14px; width: 1px;
+  background: var(--border);
+}
+.trust-item strong { color: var(--fg); font-weight: 500; }
 
 /* ── Section ─────────────────────────────────────────────────── */
 .section {
@@ -248,16 +284,35 @@ body {
   background: var(--surface);
   border: 1px solid var(--border);
   border-radius: 16px;
-  padding: 26px 22px;
-  transition: border-color .2s, transform .15s;
+  padding: 28px 24px 24px;
+  transition: border-color .2s, transform .2s, box-shadow .2s;
+  position: relative;
+  overflow: hidden;
 }
-.card:hover { border-color: var(--accent); transform: translateY(-3px); }
-.card-icon { font-size: 28px; margin-bottom: 14px; display: block; }
+.card::after {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, var(--accent), transparent);
+  opacity: 0;
+  transition: opacity .2s;
+}
+.card:hover { border-color: rgba(96,165,250,.4); transform: translateY(-4px); box-shadow: 0 12px 32px rgba(0,0,0,.25); }
+.card:hover::after { opacity: 1; }
+.card-icon { font-size: 30px; margin-bottom: 16px; display: block; }
 .card-title { font-weight: 600; font-size: 16px; margin-bottom: 8px; }
-.card-body { font-size: 13px; color: var(--fg2); line-height: 1.75; }
+.card-body { font-size: 13px; color: var(--fg2); line-height: 1.8; }
+.card-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 18px;
+  padding-top: 14px;
+  border-top: 1px solid var(--border);
+}
 .card-tag {
   display: inline-block;
-  margin-top: 12px;
   font-size: 10px;
   letter-spacing: 1px;
   font-weight: 600;
@@ -268,8 +323,6 @@ body {
 }
 .card-link {
   display: inline-block;
-  margin-top: 14px;
-  margin-left: 8px;
   font-size: 12px;
   font-weight: 600;
   color: var(--accent);
@@ -280,26 +333,6 @@ body {
 }
 .card-link:hover { opacity: 1; text-decoration: underline; }
 
-/* ── Who grid ────────────────────────────────────────────────── */
-.who-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-  gap: 12px;
-  margin-top: 32px;
-}
-.who-card {
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: 12px;
-  padding: 20px;
-  display: flex;
-  align-items: flex-start;
-  gap: 12px;
-}
-.who-icon { font-size: 22px; flex-shrink: 0; margin-top: 2px; }
-.who-title { font-size: 14px; font-weight: 600; margin-bottom: 4px; }
-.who-desc { font-size: 12px; color: var(--fg2); line-height: 1.65; }
-
 /* ── Myth/truth cards ────────────────────────────────────────── */
 .myths {
   display: grid;
@@ -309,52 +342,58 @@ body {
 }
 .myth-card {
   background: var(--surface);
-  border: 1px solid var(--border);
+  border: 1px solid rgba(248,113,113,.15);
   border-radius: 14px;
   overflow: hidden;
+  transition: transform .2s, box-shadow .2s;
 }
+.myth-card:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(0,0,0,.2); }
 .myth-header {
-  background: rgba(220,38,38,.08);
-  border-bottom: 1px solid rgba(220,38,38,.15);
-  padding: 14px 18px;
+  background: rgba(220,38,38,.07);
+  border-bottom: 1px solid rgba(220,38,38,.12);
+  padding: 14px 20px;
   font-size: 13px;
-  color: #F87171;
+  color: #FCA5A5;
   font-weight: 500;
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
 }
-.myth-header::before { content: "❌ 误区 · "; }
-.truth-header {
-  background: rgba(16,185,129,.08);
-  border-bottom: 1px solid rgba(16,185,129,.15);
-  padding: 14px 18px;
-  font-size: 13px;
-  color: #34D399;
-  font-weight: 500;
-}
-.truth-header::before { content: "✅ 事实 · "; }
-.myth-body { padding: 16px 18px; font-size: 13px; color: var(--fg2); line-height: 1.75; }
+.myth-header::before { content: "❌"; flex-shrink: 0; }
+.myth-body { padding: 18px 20px; font-size: 13px; color: var(--fg2); line-height: 1.8; }
 
 /* ── Steps ───────────────────────────────────────────────────── */
-.steps { margin-top: 40px; display: flex; flex-direction: column; gap: 0; }
+.steps { margin-top: 40px; display: flex; flex-direction: column; gap: 0; position: relative; }
+.steps::before {
+  content: '';
+  position: absolute;
+  left: 17px; top: 36px; bottom: 36px;
+  width: 1px;
+  background: linear-gradient(to bottom, var(--accent), transparent);
+  opacity: .2;
+}
 .step {
   display: flex;
   gap: 20px;
   align-items: flex-start;
-  padding: 24px 0;
+  padding: 26px 0;
   border-bottom: 1px solid var(--border);
 }
 .step:last-child { border-bottom: none; }
 .step-num {
   width: 36px; height: 36px; border-radius: 50%;
-  background: rgba(96,165,250,.1);
-  border: 1px solid rgba(96,165,250,.25);
+  background: rgba(96,165,250,.12);
+  border: 1px solid rgba(96,165,250,.3);
   color: var(--accent);
   font-size: 14px; font-weight: 700;
   display: flex; align-items: center; justify-content: center;
   flex-shrink: 0;
   font-variant-numeric: tabular-nums;
+  position: relative;
+  z-index: 1;
 }
-.step-title { font-weight: 600; font-size: 15px; margin-bottom: 6px; }
-.step-body { font-size: 13px; color: var(--fg2); line-height: 1.75; }
+.step-title { font-weight: 600; font-size: 15px; margin-bottom: 8px; }
+.step-body { font-size: 13px; color: var(--fg2); line-height: 1.8; }
 
 /* ── FAQ ─────────────────────────────────────────────────────── */
 .faq { margin-top: 40px; }
@@ -378,36 +417,89 @@ body {
 
 /* ── Contact ─────────────────────────────────────────────────── */
 .contact-box {
-  background: linear-gradient(135deg, rgba(29,78,216,.12), rgba(96,165,250,.06));
-  border: 1px solid rgba(96,165,250,.2);
-  border-radius: 20px;
-  padding: 48px 32px;
+  background: linear-gradient(145deg, rgba(29,78,216,.14) 0%, rgba(96,165,250,.04) 60%, rgba(13,27,42,0) 100%);
+  border: 1px solid rgba(96,165,250,.22);
+  border-radius: 24px;
+  padding: 56px 40px;
   text-align: center;
+  position: relative;
+  overflow: hidden;
 }
-.contact-box h2 { font-family: var(--serif); font-size: clamp(22px, 4vw, 30px); margin-bottom: 12px; }
-.contact-box p { font-size: 14px; color: var(--fg2); max-width: 480px; margin: 0 auto 28px; line-height: 1.85; }
+.contact-box::before {
+  content: '竹';
+  position: absolute;
+  right: -10px; bottom: -20px;
+  font-size: 160px;
+  color: var(--accent);
+  opacity: .03;
+  font-family: var(--serif);
+  pointer-events: none;
+  line-height: 1;
+}
+.contact-box h2 { font-family: var(--serif); font-size: clamp(22px, 4vw, 32px); margin-bottom: 14px; }
+.contact-box p { font-size: 14px; color: var(--fg2); max-width: 480px; margin: 0 auto 32px; line-height: 1.9; }
 .contact-email {
-  font-size: 18px; font-weight: 600; color: var(--accent);
-  letter-spacing: .5px; display: block; margin-bottom: 8px;
+  font-size: 19px; font-weight: 600; color: var(--accent);
+  letter-spacing: .5px; display: block; margin-bottom: 10px;
+  font-variant-numeric: tabular-nums;
 }
-.contact-note { font-size: 12px; color: var(--fg3); }
+.contact-note { font-size: 12px; color: var(--fg3); letter-spacing: .5px; }
 .copy-btn {
-  margin-top: 20px;
-  background: none; border: 1px solid var(--border);
+  margin-top: 22px;
+  background: none; border: 1px solid rgba(96,165,250,.3);
   color: var(--fg2); font-family: var(--sans);
-  font-size: 12px; padding: 8px 20px; border-radius: 20px;
-  cursor: pointer; transition: color .2s, border-color .2s;
+  font-size: 12px; padding: 9px 24px; border-radius: 20px;
+  cursor: pointer; transition: color .2s, border-color .2s, background .2s;
+  letter-spacing: .5px;
 }
-.copy-btn:hover { color: var(--accent); border-color: var(--accent); }
+.copy-btn:hover { color: var(--accent); border-color: var(--accent); background: rgba(96,165,250,.07); }
 
 /* ── Footer ──────────────────────────────────────────────────── */
 .footer {
-  text-align: center; padding: 32px 24px;
+  text-align: center; padding: 36px 24px;
   font-size: 11px; color: var(--fg3);
-  border-top: 1px solid var(--border); line-height: 2;
+  border-top: 1px solid var(--border); line-height: 2.2;
+  letter-spacing: .3px;
+}
+.footer-brand {
+  font-size: 13px; font-weight: 600;
+  color: var(--fg2); letter-spacing: .5px;
+  display: block; margin-bottom: 4px;
 }
 .footer a { color: var(--fg3); text-decoration: none; }
 .footer a:hover { color: var(--accent); }
+
+/* ── Who grid ────────────────────────────────────────────────── */
+.who-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 12px;
+  margin-top: 32px;
+}
+.who-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 20px;
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  transition: border-color .2s, transform .2s;
+}
+.who-card:hover { border-color: rgba(96,165,250,.3); transform: translateY(-2px); }
+.who-icon { font-size: 24px; flex-shrink: 0; margin-top: 1px; }
+.who-title { font-size: 14px; font-weight: 600; margin-bottom: 5px; }
+.who-desc { font-size: 12px; color: var(--fg2); line-height: 1.65; }
+
+/* ── Scroll reveal ───────────────────────────────────────────── */
+@media (prefers-reduced-motion: no-preference) {
+  .reveal {
+    opacity: 0;
+    transform: translateY(16px);
+    transition: opacity .5s ease, transform .5s ease;
+  }
+  .reveal.in { opacity: 1; transform: none; }
+}
 </style>
 
 <!-- 导航 -->
@@ -450,43 +542,43 @@ body {
         <span class="card-icon">📋</span>
         <div class="card-title">ABN 与企业结构</div>
         <div class="card-body">个人独资、公司、合伙还是信托？结构不同，税务处理和法律责任也不同。我们帮你在注册前看清楚区别，选择适合自己情况的方式。</div>
-        <span class="card-tag">刚起步</span>
-        <a href="abn-structure.html" class="card-link">带你读懂 →</a>
+        <div class="card-footer"><span class="card-tag">刚起步</span>
+        <a href="abn-structure.html" class="card-link">带你读懂 →</a></div>
       </div>
       <div class="card">
         <span class="card-icon">🧾</span>
         <div class="card-title">GST 与 BAS 申报</div>
         <div class="card-body">年营业额达到 A$75,000 须注册 GST，向客户收取 10% 税款，并定期申报 BAS。我们一步一步带你了解整个流程。</div>
-        <span class="card-tag">税务</span>
-        <a href="gst-bas.html" class="card-link">带你读懂 →</a>
+        <div class="card-footer"><span class="card-tag">税务</span>
+        <a href="gst-bas.html" class="card-link">带你读懂 →</a></div>
       </div>
       <div class="card">
         <span class="card-icon">👥</span>
         <div class="card-title">Fair Work 雇员合规</div>
         <div class="card-body">聘用员工前需要了解：最低工资、工资单格式、年假病假权利、临时工和兼职的区别——Fair Work 法规范围很广，我们帮你读懂关键点。</div>
-        <span class="card-tag">雇员</span>
-        <a href="fair-work.html" class="card-link">带你读懂 →</a>
+        <div class="card-footer"><span class="card-tag">雇员</span>
+        <a href="fair-work.html" class="card-link">带你读懂 →</a></div>
       </div>
       <div class="card">
         <span class="card-icon">🏦</span>
         <div class="card-title">超级年金（Super）</div>
         <div class="card-body">雇主须为符合条件的员工缴纳 11.5% 超级年金。谁须缴纳、什么时候缴、通过哪个基金缴——我们逐一说清楚。</div>
-        <span class="card-tag">雇员</span>
-        <a href="super.html" class="card-link">带你读懂 →</a>
+        <div class="card-footer"><span class="card-tag">雇员</span>
+        <a href="super.html" class="card-link">带你读懂 →</a></div>
       </div>
       <div class="card">
         <span class="card-icon">🌏</span>
         <div class="card-title">海外收入与进出口</div>
         <div class="card-body">从中国收款、代购、进货、海淘代运——这些在澳洲都有对应的税务规定。我们帮你理清 GST、关税和海外所得的关系。</div>
-        <span class="card-tag">跨境</span>
-        <a href="overseas-income.html" class="card-link">带你读懂 →</a>
+        <div class="card-footer"><span class="card-tag">跨境</span>
+        <a href="overseas-income.html" class="card-link">带你读懂 →</a></div>
       </div>
       <div class="card">
         <span class="card-icon">📂</span>
         <div class="card-title">账本与记录保存</div>
         <div class="card-body">ATO 要求大多数商业记录保存 5 年。我们帮你建立简单好用的数字记账习惯——电子收据、发票规范、工资记录都说清楚。</div>
-        <span class="card-tag">日常运营</span>
-        <a href="record-keeping.html" class="card-link">带你读懂 →</a>
+        <div class="card-footer"><span class="card-tag">日常运营</span>
+        <a href="record-keeping.html" class="card-link">带你读懂 →</a></div>
       </div>
     </div>
   </div>
@@ -501,29 +593,29 @@ body {
         <span class="card-icon">🏠</span>
         <div class="card-title">投资房与租金收入</div>
         <div class="card-body">在澳洲持有投资房，租金收入须申报为个人所得。负扣税（Negative Gearing）、折旧抵税、贷款利息——哪些可以申报，我们帮你读清楚。</div>
-        <span class="card-tag">房产</span>
-        <a href="property-tax.html" class="card-link">带你读懂 → </a>
+        <div class="card-footer"><span class="card-tag">房产</span>
+        <a href="property-tax.html" class="card-link">带你读懂 → </a></div>
       </div>
       <div class="card">
         <span class="card-icon">📈</span>
         <div class="card-title">资本增值税（CGT）</div>
         <div class="card-body">卖房、卖股票、卖加密货币都可能产生资本增值税。自住房豁免规则、持有满 12 个月 50% 折扣、海外人士的不同规定——这里逐一说明。</div>
-        <span class="card-tag">卖出资产</span>
-        <a href="cgt.html" class="card-link">带你读懂 → </a>
+        <div class="card-footer"><span class="card-tag">卖出资产</span>
+        <a href="cgt.html" class="card-link">带你读懂 → </a></div>
       </div>
       <div class="card">
         <span class="card-icon">💼</span>
         <div class="card-title">工作相关扣减</div>
         <div class="card-body">在家办公、出行、设备购置、学习提升——符合条件的工作开支可以在报税时申报扣减。ATO 对不同职业有具体指引，我们帮你对照自己的情况。</div>
-        <span class="card-tag">个人报税</span>
-        <a href="deductions.html" class="card-link">带你读懂 → </a>
+        <div class="card-footer"><span class="card-tag">个人报税</span>
+        <a href="deductions.html" class="card-link">带你读懂 → </a></div>
       </div>
       <div class="card">
         <span class="card-icon">🌐</span>
         <div class="card-title">海外资产与申报义务</div>
         <div class="card-body">澳洲永居和公民须申报全球收入，包括中国的房产、银行存款、投资账户。哪些需要申报、填哪张表、双边税收协定如何保护你——我们帮你理清。</div>
-        <span class="card-tag">跨境个人</span>
-        <a href="foreign-assets.html" class="card-link">带你读懂 → </a>
+        <div class="card-footer"><span class="card-tag">跨境个人</span>
+        <a href="foreign-assets.html" class="card-link">带你读懂 → </a></div>
       </div>
     </div>
   </div>
@@ -774,11 +866,10 @@ body {
 
 <!-- 页脚 -->
 <footer class="footer">
-  <div>🎋 竹 Digital · 墨尔本，维多利亚州 · ABN 29 919 594 996</div>
-  <div style="margin-top:6px;">
-    本网站提供合规教育资讯，不构成法律或税务建议 ·
-    <a href="consultant_en.html">English version →</a>
-  </div>
+  <span class="footer-brand">🎋 竹 Digital</span>
+  <div>墨尔本，维多利亚州 · ABN 29 919 594 996</div>
+  <div>本网站提供合规教育资讯，不构成法律或税务建议</div>
+  <div><a href="consultant_en.html">English version →</a> · © 2026</div>
 </footer>
 
 <script>
@@ -802,4 +893,17 @@ document.querySelectorAll('a[href^="#"]').forEach(a => {
     if (target) { e.preventDefault(); target.scrollIntoView({ behavior: 'smooth', block: 'start' }); }
   });
 });
+
+// Scroll reveal
+const revealEls = document.querySelectorAll('.section, .trust-bar, .sub-section, .card, .who-card, .myth-card, .step, .contact-box');
+revealEls.forEach(el => el.classList.add('reveal'));
+const io = new IntersectionObserver(entries => {
+  entries.forEach((e, i) => {
+    if (e.isIntersecting) {
+      setTimeout(() => e.target.classList.add('in'), i * 40);
+      io.unobserve(e.target);
+    }
+  });
+}, { threshold: 0.08 });
+revealEls.forEach(el => io.observe(el));
 </script>
