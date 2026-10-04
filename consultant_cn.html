@@ -202,6 +202,41 @@ body {
   line-height: 1.85;
 }
 
+/* ── Sub-section divider ─────────────────────────────────────── */
+.sub-section {
+  margin-top: 52px;
+}
+.sub-section:first-child { margin-top: 36px; }
+.sub-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  color: var(--accent);
+  background: rgba(96,165,250,.08);
+  border: 1px solid rgba(96,165,250,.2);
+  border-radius: 20px;
+  padding: 5px 14px;
+  margin-bottom: 20px;
+  text-transform: uppercase;
+}
+.sub-title {
+  font-family: var(--serif);
+  font-size: clamp(18px, 3vw, 22px);
+  font-weight: 600;
+  margin-bottom: 6px;
+  color: var(--fg);
+}
+.sub-desc {
+  font-size: 13px;
+  color: var(--fg2);
+  margin-bottom: 20px;
+  line-height: 1.75;
+  max-width: 600px;
+}
+
 /* ── Service cards ───────────────────────────────────────────── */
 .cards {
   display: grid;
@@ -377,17 +412,17 @@ body {
 
 <!-- 导航 -->
 <nav class="nav">
-  <a href="竹Digital_向导.html" class="nav-brand">
+  <a href="consultant_cn.html" class="nav-brand">
     🎋 竹 Digital <span>· 在线合规顾问</span>
   </a>
-  <a href="竹Digital_向导.html" class="nav-back">← 切换语言</a>
+  <a href="consultant_en.html" class="nav-back">English →</a>
 </nav>
 
 <!-- 主视觉区 -->
 <header class="hero">
   <p class="hero-flag">🇦🇺 澳洲华人小企业合规指南</p>
   <h1>澳洲合规规定<br><em>我们帮你读懂</em></h1>
-  <p class="hero-sub">得到简单清晰的解释——我们会针对您的具体情况，把合规翻译成你能读懂的文字，包括数字、截止日期、要填什么表。<br><br>很多华人小业主在ABN注册、GST报税、雇员合规上走了弯路——不是因为不努力，而是因为那些规定用英文写的，用政府语言写的，对大多数人来说并不容易理解。竹 Digital 就是为了解决这个问题而建的。</p>
+  <p class="hero-sub">在这里，您将会得到简单清晰的解释——我们针对您的具体情况，把合规翻译成您能读懂的文字，包括数字、截止日期、要填什么表。<br><br>很多华人小业主在ABN注册、GST报税、雇员合规上走了弯路——不是因为不努力，而是因为那些规定用英文写的，用政府语言写的，对大多数人来说并不容易理解。竹 Digital 就是为了解决这个问题而建的。</p>
   <a href="#contact" class="hero-cta">免费咨询 15 分钟 →</a>
 </header>
 
@@ -402,52 +437,97 @@ body {
 <!-- 服务范围 -->
 <section class="section" id="services">
   <p class="section-label">我们做什么</p>
-  <h2 class="section-title">华人小业主最常遇到的合规问题</h2>
-  <p class="section-body">从注册ABN到雇人开工资，每一步背后都有澳洲的法律规定。我们帮你把这些规定讲清楚。</p>
-  <div class="cards">
-    <div class="card">
-      <span class="card-icon">📋</span>
-      <div class="card-title">ABN 与企业结构</div>
-      <div class="card-body">个人独资、公司、合伙还是信托？结构选错了，税和责任都会出问题。我们帮你在注册前搞清楚区别，选对适合你的方式。</div>
-      <span class="card-tag">刚起步</span>
-      <a href="abn-structure.html" class="card-link">带你读懂 →</a>
-    </div>
-    <div class="card">
-      <span class="card-icon">🧾</span>
-      <div class="card-title">GST 与 BAS 申报</div>
-      <div class="card-body">年营业额超过 A$75,000 必须注册 GST、收 10% 税、每季度申报 BAS。我们一步一步带你走，不让你被 ATO 罚款。</div>
-      <span class="card-tag">税务</span>
-      <a href="gst-bas.html" class="card-link">带你读懂 →</a>
-    </div>
-    <div class="card">
-      <span class="card-icon">👥</span>
-      <div class="card-title">Fair Work 雇员合规</div>
-      <div class="card-body">请员工前必须知道：最低工资、工资单格式、年假病假权利、临时工和兼职的区别——Fair Work法不懂会吃大亏。</div>
-      <span class="card-tag">雇员</span>
-      <a href="fair-work.html" class="card-link">带你读懂 →</a>
-    </div>
-    <div class="card">
-      <span class="card-icon">🏦</span>
-      <div class="card-title">超级年金（Super）</div>
-      <div class="card-body">雇主必须为符合条件的员工缴纳 11.5% 超级年金。谁要缴、什么时候缴、怎么缴——搞错了有 SGC 罚款。</div>
-      <span class="card-tag">雇员</span>
-      <a href="super.html" class="card-link">带你读懂 →</a>
-    </div>
-    <div class="card">
-      <span class="card-icon">🌏</span>
-      <div class="card-title">海外收入与进出口</div>
-      <div class="card-body">从中国收款、代购、进货、海淘代运——这些在澳洲都有对应的税务规定。我们帮你理清 GST、关税和海外所得的关系。</div>
-      <span class="card-tag">跨境</span>
-      <a href="overseas-income.html" class="card-link">带你读懂 →</a>
-    </div>
-    <div class="card">
-      <span class="card-icon">📂</span>
-      <div class="card-title">账本与记录保存</div>
-      <div class="card-body">ATO 要求大多数商业记录保存 5 年。我们帮你建立简单好用的数字记账习惯——电子收据、发票规范、工资记录都说清楚。</div>
-      <span class="card-tag">日常运营</span>
-      <a href="record-keeping.html" class="card-link">带你读懂 →</a>
+  <h2 class="section-title">把澳洲的规定讲清楚</h2>
+  <p class="section-body">两个板块，各自独立——您先找到自己的问题在哪里，再深入阅读。</p>
+
+  <!-- 小企业板块 -->
+  <div class="sub-section">
+    <div class="sub-label">🏢 小企业合规</div>
+    <div class="sub-title">经营生意的华人业主</div>
+    <p class="sub-desc">从注册 ABN 到雇人开工资，每一步背后都有澳洲的法律规定。</p>
+    <div class="cards">
+      <div class="card">
+        <span class="card-icon">📋</span>
+        <div class="card-title">ABN 与企业结构</div>
+        <div class="card-body">个人独资、公司、合伙还是信托？结构不同，税务处理和法律责任也不同。我们帮你在注册前看清楚区别，选择适合自己情况的方式。</div>
+        <span class="card-tag">刚起步</span>
+        <a href="abn-structure.html" class="card-link">带你读懂 →</a>
+      </div>
+      <div class="card">
+        <span class="card-icon">🧾</span>
+        <div class="card-title">GST 与 BAS 申报</div>
+        <div class="card-body">年营业额达到 A$75,000 须注册 GST，向客户收取 10% 税款，并定期申报 BAS。我们一步一步带你了解整个流程。</div>
+        <span class="card-tag">税务</span>
+        <a href="gst-bas.html" class="card-link">带你读懂 →</a>
+      </div>
+      <div class="card">
+        <span class="card-icon">👥</span>
+        <div class="card-title">Fair Work 雇员合规</div>
+        <div class="card-body">聘用员工前需要了解：最低工资、工资单格式、年假病假权利、临时工和兼职的区别——Fair Work 法规范围很广，我们帮你读懂关键点。</div>
+        <span class="card-tag">雇员</span>
+        <a href="fair-work.html" class="card-link">带你读懂 →</a>
+      </div>
+      <div class="card">
+        <span class="card-icon">🏦</span>
+        <div class="card-title">超级年金（Super）</div>
+        <div class="card-body">雇主须为符合条件的员工缴纳 11.5% 超级年金。谁须缴纳、什么时候缴、通过哪个基金缴——我们逐一说清楚。</div>
+        <span class="card-tag">雇员</span>
+        <a href="super.html" class="card-link">带你读懂 →</a>
+      </div>
+      <div class="card">
+        <span class="card-icon">🌏</span>
+        <div class="card-title">海外收入与进出口</div>
+        <div class="card-body">从中国收款、代购、进货、海淘代运——这些在澳洲都有对应的税务规定。我们帮你理清 GST、关税和海外所得的关系。</div>
+        <span class="card-tag">跨境</span>
+        <a href="overseas-income.html" class="card-link">带你读懂 →</a>
+      </div>
+      <div class="card">
+        <span class="card-icon">📂</span>
+        <div class="card-title">账本与记录保存</div>
+        <div class="card-body">ATO 要求大多数商业记录保存 5 年。我们帮你建立简单好用的数字记账习惯——电子收据、发票规范、工资记录都说清楚。</div>
+        <span class="card-tag">日常运营</span>
+        <a href="record-keeping.html" class="card-link">带你读懂 →</a>
+      </div>
     </div>
   </div>
+
+  <!-- 个人板块 -->
+  <div class="sub-section">
+    <div class="sub-label">👤 个人税务</div>
+    <div class="sub-title">在澳洲生活与投资的华人个人</div>
+    <p class="sub-desc">投资房、卖房、海外资产、个人所得——这些都有澳洲的申报规定，我们帮你逐一看清楚。</p>
+    <div class="cards">
+      <div class="card">
+        <span class="card-icon">🏠</span>
+        <div class="card-title">投资房与租金收入</div>
+        <div class="card-body">在澳洲持有投资房，租金收入须申报为个人所得。负扣税（Negative Gearing）、折旧抵税、贷款利息——哪些可以申报，我们帮你读清楚。</div>
+        <span class="card-tag">房产</span>
+        <a href="property-tax.html" class="card-link">带你读懂 → <span style="font-size:10px;opacity:.6">（即将上线）</span></a>
+      </div>
+      <div class="card">
+        <span class="card-icon">📈</span>
+        <div class="card-title">资本增值税（CGT）</div>
+        <div class="card-body">卖房、卖股票、卖加密货币都可能产生资本增值税。自住房豁免规则、持有满 12 个月 50% 折扣、海外人士的不同规定——这里逐一说明。</div>
+        <span class="card-tag">卖出资产</span>
+        <a href="cgt.html" class="card-link">带你读懂 → <span style="font-size:10px;opacity:.6">（即将上线）</span></a>
+      </div>
+      <div class="card">
+        <span class="card-icon">💼</span>
+        <div class="card-title">工作相关扣减</div>
+        <div class="card-body">在家办公、出行、设备购置、学习提升——符合条件的工作开支可以在报税时申报扣减。ATO 对不同职业有具体指引，我们帮你对照自己的情况。</div>
+        <span class="card-tag">个人报税</span>
+        <a href="deductions.html" class="card-link">带你读懂 → <span style="font-size:10px;opacity:.6">（即将上线）</span></a>
+      </div>
+      <div class="card">
+        <span class="card-icon">🌐</span>
+        <div class="card-title">海外资产与申报义务</div>
+        <div class="card-body">澳洲永居和公民须申报全球收入，包括中国的房产、银行存款、投资账户。哪些需要申报、填哪张表、双边税收协定如何保护你——我们帮你理清。</div>
+        <span class="card-tag">跨境个人</span>
+        <a href="foreign-assets.html" class="card-link">带你读懂 → <span style="font-size:10px;opacity:.6">（即将上线）</span></a>
+      </div>
+    </div>
+  </div>
+
 </section>
 
 <!-- 我们服务谁 -->
@@ -508,11 +588,11 @@ body {
   <div class="myths">
     <div class="myth-card">
       <div class="myth-header">收入不高，不用注册 GST</div>
-      <div class="myth-body">门槛是 <strong>A$75,000</strong>，但算的是"营业额"不是"利润"。很多薄利多销的行业营业额很快就过线，不提前注册会被罚款和补税。</div>
+      <div class="myth-body">门槛是 <strong>A$75,000</strong>，但算的是"营业额"不是"利润"。很多薄利多销的行业营业额很快就会达到门槛，提前了解注册要求，可以避免事后补税和额外费用。</div>
     </div>
     <div class="myth-card">
       <div class="myth-header">请"现金员工"就不用缴 Super</div>
-      <div class="myth-body">用现金支付工资不能免除超级年金义务。ATO 有专门针对现金经济的稽查，一旦查到，补缴 + 罚款 + 利息全部叠加。</div>
+      <div class="myth-body">用现金支付工资不能免除超级年金义务。ATO 对现金经济有专门的合规要求，若未按规定缴纳，须补缴 Super 本金及相关附加费用。</div>
     </div>
     <div class="myth-card">
       <div class="myth-header">中国汇来的钱不算澳洲收入</div>
@@ -578,14 +658,14 @@ body {
         我在微信上卖东西，要向 ATO 申报吗？
         <svg class="faq-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
       </button>
-      <div class="faq-a">是的。不管通过什么平台收款——微信支付、支付宝还是银行转账——只要你在澳洲运营、有营业行为，就适用澳洲税法。ATO 对现金和电子支付都有追踪手段，平台并不能"藏"住收入。</div>
+      <div class="faq-a">是的。不管通过什么平台收款——微信支付、支付宝还是银行转账——只要你在澳洲运营、有营业行为，就适用澳洲税法。ATO 对现金和电子支付都有完整的数据比对机制，澳洲税法适用于所有符合条件的收入来源。</div>
     </div>
     <div class="faq-item">
       <button class="faq-q" onclick="toggleFaq(this)">
         请了帮工，要签什么合同？
         <svg class="faq-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
       </button>
-      <div class="faq-a">雇员和独立承包商的法律地位不同，不是你选哪种、就是哪种——Fair Work 和 ATO 都有判断标准。错误分类的后果很严重：补缴工资、Super、罚款。我们可以帮你理清你的具体情况适用哪种关系。</div>
+      <div class="faq-a">雇员和独立承包商的法律地位不同，不是你选哪种、就是哪种——Fair Work 和 ATO 都有判断标准。分类不准确可能须补缴工资差额和 Super，建议在聘用前先确认清楚。我们可以帮你理清你的具体情况适用哪种关系。</div>
     </div>
     <div class="faq-item">
       <button class="faq-q" onclick="toggleFaq(this)">
