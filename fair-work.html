@@ -1,0 +1,707 @@
+<!--
+  竹 Digital — Fair Work 雇员合规
+  ════════════════════════════════════════════════════════
+  DATA_UPDATE_SCHEDULE: 每年7月1日后更新（Fair Work委员会年度工资裁决）
+  LAST_UPDATED: 2026-10
+  FISCAL_YEAR: 2026-27
+
+  KEY_FIGURES (核实这些数据是否有变化):
+  - 全国最低工资(NMW): $26.44/小时（2026-07-01起，+6%）→ 来源: Fair Work https://www.fairwork.gov.au/pay-and-wages/minimum-wages/national-minimum-wage
+  - NMW周薪: $1,004.90（基于38小时）
+  - NMW年薪全职: $52,254.80
+  - 临时工附加费: +25%，即 $33.05/小时
+  - 年度工资增长幅度: 2026-07-01行业奖 +4.75% → 来源: Fair Work https://www.fairwork.gov.au/newsroom/news/minimum-wages-increase
+  - 最高民事处罚（企业）: $546,000（普通），$5,460,000（严重）→ 来源: Fair Work Act 2009
+  - 最高民事处罚（个人）: $109,200 → 来源: Fair Work Act 2009
+  - 高收入阈值: $190,100 → 来源: Fair Work https://www.fairwork.gov.au/employment-conditions/the-high-income-threshold
+  - 超级年金率: 12%（2025-07-01起）→ 来源: ATO
+
+  AWARD_RATES (核实具体行业奖，以下为参考，均含2026年+4.75%):
+  - Retail Grade 1: $26.66/hr
+  - Hospitality Level 1: $26.54/hr
+  - Hair & Beauty Level 2: $27.39/hr
+  - Cleaning Level 1: $26.44+（受NMW底线保护）
+
+  SOURCES:
+  - Fair Work: https://www.fairwork.gov.au
+  - Fair Work Act: https://www.legislation.gov.au/Details/C2009A00028
+  - Payday Super: https://www.fairwork.gov.au/newsroom/news/payday-super-new-rules-starting-1-july-2026
+  ════════════════════════════════════════════════════════
+-->
+<title>Fair Work 雇员合规</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;700&family=Noto+Sans+SC:wght@300;400;500;600&display=swap">
+<style>
+:root {
+  --bg:        #0D1B2A;
+  --bg2:       #0F1F30;
+  --surface:   #152233;
+  --surface2:  #1A2B3F;
+  --border:    rgba(59,130,246,.13);
+  --border2:   rgba(59,130,246,.22);
+  --fg:        #F1F5F9;
+  --fg2:       #94A3B8;
+  --fg3:       #475569;
+  --accent:    #60A5FA;
+  --blue:      #1D4ED8;
+  --blue-lit:  #2563EB;
+  --green:     #34D399;
+  --green-bg:  rgba(52,211,153,.08);
+  --yellow:    #FCD34D;
+  --yellow-bg: rgba(252,211,77,.08);
+  --red:       #F87171;
+  --red-bg:    rgba(248,113,113,.08);
+  --purple:    #A78BFA;
+  --purple-bg: rgba(167,139,250,.08);
+  --serif:     "Noto Serif SC", Georgia, serif;
+  --sans:      "Noto Sans SC", system-ui, sans-serif;
+  color-scheme: dark;
+}
+@media (prefers-color-scheme: light) {
+  :root:not([data-theme="dark"]) {
+    --bg:#F0F4FA;--bg2:#E4EBF7;--surface:#FFFFFF;--surface2:#F8FAFC;
+    --border:rgba(37,99,235,.13);--border2:rgba(37,99,235,.25);
+    --fg:#0F172A;--fg2:#334155;--fg3:#64748B;--accent:#1D4ED8;
+    --blue:#1D4ED8;--blue-lit:#2563EB;
+    --green:#059669;--green-bg:rgba(5,150,105,.07);
+    --yellow:#B45309;--yellow-bg:rgba(180,83,9,.06);
+    --red:#DC2626;--red-bg:rgba(220,38,38,.06);
+    --purple:#7C3AED;--purple-bg:rgba(124,58,237,.07);
+    color-scheme:light;
+  }
+}
+:root[data-theme="dark"] {
+  --bg:#0D1B2A;--bg2:#0F1F30;--surface:#152233;--surface2:#1A2B3F;
+  --border:rgba(59,130,246,.13);--border2:rgba(59,130,246,.22);
+  --fg:#F1F5F9;--fg2:#94A3B8;--fg3:#475569;--accent:#60A5FA;
+  --blue:#1D4ED8;--blue-lit:#2563EB;
+  --green:#34D399;--green-bg:rgba(52,211,153,.08);
+  --yellow:#FCD34D;--yellow-bg:rgba(252,211,77,.08);
+  --red:#F87171;--red-bg:rgba(248,113,113,.08);
+  --purple:#A78BFA;--purple-bg:rgba(167,139,250,.08);
+  color-scheme:dark;
+}
+
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:var(--sans);background:var(--bg);color:var(--fg);min-height:100vh;font-size:15px;line-height:1.7;}
+
+.nav{position:sticky;top:env(safe-area-inset-top,0px);z-index:100;background:rgba(13,27,42,.92);backdrop-filter:blur(12px);border-bottom:1px solid var(--border);padding:14px 24px;display:flex;align-items:center;gap:12px;}
+.nav-back{font-size:13px;color:var(--fg2);text-decoration:none;display:flex;align-items:center;gap:5px;}
+.nav-back:hover{color:var(--accent);}
+.nav-sep{color:var(--fg3);font-size:12px;}
+.nav-current{font-size:13px;color:var(--fg);font-weight:500;}
+.nav-brand{margin-left:auto;font-size:12px;color:var(--fg3);}
+
+.hero{background:linear-gradient(160deg,#0a1628 0%,#0d1b2a 50%,#0f2035 100%);padding:64px 24px 52px;text-align:center;border-bottom:1px solid var(--border);position:relative;overflow:hidden;}
+.hero::before{content:'';position:absolute;top:-60px;left:50%;transform:translateX(-50%);width:500px;height:500px;background:radial-gradient(circle,rgba(96,165,250,.06) 0%,transparent 70%);pointer-events:none;}
+.breadcrumb{font-size:12px;color:var(--accent);letter-spacing:1px;text-transform:uppercase;margin-bottom:20px;opacity:.8;}
+.hero h1{font-family:var(--serif);font-size:clamp(26px,5vw,38px);font-weight:700;line-height:1.35;text-wrap:balance;margin-bottom:18px;}
+.hero h1 em{font-style:normal;color:var(--accent);}
+.hero-sub{font-size:15px;color:var(--fg2);max-width:560px;margin:0 auto 28px;line-height:1.8;}
+.hero-tags{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;}
+.hero-tag{font-size:11px;letter-spacing:.5px;padding:5px 14px;border-radius:20px;border:1px solid var(--border2);color:var(--fg2);background:var(--surface);}
+
+.page{max-width:760px;margin:0 auto;padding:0 20px 80px;}
+.section{margin-top:64px;}
+.section-label{font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--accent);margin-bottom:10px;opacity:.8;}
+.section-title{font-family:var(--serif);font-size:clamp(20px,3.5vw,26px);font-weight:700;margin-bottom:12px;text-wrap:balance;}
+.section-body{font-size:14px;color:var(--fg2);line-height:1.85;max-width:620px;}
+
+/* ── Employee vs Contractor decision ── */
+.decision-tree{margin-top:32px;display:flex;flex-direction:column;gap:16px;}
+.dt-question{background:var(--surface);border:1px solid var(--border2);border-radius:14px;padding:22px 20px;}
+.dt-q-text{font-size:14px;font-weight:600;margin-bottom:14px;}
+.dt-answers{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+@media(max-width:480px){.dt-answers{grid-template-columns:1fr;}}
+.dt-answer{padding:12px 14px;border-radius:10px;font-size:12px;line-height:1.6;}
+.dt-employee{background:var(--yellow-bg);border:1px solid rgba(252,211,77,.2);}
+.dt-contractor{background:var(--green-bg);border:1px solid rgba(52,211,153,.15);}
+.dt-label{font-size:10px;letter-spacing:1px;font-weight:700;margin-bottom:4px;text-transform:uppercase;}
+.dt-label.e{color:var(--yellow);}
+.dt-label.c{color:var(--green);}
+.dt-note{font-size:12px;color:var(--fg3);margin-top:14px;padding:10px 14px;background:var(--surface2);border-radius:8px;line-height:1.6;}
+
+/* ── Stat tiles ── */
+.stats{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:14px;margin-top:32px;}
+.stat{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:20px 16px;text-align:center;}
+.stat-num{font-size:24px;font-weight:700;font-variant-numeric:tabular-nums;line-height:1.1;margin-bottom:6px;}
+.stat-num.accent{color:var(--accent);}
+.stat-num.green{color:var(--green);}
+.stat-num.yellow{color:var(--yellow);}
+.stat-num.red{color:var(--red);}
+.stat-label{font-size:11px;color:var(--fg2);line-height:1.5;}
+
+/* ── Award / pay rate cards ── */
+.award-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:14px;margin-top:28px;}
+.award-card{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:20px 18px;}
+.award-type{font-size:10px;letter-spacing:1px;text-transform:uppercase;color:var(--accent);font-weight:600;margin-bottom:8px;}
+.award-name{font-size:14px;font-weight:600;margin-bottom:10px;}
+.award-rates{display:flex;flex-direction:column;gap:6px;}
+.award-rate{display:flex;justify-content:space-between;align-items:center;font-size:12px;}
+.award-rate-label{color:var(--fg2);}
+.award-rate-val{font-weight:600;font-variant-numeric:tabular-nums;color:var(--fg);}
+.award-rate-val.hi{color:var(--yellow);}
+.award-note{margin-top:10px;font-size:11px;color:var(--fg3);line-height:1.5;}
+
+/* ── National Minimum Wage banner ── */
+.nmw-banner{margin-top:28px;background:linear-gradient(135deg,var(--blue) 0%,#1a3a6e 100%);border-radius:16px;padding:24px 22px;display:flex;align-items:center;gap:20px;flex-wrap:wrap;}
+.nmw-big{font-size:36px;font-weight:700;font-variant-numeric:tabular-nums;color:#fff;flex-shrink:0;}
+.nmw-info h4{font-size:14px;font-weight:600;color:#fff;margin-bottom:4px;}
+.nmw-info p{font-size:12px;color:rgba(255,255,255,.7);line-height:1.6;}
+
+/* ── Entitlement table ── */
+.ent-table{width:100%;border-collapse:collapse;margin-top:28px;font-size:13px;}
+.ent-table th{text-align:left;padding:10px 14px;font-size:11px;letter-spacing:.8px;text-transform:uppercase;color:var(--fg3);border-bottom:1px solid var(--border2);font-weight:600;}
+.ent-table td{padding:14px 14px;border-bottom:1px solid var(--border);vertical-align:top;line-height:1.65;}
+.ent-table tr:last-child td{border-bottom:none;}
+.ent-table tbody tr:hover td{background:var(--surface2);}
+.ent-name{font-weight:600;color:var(--fg);}
+.ent-rate{color:var(--accent);font-weight:600;font-variant-numeric:tabular-nums;}
+.ent-note{color:var(--fg2);font-size:12px;margin-top:3px;}
+.chip{display:inline-block;font-size:10px;padding:2px 8px;border-radius:10px;font-weight:600;margin-left:6px;}
+.chip-fw{background:var(--green-bg);color:var(--green);}
+.chip-award{background:var(--purple-bg);color:var(--purple);}
+
+/* ── Payslip checklist ── */
+.payslip-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:12px;margin-top:28px;}
+.payslip-item{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:16px 16px;display:flex;gap:10px;align-items:flex-start;}
+.payslip-icon{font-size:16px;flex-shrink:0;margin-top:2px;}
+.payslip-name{font-size:13px;font-weight:600;margin-bottom:3px;}
+.payslip-desc{font-size:11px;color:var(--fg2);line-height:1.55;}
+.payslip-item.required{border-color:rgba(96,165,250,.3);}
+
+/* ── Myths ── */
+.myths{display:flex;flex-direction:column;gap:14px;margin-top:28px;}
+.myth-card{border-radius:14px;overflow:hidden;border:1px solid var(--border);}
+.myth-part,.truth-part{padding:16px 20px;}
+.myth-part{background:var(--red-bg);border-bottom:1px solid var(--border);}
+.truth-part{background:var(--green-bg);}
+.myth-badge,.truth-badge{font-size:10px;letter-spacing:1px;font-weight:700;margin-bottom:6px;display:block;}
+.myth-badge{color:var(--red);}
+.truth-badge{color:var(--green);}
+.myth-text,.truth-text{font-size:13px;line-height:1.7;}
+
+/* ── Penalty cards ── */
+.penalty-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:12px;margin-top:28px;}
+.penalty-card{background:var(--surface);border:1px solid var(--red-bg);border-left:3px solid var(--red);border-radius:12px;padding:18px 16px;}
+.penalty-title{font-size:13px;font-weight:600;margin-bottom:6px;color:var(--red);}
+.penalty-body{font-size:12px;color:var(--fg2);line-height:1.65;}
+
+/* ── Checklist ── */
+.checklist{display:flex;flex-direction:column;gap:12px;margin-top:28px;}
+.check-item{display:flex;gap:14px;align-items:flex-start;background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:16px 18px;}
+.check-num{width:28px;height:28px;border-radius:50%;background:var(--blue);color:#fff;font-size:12px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px;}
+.check-title{font-size:13px;font-weight:600;margin-bottom:4px;}
+.check-body{font-size:12px;color:var(--fg2);line-height:1.65;}
+.check-link{display:inline-block;margin-top:6px;font-size:11px;color:var(--accent);text-decoration:none;}
+.check-link:hover{text-decoration:underline;}
+
+/* ── CTA ── */
+.cta-strip{margin-top:64px;background:linear-gradient(135deg,var(--surface) 0%,var(--surface2) 100%);border:1px solid var(--border2);border-radius:20px;padding:36px 28px;text-align:center;}
+.cta-strip h3{font-family:var(--serif);font-size:20px;margin-bottom:10px;}
+.cta-strip p{font-size:13px;color:var(--fg2);margin-bottom:24px;}
+.cta-buttons{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;}
+.cta-btn{display:inline-block;padding:12px 24px;border-radius:10px;font-size:14px;font-weight:600;text-decoration:none;transition:opacity .15s,transform .15s;}
+.cta-btn:hover{opacity:.88;transform:translateY(-1px);}
+.cta-primary{background:var(--blue-lit);color:#fff;}
+.cta-secondary{background:var(--surface);border:1px solid var(--border2);color:var(--fg2);}
+
+.article-nav{display:flex;justify-content:space-between;gap:16px;margin-top:48px;flex-wrap:wrap;}
+.article-nav-item{flex:1;min-width:160px;background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:16px 18px;text-decoration:none;transition:border-color .15s;}
+.article-nav-item:hover{border-color:var(--accent);}
+.article-nav-dir{font-size:10px;letter-spacing:1px;text-transform:uppercase;color:var(--fg3);margin-bottom:6px;}
+.article-nav-title{font-size:13px;font-weight:600;color:var(--fg);}
+
+footer{margin-top:80px;border-top:1px solid var(--border);padding:28px 24px;text-align:center;font-size:11px;color:var(--fg3);line-height:1.8;}
+footer a{color:var(--fg3);text-decoration:none;}
+footer a:hover{color:var(--accent);}
+
+.overflow-x{overflow-x:auto;-webkit-overflow-scrolling:touch;}
+.overflow-x table{min-width:520px;}
+</style>
+
+<nav class="nav">
+  <a href="consultant_cn.html" class="nav-back">← 返回顾问</a>
+  <span class="nav-sep">/</span>
+  <span class="nav-current">Fair Work 雇员合规</span>
+  <span class="nav-brand">🎋 竹 Digital</span>
+</nav>
+
+<header class="hero">
+  <p class="breadcrumb">带你读懂 · 系列第三篇</p>
+  <h1>雇了人，你的责任<br><em>比你想的要多</em></h1>
+  <p class="hero-sub">在澳洲雇员工，不是给钱这么简单。Fair Work 法律规定了最低工资、带薪假期、加班费、罚款……搞错一项就可能被追讨几万块。</p>
+  <div class="hero-tags">
+    <span class="hero-tag">💼 雇主必读</span>
+    <span class="hero-tag">💰 最低工资 $26.44/h（2026-27）</span>
+    <span class="hero-tag">📅 带薪年假 4周</span>
+    <span class="hero-tag">⚠️ 公司违规最高罚款 $546,000</span>
+  </div>
+</header>
+
+<main class="page">
+
+  <div style="background:var(--surface);border:1px solid var(--border2,var(--border));border-radius:10px;padding:12px 18px;font-size:12px;color:var(--fg2);margin-top:28px;margin-bottom:0;line-height:1.8;">
+    📅 <strong style="color:var(--accent);">数据截至：2026年10月</strong> · 适用财年：2026–27（2026年7月1日起）·
+    来源：<a href="https://www.fairwork.gov.au/pay/minimum-wages" target="_blank" rel="noopener" style="color:var(--accent);text-decoration:none;">Fair Work（最低工资）</a>、
+    <a href="https://jws.com.au/what-we-think/key-employment-monetary-and-other-changes-from-1-july-2026" target="_blank" rel="noopener" style="color:var(--accent);text-decoration:none;">JWS（罚款标准）</a>、
+    <a href="https://www.ato.gov.au/businesses-and-organisations/hiring-and-paying-your-workers/super/paying-super-contributions/how-much-super-to-pay" target="_blank" rel="noopener" style="color:var(--accent);text-decoration:none;">ATO（Super 比率）</a> ·
+    ⚡ 建议每年7月1日后核查最新比率
+  </div>
+
+  <!-- 1. 员工 vs 承包商 -->
+  <section class="section">
+    <p class="section-label">第一步搞清楚</p>
+    <h2 class="section-title">他是你的员工，还是承包商？</h2>
+    <p class="section-body">这是很多华人老板踩的第一个坑：把本质上是员工的人当成承包商处理，省了超级年金和带薪假期，结果被 Fair Work 或 ATO 追查，补缴加罚款。ATO 和 Fair Work 都有自己的判断标准——不是你们怎么签合同，而是看实际工作方式。</p>
+
+    <div class="decision-tree">
+      <div class="dt-question">
+        <div class="dt-q-text">🔍 判断标准一：谁控制工作方式？</div>
+        <div class="dt-answers">
+          <div class="dt-answer dt-employee">
+            <div class="dt-label e">倾向：员工</div>
+            你规定他什么时候上班、在哪里干活、用什么方式完成工作
+          </div>
+          <div class="dt-answer dt-contractor">
+            <div class="dt-label c">倾向：承包商</div>
+            他自己决定怎么做、什么时间做，你只管结果
+          </div>
+        </div>
+      </div>
+      <div class="dt-question">
+        <div class="dt-q-text">🔍 判断标准二：他能不能给别人干活？</div>
+        <div class="dt-answers">
+          <div class="dt-answer dt-employee">
+            <div class="dt-label e">倾向：员工</div>
+            他只给你一家公司干活，工作时间基本是你定的
+          </div>
+          <div class="dt-answer dt-contractor">
+            <div class="dt-label c">倾向：承包商</div>
+            他同时服务多个客户，有自己的 ABN 和报价单
+          </div>
+        </div>
+      </div>
+      <div class="dt-question">
+        <div class="dt-q-text">🔍 判断标准三：工具和风险谁的？</div>
+        <div class="dt-answers">
+          <div class="dt-answer dt-employee">
+            <div class="dt-label e">倾向：员工</div>
+            工具是你提供的，他做错了你来赔
+          </div>
+          <div class="dt-answer dt-contractor">
+            <div class="dt-label c">倾向：承包商</div>
+            他用自己的工具，自己承担商业风险，自己买保险
+          </div>
+        </div>
+      </div>
+      <p class="dt-note">⚠️ <strong>重要：</strong>就算你们签了"承包商合同"，只要实际情况符合以上"员工"特征，Fair Work 和 ATO 仍然可以将其认定为员工关系，追讨欠缴的超级年金、带薪假期等。合同的标签不改变实质。</p>
+    </div>
+  </section>
+
+  <!-- 2. 关键数字 -->
+  <section class="section">
+    <p class="section-label">2024–25 关键数字</p>
+    <h2 class="section-title">你必须知道的数字</h2>
+    <div class="stats">
+      <div class="stat">
+        <div class="stat-num accent">$26.44</div>
+        <div class="stat-label">全国最低时薪（2026年7月起，+6%）</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num green">4周</div>
+        <div class="stat-label">全职/兼职员工每年带薪年假</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num yellow">10天</div>
+        <div class="stat-label">带薪病假/护理假（每年）</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num accent">12%</div>
+        <div class="stat-label">超级年金雇主缴费比例（2025-26起，已达最终）</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num red">$546,000</div>
+        <div class="stat-label">公司严重违规最高罚款（2026年7月起）</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num yellow">150%</div>
+        <div class="stat-label">周六加班最低工资倍率（多数 Award）</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 3. 最低工资 -->
+  <section class="section">
+    <p class="section-label">最低工资</p>
+    <h2 class="section-title">你付的工资，够吗？</h2>
+    <p class="section-body">澳洲有两层最低工资保障：全国最低工资（National Minimum Wage）是绝对底线；很多行业还有更高的 Award 工资（行业协议），必须以两者中较高的为准。</p>
+
+    <div class="nmw-banner">
+      <div class="nmw-big">$26.44</div>
+      <div class="nmw-info">
+        <h4>全国最低时薪（2026年7月1日起，较上年+6%）<a href="https://www.fairwork.gov.au/pay/minimum-wages" target="_blank" rel="noopener" style="display:inline-block;font-size:10px;color:var(--fg3);background:var(--surface);border:1px solid var(--border);border-radius:4px;padding:1px 5px;margin-left:5px;text-decoration:none;vertical-align:middle;">Fair Work</a></h4>
+        <p>适用于所有不受 Award 覆盖的员工。全职员工年薪等值约 <strong>$52,254.80</strong>（税前，38小时工作周）。Casual 最低 $33.05/h（含25%加载费）。不得低于此标准，否则属于欠薪（Underpayment），自2025年1月起为刑事犯罪。</p>
+      </div>
+    </div>
+
+    <div class="award-grid" style="margin-top:24px;">
+      <div class="award-card">
+        <div class="award-type">零售业 Award</div>
+        <div class="award-name">General Retail Industry Award</div>
+        <div class="award-rates">
+          <div class="award-rate">
+            <span class="award-rate-label">Grade 1 时薪</span>
+            <span class="award-rate-val">$26.66</span>
+          </div>
+          <div class="award-rate">
+            <span class="award-rate-label">周六加班</span>
+            <span class="award-rate-val hi">×1.25</span>
+          </div>
+          <div class="award-rate">
+            <span class="award-rate-label">周日加班</span>
+            <span class="award-rate-val hi">×1.50</span>
+          </div>
+        </div>
+        <div class="award-note">超市、专卖店、网店等零售经营均适用</div>
+      </div>
+      <div class="award-card">
+        <div class="award-type">餐饮业 Award</div>
+        <div class="award-name">Hospitality Industry Award</div>
+        <div class="award-rates">
+          <div class="award-rate">
+            <span class="award-rate-label">Level 1 时薪</span>
+            <span class="award-rate-val">$26.54</span>
+          </div>
+          <div class="award-rate">
+            <span class="award-rate-label">周六加班</span>
+            <span class="award-rate-val hi">×1.25</span>
+          </div>
+          <div class="award-rate">
+            <span class="award-rate-label">公众假期</span>
+            <span class="award-rate-val hi">×2.25</span>
+          </div>
+        </div>
+        <div class="award-note">餐厅、咖啡厅、酒吧、外卖店适用</div>
+      </div>
+      <div class="award-card">
+        <div class="award-type">美容美发 Award</div>
+        <div class="award-name">Hair &amp; Beauty Industry Award</div>
+        <div class="award-rates">
+          <div class="award-rate">
+            <span class="award-rate-label">Level 2 时薪</span>
+            <span class="award-rate-val">$27.39</span>
+          </div>
+          <div class="award-rate">
+            <span class="award-rate-label">周六</span>
+            <span class="award-rate-val hi">×1.50</span>
+          </div>
+          <div class="award-rate">
+            <span class="award-rate-label">周日</span>
+            <span class="award-rate-val hi">×1.75</span>
+          </div>
+        </div>
+        <div class="award-note">美发沙龙、美甲美容、spa 适用</div>
+      </div>
+      <div class="award-card">
+        <div class="award-type">清洁业 Award</div>
+        <div class="award-name">Cleaning Services Award</div>
+        <div class="award-rates">
+          <div class="award-rate">
+            <span class="award-rate-label">Level 1 时薪</span>
+            <span class="award-rate-val">$26.44+</span>
+          </div>
+          <div class="award-rate">
+            <span class="award-rate-label">周六加班</span>
+            <span class="award-rate-val hi">×1.50</span>
+          </div>
+          <div class="award-rate">
+            <span class="award-rate-label">公众假期</span>
+            <span class="award-rate-val hi">×2.50</span>
+          </div>
+        </div>
+        <div class="award-note">商业清洁、家政、物业清洁适用</div>
+      </div>
+    </div>
+    <p class="dt-note" style="margin-top:16px;">📌 以上时薪为 2026年7月1日生效的 Award 最低标准（经年度审查上调4.75%）。实际 Award 可能有更多等级和加班系数——请用 Fair Work 官方工具核查你的行业：<a href="https://www.fairwork.gov.au/find-help-for/industries" target="_blank" rel="noopener" style="color:var(--accent)">Fair Work 行业薪资指南</a>。建议每年7月后更新。</p>
+  </section>
+
+  <!-- 4. 带薪假期 -->
+  <section class="section">
+    <p class="section-label">假期权益</p>
+    <h2 class="section-title">员工有哪些带薪假期？</h2>
+
+    <div class="overflow-x">
+      <table class="ent-table">
+        <thead>
+          <tr>
+            <th>假期类型</th>
+            <th>天数/额度</th>
+            <th>适用对象</th>
+            <th>备注</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><span class="ent-name">年假（Annual Leave）</span></td>
+            <td><span class="ent-rate">4 周/年</span></td>
+            <td>全职 &amp; 兼职<span class="chip chip-fw">NES</span></td>
+            <td><span class="ent-note">按工作比例累积。可携带（carry over），不可被没收</span></td>
+          </tr>
+          <tr>
+            <td><span class="ent-name">病假/护理假（Personal/Carer's Leave）</span></td>
+            <td><span class="ent-rate">10 天/年</span></td>
+            <td>全职 &amp; 兼职<span class="chip chip-fw">NES</span></td>
+            <td><span class="ent-note">包括自己生病和照顾家人。可累积，但最多只能用于家庭护理 2 天/年</span></td>
+          </tr>
+          <tr>
+            <td><span class="ent-name">陪产/领养假（Parental Leave）</span></td>
+            <td><span class="ent-rate">最多 12 个月</span></td>
+            <td>工龄满 12 个月<span class="chip chip-fw">NES</span></td>
+            <td><span class="ent-note">无薪，但工作职位受保护。父亲/伴侣可取 2 周陪产</span></td>
+          </tr>
+          <tr>
+            <td><span class="ent-name">公众假期（Public Holidays）</span></td>
+            <td><span class="ent-rate">按州/领地</span></td>
+            <td>全职 &amp; 兼职<span class="chip chip-fw">NES</span></td>
+            <td><span class="ent-note">VIC 约 12 天。若要求员工公众假期上班，须支付加班工资</span></td>
+          </tr>
+          <tr>
+            <td><span class="ent-name">丧假（Compassionate Leave）</span></td>
+            <td><span class="ent-rate">2 天/次</span></td>
+            <td>全职、兼职、Casual<span class="chip chip-fw">NES</span></td>
+            <td><span class="ent-note">家庭成员或近亲死亡或危及生命疾病时适用</span></td>
+          </tr>
+          <tr>
+            <td><span class="ent-name">家庭暴力假（Family &amp; Domestic Violence Leave）</span></td>
+            <td><span class="ent-rate">10 天/年（带薪）</span></td>
+            <td>全职、兼职、Casual<span class="chip chip-fw">NES</span></td>
+            <td><span class="ent-note">2023年2月起，包括Casual员工，均享带薪，雇主须保密</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="dt-note" style="margin-top:16px;">NES = National Employment Standards（全国最低雇用标准），所有澳洲员工必须享有，不得以任何形式削减或排除。</p>
+  </section>
+
+  <!-- 5. 工资单 -->
+  <section class="section">
+    <p class="section-label">工资单</p>
+    <h2 class="section-title">每次发工资，工资单必须写什么？</h2>
+    <p class="section-body">澳洲法律要求每次发工资后 1 个工作日内给员工工资单（Payslip）。格式不限（纸质/电子均可），但必须包含以下信息。漏了项目，属于违法。</p>
+
+    <div class="payslip-grid">
+      <div class="payslip-item required">
+        <div class="payslip-icon">🏢</div>
+        <div>
+          <div class="payslip-name">雇主名称和 ABN</div>
+          <div class="payslip-desc">公司名（或你的名字）+ ABN 号码</div>
+        </div>
+      </div>
+      <div class="payslip-item required">
+        <div class="payslip-icon">👤</div>
+        <div>
+          <div class="payslip-name">员工姓名</div>
+          <div class="payslip-desc">完整法定姓名</div>
+        </div>
+      </div>
+      <div class="payslip-item required">
+        <div class="payslip-icon">📅</div>
+        <div>
+          <div class="payslip-name">工资周期</div>
+          <div class="payslip-desc">本次工资覆盖的起止日期</div>
+        </div>
+      </div>
+      <div class="payslip-item required">
+        <div class="payslip-icon">💰</div>
+        <div>
+          <div class="payslip-name">税前工资 + 扣税金额</div>
+          <div class="payslip-desc">Gross pay、Tax withheld、Net pay（实际到手）</div>
+        </div>
+      </div>
+      <div class="payslip-item required">
+        <div class="payslip-icon">⏰</div>
+        <div>
+          <div class="payslip-name">工时 + 时薪</div>
+          <div class="payslip-desc">本期工作小时数及对应时薪（时薪制员工）</div>
+        </div>
+      </div>
+      <div class="payslip-item required">
+        <div class="payslip-icon">🏖️</div>
+        <div>
+          <div class="payslip-name">累积假期余额</div>
+          <div class="payslip-desc">年假、病假剩余天数（小时数）</div>
+        </div>
+      </div>
+      <div class="payslip-item required">
+        <div class="payslip-icon">🦺</div>
+        <div>
+          <div class="payslip-name">超级年金缴费</div>
+          <div class="payslip-desc">本期雇主缴纳的 Super 金额 + 基金名称</div>
+        </div>
+      </div>
+      <div class="payslip-item">
+        <div class="payslip-icon">📋</div>
+        <div>
+          <div class="payslip-name">适用 Award / EBA 名称</div>
+          <div class="payslip-desc">员工适用的行业 Award 名称（如适用）</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 6. 误区澄清 -->
+  <section class="section">
+    <p class="section-label">误区澄清</p>
+    <h2 class="section-title">华人雇主最常踩的坑</h2>
+
+    <div class="myths">
+      <div class="myth-card">
+        <div class="myth-part">
+          <span class="myth-badge">❌ 常见误区</span>
+          <p class="myth-text">「我帮他省了税，给他 cash，双方都方便，没问题的。」</p>
+        </div>
+        <div class="truth-part">
+          <span class="truth-badge">✅ 实际情况</span>
+          <p class="truth-text">现金支付本身不违法，但必须按时薪标准、必须缴超级年金、必须留记录。ATO 和 Fair Work 经常在社交媒体、员工举报中发现现金雇用案例，补缴金额加罚款可以很高。员工事后可以举报你——你没有任何保护。</p>
+        </div>
+      </div>
+      <div class="myth-card">
+        <div class="myth-part">
+          <span class="myth-badge">❌ 常见误区</span>
+          <p class="myth-text">「Casual 工没有带薪假期，给点 loading 就行了。」</p>
+        </div>
+        <div class="truth-part">
+          <span class="truth-badge">✅ 实际情况</span>
+          <p class="truth-text">确实——Casual 员工没有年假和病假，但你必须支付 <strong>25% Casual Loading</strong>（在基本工资基础上加25%），以补偿他们没有带薪假期的损失。同时，Casual 员工在连续工作 12 个月后，有权申请转为正式员工（Casual Conversion）。</p>
+        </div>
+      </div>
+      <div class="myth-card">
+        <div class="myth-part">
+          <span class="myth-badge">❌ 常见误区</span>
+          <p class="myth-text">「试用期 3 个月，我可以不给超级年金，等他过了试用期再给。」</p>
+        </div>
+        <div class="truth-part">
+          <span class="truth-badge">✅ 实际情况</span>
+          <p class="truth-text">完全错误。超级年金（Superannuation）从第一天工作就开始累积，没有试用期豁免。雇主必须按季度把缴费打入员工指定的 Super 基金，逾期未缴还要加缴 SGC（Super Guarantee Charge）罚款。</p>
+        </div>
+      </div>
+      <div class="myth-card">
+        <div class="myth-part">
+          <span class="myth-badge">❌ 常见误区</span>
+          <p class="myth-text">「我是老板，我说几点上班就几点上班，加班费我说了算。」</p>
+        </div>
+        <div class="truth-part">
+          <span class="truth-badge">✅ 实际情况</span>
+          <p class="truth-text">Award 工资中包含强制性的加班费率（overtime rates）和罚款率（penalty rates）——周末、公众假期、深夜工作都有不同的倍率要求。这些不是你可以和员工"协商掉"的，也不能用包薪（all-in rates）来规避，除非包薪已经覆盖所有可能的加班费用。</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 7. 违规后果 -->
+  <section class="section">
+    <p class="section-label">法律风险</p>
+    <h2 class="section-title">违反 Fair Work 的后果</h2>
+
+    <div class="penalty-grid">
+      <div class="penalty-card">
+        <div class="penalty-title">欠薪（Underpayment）</div>
+        <div class="penalty-body">必须补足所有欠薪 + 利息。Fair Work Ombudsman 可以代员工追讨，追溯期通常 6 年。</div>
+      </div>
+      <div class="penalty-card">
+        <div class="penalty-title">违规罚款（2026年7月起大幅提高）</div>
+        <div class="penalty-body">每项违规：个人最高 $109,200，公司最高 $546,000；严重违规公司最高 $5,460,000 或欠薪金额的 3 倍（取更高者）。<a href="https://jws.com.au/what-we-think/key-employment-monetary-and-other-changes-from-1-july-2026" target="_blank" rel="noopener" style="font-size:10px;color:var(--fg3);text-decoration:none;border:1px solid var(--border);border-radius:4px;padding:1px 5px;margin-left:3px;">来源</a></div>
+      </div>
+      <div class="penalty-card">
+        <div class="penalty-title">记录保存违规</div>
+        <div class="penalty-body">未保存员工工资记录 7 年，或未发工资单：每项罚款最高 $9,390（公司）。</div>
+      </div>
+      <div class="penalty-card">
+        <div class="penalty-title">报复员工举报</div>
+        <div class="penalty-body">员工因举报被解雇或受到不公正对待，属于"不当解雇"，Fair Work 可要求复职或赔偿，无上限。</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 8. 合规步骤 -->
+  <section class="section">
+    <p class="section-label">操作步骤</p>
+    <h2 class="section-title">雇第一个员工，需要做哪些准备？</h2>
+
+    <div class="checklist">
+      <div class="check-item">
+        <div class="check-num">1</div>
+        <div>
+          <div class="check-title">注册 PAYG Withholding（工资税扣留）</div>
+          <div class="check-body">在 ATO 注册雇主身份，取得 PAYG withholding 资格。这样你才能从员工工资里扣税、然后代交给 ATO。登录 ATO Business Portal 或通过 Tax Agent 办理。</div>
+          <a href="https://www.ato.gov.au/businesses-and-organisations/hiring-and-paying-your-workers" target="_blank" rel="noopener" class="check-link">→ ATO 雇主指南</a>
+        </div>
+      </div>
+      <div class="check-item">
+        <div class="check-num">2</div>
+        <div>
+          <div class="check-title">让员工填写 TFN Declaration 和 Super Choice Form</div>
+          <div class="check-body">TFN 申报表：收集员工税号，确定正确的税率档位。Super Choice Form：员工选择自己的 Super 基金（若没选，用你的默认基金）。两者都要在员工入职 28 天内完成。</div>
+        </div>
+      </div>
+      <div class="check-item">
+        <div class="check-num">3</div>
+        <div>
+          <div class="check-title">查清员工适用的 Award 和最低工资</div>
+          <div class="check-body">用 Fair Work 的 Pay and Conditions Tool（PACT）查你行业的 Award，确认员工级别和对应时薪、加班费率、假期权利。</div>
+          <a href="https://calculate.fairwork.gov.au" target="_blank" rel="noopener" class="check-link">→ Fair Work Pay Calculator</a>
+        </div>
+      </div>
+      <div class="check-item">
+        <div class="check-num">4</div>
+        <div>
+          <div class="check-title">建立工资记录和出勤记录系统</div>
+          <div class="check-body">法律要求保存至少 7 年的工资记录和 3 年的出勤记录。推荐使用 Xero Payroll、MYOB、Deputy 等软件自动记录，也可用 Excel，但手动记录容易出错。</div>
+        </div>
+      </div>
+      <div class="check-item">
+        <div class="check-num">5</div>
+        <div>
+          <div class="check-title">注册 Single Touch Payroll（STP）</div>
+          <div class="check-body">所有雇主（包括只有一个员工）都必须通过 STP 向 ATO 实时报告工资和税款。大多数主流工资软件都内置 STP 功能，每次发工资时自动提交。</div>
+          <a href="https://www.ato.gov.au/businesses-and-organisations/hiring-and-paying-your-workers/single-touch-payroll" target="_blank" rel="noopener" class="check-link">→ ATO STP 说明</a>
+        </div>
+      </div>
+      <div class="check-item">
+        <div class="check-num">6</div>
+        <div>
+          <div class="check-title">按季度缴纳超级年金（Super）</div>
+          <div class="check-body">⚠️ <strong>2026年7月起实施 Payday Super：</strong>季度缴款已成历史。现在必须每次发薪后 <strong>7 个工作日</strong>内确保 Super 到账员工基金。请检查你的工资软件是否已开启自动 Payday Super 功能（Xero、MYOB 均已支持）。</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="cta-strip">
+    <h3>不确定有没有漏掉什么？</h3>
+    <p>Fair Work 合规细节多、罚款重。预约 15 分钟，我们帮你过一遍你的雇员安排，找出潜在风险点。</p>
+    <div class="cta-buttons">
+      <a href="consultant_cn.html#contact" class="cta-btn cta-primary">免费预约咨询 →</a>
+      <a href="super.html" class="cta-btn cta-secondary">下一篇：超级年金详解 →</a>
+    </div>
+  </div>
+
+  <div class="article-nav">
+    <a href="gst-bas.html" class="article-nav-item">
+      <div class="article-nav-dir">← 上一篇</div>
+      <div class="article-nav-title">GST 与 BAS 申报</div>
+    </a>
+    <a href="super.html" class="article-nav-item" style="text-align:right">
+      <div class="article-nav-dir">下一篇 →</div>
+      <div class="article-nav-title">超级年金（Super）</div>
+    </a>
+  </div>
+</main>
+
+<footer>
+  <div>🎋 竹 Digital · 墨尔本，维多利亚州 · ABN 29 919 594 996</div>
+  <div style="margin-top:6px;">
+    本页面为教育性合规资讯，不构成法律建议 ·
+    <a href="consultant_cn.html">返回顾问首页</a>
+  </div>
+</footer>

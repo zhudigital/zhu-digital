@@ -1,0 +1,616 @@
+<!--
+  竹 Digital — 海外收入与进出口
+  ════════════════════════════════════════════════════════
+  DATA_UPDATE_SCHEDULE: 每年7月1日后更新（关税税率、GST阈值、报告要求可能变化）
+  LAST_UPDATED: 2026-10
+  FISCAL_YEAR: 2026-27
+
+  KEY_FIGURES (核实这些数据是否有变化):
+  - GST进口低价值货物阈值: $1,000 AUD（已废除$1,000免税门槛，2018年7月1日起）
+    → 来源: ATO https://www.ato.gov.au/businesses-and-organisations/international-tax-for-businesses/gst-on-imported-services-and-digital-products
+  - 海外礼物/低价值商品免关税门槛: AUD $1,000（个人随行进口）
+  - 关税局申报门槛: AUD $10,000 现金/等价物须向ABF申报
+  - 在澳澳税居民需申报全球收入（无论来自哪个国家）
+  - 外国居民预扣税（PAYG withholding）: 股息10-30%, 利息10%, 特许权10%
+  - 代购（Daigou）作为生意需注册GST（若营业额≥$75K），并申报利润为商业收入
+  - Transfer pricing规则适用于关联方交易（$25M以上营业额企业）
+  - 国家报告（CBC）门槛: AUD $1B合并营业额
+
+  SOURCES:
+  - ATO海外收入: https://www.ato.gov.au/individuals-and-families/income-deductions-offsets-and-records/income-you-must-declare/foreign-income
+  - ATO GST进口: https://www.ato.gov.au/businesses-and-organisations/international-tax-for-businesses/gst-on-imported-services-and-digital-products
+  - ABF进口申报: https://www.abf.gov.au/importing-exporting-and-manufacturing/importing
+  - ATO税务居民: https://www.ato.gov.au/individuals-and-families/coming-to-australia-or-going-overseas/your-tax-residency
+  ════════════════════════════════════════════════════════
+-->
+<title>海外收入与进出口</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;700&family=Noto+Sans+SC:wght@300;400;500;600&display=swap">
+<style>
+/* ── 竹 Digital 设计系统 · 深色优先 ── */
+:root {
+  --bg:#0D1B2A;--bg2:#0F1F30;--surface:#152233;--surface2:#1A2B3F;
+  --border:rgba(59,130,246,.13);--border2:rgba(59,130,246,.22);
+  --fg:#F1F5F9;--fg2:#94A3B8;--fg3:#475569;--accent:#60A5FA;
+  --blue:#1D4ED8;--blue-lit:#2563EB;
+  --green:#34D399;--green-bg:rgba(52,211,153,.08);
+  --yellow:#FCD34D;--yellow-bg:rgba(252,211,77,.08);
+  --red:#F87171;--red-bg:rgba(248,113,113,.08);
+  --orange:#FB923C;--orange-bg:rgba(251,146,60,.08);
+  --teal:#2DD4BF;--teal-bg:rgba(45,212,191,.08);
+  --serif:"Noto Serif SC",Georgia,serif;
+  --sans:"Noto Sans SC",system-ui,sans-serif;
+  color-scheme:dark;
+}
+@media(prefers-color-scheme:light){
+  :root:not([data-theme="dark"]){
+    --bg:#F0F4FA;--bg2:#E4EBF7;--surface:#FFFFFF;--surface2:#F8FAFC;
+    --border:rgba(37,99,235,.13);--border2:rgba(37,99,235,.25);
+    --fg:#0F172A;--fg2:#334155;--fg3:#64748B;--accent:#1D4ED8;
+    --blue:#1D4ED8;--blue-lit:#2563EB;
+    --green:#059669;--green-bg:rgba(5,150,105,.07);
+    --yellow:#B45309;--yellow-bg:rgba(180,83,9,.06);
+    --red:#DC2626;--red-bg:rgba(220,38,38,.06);
+    --orange:#C2410C;--orange-bg:rgba(194,65,12,.06);
+    --teal:#0D9488;--teal-bg:rgba(13,148,136,.07);
+    color-scheme:light;
+  }
+}
+:root[data-theme="light"]{
+  --bg:#F0F4FA;--bg2:#E4EBF7;--surface:#FFFFFF;--surface2:#F8FAFC;
+  --border:rgba(37,99,235,.13);--border2:rgba(37,99,235,.25);
+  --fg:#0F172A;--fg2:#334155;--fg3:#64748B;--accent:#1D4ED8;
+  --blue:#1D4ED8;--blue-lit:#2563EB;
+  --green:#059669;--green-bg:rgba(5,150,105,.07);
+  --yellow:#B45309;--yellow-bg:rgba(180,83,9,.06);
+  --red:#DC2626;--red-bg:rgba(220,38,38,.06);
+  --orange:#C2410C;--orange-bg:rgba(194,65,12,.06);
+  --teal:#0D9488;--teal-bg:rgba(13,148,136,.07);
+  color-scheme:light;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--fg);font-family:var(--sans);line-height:1.7;padding:0 0 80px}
+
+/* ── Nav ── */
+.nav{display:flex;align-items:center;justify-content:space-between;padding:18px 24px;border-bottom:1px solid var(--border);position:sticky;top:0;background:var(--bg);z-index:100}
+.nav-logo{font-family:var(--serif);font-size:18px;color:var(--fg);text-decoration:none;letter-spacing:.02em}
+.nav-logo span{color:var(--accent)}
+.nav-back{font-size:13px;color:var(--fg2);text-decoration:none;display:flex;align-items:center;gap:6px;transition:color .2s}
+.nav-back:hover{color:var(--accent)}
+.nav-links{display:flex;gap:20px}
+.nav-links a{font-size:13px;color:var(--fg2);text-decoration:none;transition:color .2s}
+.nav-links a:hover{color:var(--accent)}
+@media(max-width:600px){.nav-links{display:none}}
+
+/* ── Hero ── */
+.hero{padding:48px 24px 32px;max-width:780px;margin:0 auto}
+.breadcrumb{font-size:12px;color:var(--fg3);margin-bottom:16px;display:flex;align-items:center;gap:8px}
+.breadcrumb a{color:var(--fg3);text-decoration:none}
+.breadcrumb a:hover{color:var(--accent)}
+.breadcrumb-sep{color:var(--fg3)}
+.hero h1{font-family:var(--serif);font-size:clamp(26px,5vw,40px);font-weight:700;line-height:1.2;margin-bottom:14px;text-wrap:balance}
+.hero-sub{font-size:16px;color:var(--fg2);line-height:1.7;max-width:600px}
+.series-badge{display:inline-flex;align-items:center;gap:6px;background:var(--teal-bg);border:1px solid rgba(45,212,191,.25);color:var(--teal);font-size:11px;font-weight:600;padding:4px 10px;border-radius:20px;margin-bottom:20px;letter-spacing:.04em}
+
+/* ── Data notice ── */
+.data-notice{background:var(--surface);border:1px solid var(--border2);border-left:3px solid var(--accent);border-radius:0 8px 8px 0;padding:14px 18px;margin:0 auto 32px;max-width:780px;font-size:13px;color:var(--fg2);line-height:1.6}
+.data-notice strong{color:var(--fg);display:block;margin-bottom:4px}
+.main-wrap{max-width:780px;margin:0 auto;padding:0 24px}
+
+/* ── Section headers ── */
+.section-label{font-size:11px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);margin-bottom:8px}
+.section-title{font-family:var(--serif);font-size:22px;font-weight:700;margin-bottom:6px;text-wrap:balance}
+.section-sub{font-size:14px;color:var(--fg2);margin-bottom:24px;line-height:1.6}
+.section-block{margin-bottom:56px}
+
+/* ── Source tag ── */
+.src-tag{display:inline-flex;align-items:center;font-size:10px;background:rgba(96,165,250,.1);color:var(--accent);border:1px solid rgba(96,165,250,.2);border-radius:4px;padding:1px 6px;font-weight:600;margin-left:4px;text-decoration:none;vertical-align:middle;white-space:nowrap}
+.src-tag:hover{background:rgba(96,165,250,.2)}
+
+/* ── Tax residency box ── */
+.residency-box{background:var(--surface);border:1px solid var(--border2);border-radius:12px;padding:24px;margin-bottom:24px}
+.residency-title{font-family:var(--serif);font-size:17px;font-weight:700;margin-bottom:14px;display:flex;align-items:center;gap:10px}
+.residency-icon{font-size:22px}
+.residency-tests{display:flex;flex-direction:column;gap:10px}
+.residency-test{background:var(--bg2);border-radius:8px;padding:14px 16px;display:flex;gap:14px;align-items:flex-start}
+.test-icon{font-size:18px;flex-shrink:0;margin-top:2px}
+.test-body{}
+.test-name{font-size:14px;font-weight:600;margin-bottom:3px}
+.test-desc{font-size:13px;color:var(--fg2);line-height:1.5}
+.residency-rule{background:var(--green-bg);border:1px solid rgba(52,211,153,.2);border-radius:8px;padding:14px 16px;margin-top:14px;font-size:14px;color:var(--green)}
+.residency-rule strong{display:block;margin-bottom:4px}
+
+/* ── Income categories grid ── */
+.income-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:16px;margin-bottom:24px}
+.income-card{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:18px}
+.income-card-icon{font-size:24px;margin-bottom:10px}
+.income-card-title{font-size:15px;font-weight:600;margin-bottom:6px}
+.income-card-body{font-size:13px;color:var(--fg2);line-height:1.55}
+.income-card-tag{display:inline-block;font-size:10px;font-weight:600;padding:2px 8px;border-radius:4px;margin-top:8px;letter-spacing:.04em}
+.tag-declare{background:var(--yellow-bg);color:var(--yellow)}
+.tag-gst{background:var(--orange-bg);color:var(--orange)}
+.tag-exempt{background:var(--green-bg);color:var(--green)}
+
+/* ── Daigou section ── */
+.daigou-box{background:var(--surface);border:1px solid var(--border2);border-radius:12px;padding:24px;margin-bottom:24px}
+.daigou-title{font-family:var(--serif);font-size:17px;font-weight:700;margin-bottom:6px;display:flex;align-items:center;gap:10px}
+.daigou-sub{font-size:13px;color:var(--fg2);margin-bottom:16px}
+.daigou-steps{display:flex;flex-direction:column;gap:10px}
+.daigou-step{background:var(--bg2);border-radius:8px;padding:14px 16px;display:flex;gap:14px;align-items:flex-start}
+.step-num{width:24px;height:24px;background:var(--accent);color:#fff;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;flex-shrink:0;margin-top:1px}
+.daigou-step-body{font-size:13px;color:var(--fg2);line-height:1.5}
+.daigou-step-body strong{color:var(--fg)}
+.daigou-alert{background:var(--yellow-bg);border:1px solid rgba(252,211,77,.2);border-radius:8px;padding:14px 16px;margin-top:14px;font-size:13px;color:var(--yellow);line-height:1.5}
+.daigou-alert strong{display:block;margin-bottom:4px}
+
+/* ── Import section: two column steps ── */
+.import-flow{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px}
+@media(max-width:580px){.import-flow{grid-template-columns:1fr}}
+.import-step{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:18px}
+.import-step-num{font-size:11px;font-weight:700;color:var(--accent);letter-spacing:.06em;text-transform:uppercase;margin-bottom:6px}
+.import-step-title{font-size:15px;font-weight:600;margin-bottom:6px}
+.import-step-body{font-size:13px;color:var(--fg2);line-height:1.55}
+
+/* ── Threshold table ── */
+.threshold-table-wrap{overflow-x:auto;border-radius:10px;border:1px solid var(--border);margin-bottom:16px}
+table.threshold-table{width:100%;border-collapse:collapse;font-size:13px}
+.threshold-table thead{background:var(--surface)}
+.threshold-table th{padding:11px 14px;text-align:left;font-size:11px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--fg2);border-bottom:1px solid var(--border);white-space:nowrap}
+.threshold-table td{padding:12px 14px;border-bottom:1px solid var(--border);vertical-align:top;line-height:1.5}
+.threshold-table tr:last-child td{border-bottom:none}
+.threshold-table tr:nth-child(even) td{background:var(--bg2)}
+.cell-amount{font-weight:600;font-variant-numeric:tabular-nums;white-space:nowrap}
+.cell-green{color:var(--green)}
+.cell-yellow{color:var(--yellow)}
+.cell-red{color:var(--red)}
+
+/* ── WeChat / payment platforms ── */
+.payment-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:14px;margin-bottom:24px}
+.payment-card{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:16px}
+.payment-platform{font-size:13px;font-weight:700;margin-bottom:6px;display:flex;align-items:center;gap:8px}
+.payment-platform-icon{font-size:18px}
+.payment-rule{font-size:12px;color:var(--fg2);line-height:1.5}
+.payment-tag{display:inline-block;font-size:10px;font-weight:600;padding:2px 7px;border-radius:4px;margin-top:7px;letter-spacing:.04em;background:var(--yellow-bg);color:var(--yellow)}
+
+/* ── Withholding tax ── */
+.withholding-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:14px;margin-bottom:24px}
+.wh-card{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:16px;text-align:center}
+.wh-rate{font-family:var(--serif);font-size:32px;font-weight:700;color:var(--accent);margin-bottom:6px;font-variant-numeric:tabular-nums}
+.wh-type{font-size:14px;font-weight:600;margin-bottom:4px}
+.wh-note{font-size:12px;color:var(--fg2);line-height:1.4}
+.wh-info{background:var(--surface2);border:1px solid var(--border);border-radius:8px;padding:14px 16px;font-size:13px;color:var(--fg2);line-height:1.55;margin-bottom:24px}
+
+/* ── DTA box ── */
+.dta-box{background:var(--teal-bg);border:1px solid rgba(45,212,191,.2);border-radius:10px;padding:20px;margin-bottom:24px}
+.dta-title{font-size:15px;font-weight:700;color:var(--teal);margin-bottom:8px;display:flex;align-items:center;gap:8px}
+.dta-body{font-size:13px;color:var(--fg2);line-height:1.6}
+.dta-body strong{color:var(--teal)}
+
+/* ── Checklist ── */
+.checklist{display:flex;flex-direction:column;gap:10px;margin-bottom:24px}
+.checklist-item{display:flex;gap:12px;align-items:flex-start;background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:14px 16px}
+.check-icon{font-size:16px;flex-shrink:0;margin-top:1px}
+.check-body{font-size:13px;color:var(--fg2);line-height:1.5}
+.check-body strong{color:var(--fg)}
+
+/* ── CTA ── */
+.cta-block{background:var(--surface);border:1px solid var(--border2);border-radius:14px;padding:32px 28px;text-align:center;margin-top:48px}
+.cta-icon{font-size:36px;margin-bottom:12px}
+.cta-title{font-family:var(--serif);font-size:20px;font-weight:700;margin-bottom:8px}
+.cta-sub{font-size:14px;color:var(--fg2);margin-bottom:22px;line-height:1.6}
+.cta-btns{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
+.btn-primary{background:var(--accent);color:#fff;padding:11px 22px;border-radius:8px;font-size:14px;font-weight:600;text-decoration:none;transition:opacity .2s}
+.btn-primary:hover{opacity:.85}
+.btn-secondary{background:transparent;color:var(--accent);border:1px solid var(--accent);padding:11px 22px;border-radius:8px;font-size:14px;font-weight:600;text-decoration:none;transition:background .2s}
+.btn-secondary:hover{background:rgba(96,165,250,.1)}
+
+/* ── Series nav ── */
+.series-nav{background:var(--bg2);border-top:1px solid var(--border);padding:28px 24px;margin-top:64px}
+.series-nav-inner{max-width:780px;margin:0 auto}
+.series-nav-label{font-size:11px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--fg3);margin-bottom:16px}
+.series-links{display:flex;flex-wrap:wrap;gap:10px}
+.series-link{font-size:13px;color:var(--fg2);text-decoration:none;background:var(--surface);border:1px solid var(--border);border-radius:6px;padding:6px 12px;transition:all .2s}
+.series-link:hover{border-color:var(--accent);color:var(--accent)}
+.series-link.current{border-color:var(--accent);color:var(--accent);font-weight:600}
+
+/* ── Footer ── */
+.footer{padding:24px;text-align:center;font-size:12px;color:var(--fg3);border-top:1px solid var(--border)}
+.footer a{color:var(--fg3);text-decoration:none}
+.footer a:hover{color:var(--accent)}
+.disclaimer{max-width:780px;margin:0 auto 12px;font-size:12px;color:var(--fg3);line-height:1.6;padding:0 24px}
+</style>
+
+<!-- NAV -->
+<nav class="nav">
+  <a href="consultant_cn.html" class="nav-logo">🎋 <span>竹</span> Digital</a>
+  <a href="consultant_cn.html" class="nav-back">← 返回主页</a>
+  <div class="nav-links">
+    <a href="consultant_cn.html">中文</a>
+    <a href="consultant_en.html">English</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="breadcrumb">
+    <a href="consultant_cn.html">主页</a>
+    <span class="breadcrumb-sep">›</span>
+    <span>带你读懂 · 系列第六篇</span>
+  </div>
+  <div class="series-badge">📚 系列第六篇 · 共六篇</div>
+  <h1>海外收入与进出口</h1>
+  <p class="hero-sub">在澳大利亚经营却与海外有业务往来？了解全球收入申报、货物进出口 GST、代购合规，以及中澳之间的税务安排。</p>
+</div>
+
+<!-- DATA NOTICE -->
+<div class="data-notice" style="padding-left:24px;padding-right:24px">
+  <strong>📋 数据说明</strong>
+  本页内容依据 ATO、ABF（澳大利亚边境部队）及相关税法，截至 2026年10月。关税税率与申报要求可能随政策调整，具体情况建议咨询注册税务代理（Tax Agent）或报关行（Customs Broker）。
+  来源：<a href="https://www.ato.gov.au/individuals-and-families/income-deductions-offsets-and-records/income-you-must-declare/foreign-income" class="src-tag" target="_blank" rel="noopener">ATO</a>
+  <a href="https://www.abf.gov.au/importing-exporting-and-manufacturing/importing" class="src-tag" target="_blank" rel="noopener">ABF</a>
+</div>
+
+<div class="main-wrap">
+
+  <!-- SECTION 1: 税务居民身份 -->
+  <div class="section-block">
+    <div class="section-label">第一步</div>
+    <div class="section-title">你是澳大利亚税务居民吗？</div>
+    <div class="section-sub">这是判断你是否需要申报海外收入的关键。ATO 使用四个测试来判断税务居民身份，满足其中一项即可。</div>
+
+    <div class="residency-box">
+      <div class="residency-title"><span class="residency-icon">🏠</span> ATO 税务居民四项测试</div>
+      <div class="residency-tests">
+        <div class="residency-test">
+          <span class="test-icon">📍</span>
+          <div class="test-body">
+            <div class="test-name">居住测试（Resides Test）</div>
+            <div class="test-desc">实际居住在澳大利亚，包括日常习惯、家庭关系和商业利益所在地。这是最主要的判断标准，大多数在澳长居人士均满足。<a href="https://www.ato.gov.au/individuals-and-families/coming-to-australia-or-going-overseas/your-tax-residency" class="src-tag" target="_blank" rel="noopener">ATO</a></div>
+          </div>
+        </div>
+        <div class="residency-test">
+          <span class="test-icon">🏡</span>
+          <div class="test-body">
+            <div class="test-name">住所测试（Domicile Test）</div>
+            <div class="test-desc">澳大利亚是你的永久家园（Domicile），除非你的永久居所在海外。</div>
+          </div>
+        </div>
+        <div class="residency-test">
+          <span class="test-icon">📅</span>
+          <div class="test-body">
+            <div class="test-name">183天测试（183-Day Test）</div>
+            <div class="test-desc">在某财年内在澳连续或合计居住超过183天，且未显示在其他国家定居的意图。</div>
+          </div>
+        </div>
+        <div class="residency-test">
+          <span class="test-icon">🏛️</span>
+          <div class="test-body">
+            <div class="test-name">Commonwealth Superannuation Test</div>
+            <div class="test-desc">适用于澳大利亚联邦政府雇员（含外派人员），及其配偶和子女。</div>
+          </div>
+        </div>
+      </div>
+      <div class="residency-rule">
+        <strong>✅ 是税务居民？须申报全球收入</strong>
+        作为澳大利亚税务居民，无论收入来自哪个国家，均须向 ATO 申报。包括来自中国的租金、股息、工资或生意利润。<a href="https://www.ato.gov.au/individuals-and-families/income-deductions-offsets-and-records/income-you-must-declare/foreign-income" class="src-tag" target="_blank" rel="noopener">ATO</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- SECTION 2: 需要申报的海外收入类型 -->
+  <div class="section-block">
+    <div class="section-label">常见情况</div>
+    <div class="section-title">哪些海外收入需要申报？</div>
+    <div class="section-sub">以下是华人小业主最常遇到的海外收入类型及申报要求。</div>
+
+    <div class="income-grid">
+      <div class="income-card">
+        <div class="income-card-icon">🏠</div>
+        <div class="income-card-title">中国房产租金</div>
+        <div class="income-card-body">在中国持有房产并出租，所得租金属于澳大利亚应税收入，须换算成澳元后申报。相关费用（管理费、维修费等）可依法扣除。</div>
+        <div class="income-card-tag tag-declare">须申报</div>
+      </div>
+      <div class="income-card">
+        <div class="income-card-icon">📈</div>
+        <div class="income-card-title">海外投资股息 / 利息</div>
+        <div class="income-card-body">来自中国或其他国家的股票股息、银行利息或基金分红，均须在澳大利亚纳税申报单上填写。已在海外缴纳的税款可申请外国税收抵扣（Foreign Tax Offset）。</div>
+        <div class="income-card-tag tag-declare">须申报</div>
+      </div>
+      <div class="income-card">
+        <div class="income-card-icon">💼</div>
+        <div class="income-card-title">海外工资 / 劳务收入</div>
+        <div class="income-card-body">如你在澳大利亚税务年度内仍有来自中国公司的工资、顾问费或劳务报酬，须申报为外国就业收入。部分豁免情况需满足 ATO 的"短期派遣"条件。</div>
+        <div class="income-card-tag tag-declare">须申报</div>
+      </div>
+      <div class="income-card">
+        <div class="income-card-icon">🏭</div>
+        <div class="income-card-title">海外生意利润</div>
+        <div class="income-card-body">若你在中国有注册企业或合伙，其利润可能须通过受控外国公司（CFC）或外国信托规则申报。建议咨询专业税务顾问，因结构复杂。</div>
+        <div class="income-card-tag tag-declare">须申报</div>
+      </div>
+      <div class="income-card">
+        <div class="income-card-icon">🎁</div>
+        <div class="income-card-title">家人转账 / 礼金</div>
+        <div class="income-card-body">纯粹的家庭礼物（父母转账、亲属资助）通常不构成应税收入，但须保留记录证明资金性质。若超过 AUD $10,000 现金等价物入境，须向 ABF 申报（不代表要缴税）。</div>
+        <div class="income-card-tag tag-exempt">通常免税</div>
+      </div>
+      <div class="income-card">
+        <div class="income-card-icon">💰</div>
+        <div class="income-card-title">资产出售（CGT）</div>
+        <div class="income-card-body">出售中国房产或股权时，若购买时你已是澳大利亚税务居民，可能需要在澳申报资本利得税（CGT）。持有超过12个月可享50%折扣。</div>
+        <div class="income-card-tag tag-declare">须评估</div>
+      </div>
+    </div>
+
+    <div class="dta-box">
+      <div class="dta-title">🤝 中澳税收协定（DTA）</div>
+      <div class="dta-body">
+        中国与澳大利亚签有<strong>双边税收协定</strong>（Double Tax Agreement，DTA）。协定规定了哪个国家对哪类收入拥有征税权，并设定了预扣税的上限税率。如果你已在中国就某笔收入缴税，通常可以在澳大利亚税单上申请<strong>外国税收抵扣（Foreign Tax Offset）</strong>，避免双重征税。具体适用需逐案分析，建议咨询注册税务代理。<a href="https://www.ato.gov.au/general/international-tax-agreements/in-detail/foreign-income-tax-offsets/" class="src-tag" target="_blank" rel="noopener">ATO</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- SECTION 3: 代购 Daigou -->
+  <div class="section-block">
+    <div class="section-label">热门话题</div>
+    <div class="section-title">代购（Daigou）怎么算税？</div>
+    <div class="section-sub">代购在华人社区非常普遍，但其税务处理取决于规模和频率。</div>
+
+    <div class="daigou-box">
+      <div class="daigou-title"><span>🛍️</span> 代购的合规路径</div>
+      <div class="daigou-sub">ATO 根据代购的规模和商业意图进行判断，主要分以下几种情况：</div>
+      <div class="daigou-steps">
+        <div class="daigou-step">
+          <div class="step-num">A</div>
+          <div class="daigou-step-body">
+            <strong>偶尔帮朋友购买，收取实际费用</strong><br>
+            若是个人帮助行为，收取的是实际购买价格而非佣金，通常不被视为生意行为，无需特别申报。建议保留记录以备查验。
+          </div>
+        </div>
+        <div class="daigou-step">
+          <div class="step-num">B</div>
+          <div class="daigou-step-body">
+            <strong>定期从事代购、赚取佣金或差价</strong><br>
+            若有固定客群、持续交易、赚取利润，ATO 通常将其视为<strong>经营生意（Carrying on a business）</strong>。利润须作为商业收入申报所得税。<a href="https://www.ato.gov.au/businesses-and-organisations/starting-registering-or-closing-a-business/before-you-start-your-business/is-it-a-business-or-hobby" class="src-tag" target="_blank" rel="noopener">ATO</a>
+          </div>
+        </div>
+        <div class="daigou-step">
+          <div class="step-num">C</div>
+          <div class="daigou-step-body">
+            <strong>代购营业额达到 $75,000，须注册 GST</strong><br>
+            若年度代购销售额（含佣金收入）达到或超过 $75,000，须向 ATO 注册 GST，并就在澳销售额收取 10% GST。<a href="https://www.ato.gov.au/businesses-and-organisations/gst-excise-and-indirect-taxes/gst/registering-for-gst" class="src-tag" target="_blank" rel="noopener">ATO</a>
+          </div>
+        </div>
+        <div class="daigou-step">
+          <div class="step-num">D</div>
+          <div class="daigou-step-body">
+            <strong>向中国买家销售境内商品</strong><br>
+            若代购商品从澳大利亚寄往中国，属于出口销售。已注册 GST 的业主在符合条件的出口商品上可适用 GST 零税率（0%）。<a href="https://www.ato.gov.au/businesses-and-organisations/gst-excise-and-indirect-taxes/gst/in-detail/rules-for-specific-transactions/international-transactions/exports-and-gst" class="src-tag" target="_blank" rel="noopener">ATO</a>
+          </div>
+        </div>
+      </div>
+      <div class="daigou-alert">
+        <strong>⚠️ ATO 对代购的关注度持续上升</strong>
+        ATO 通过数据匹配（包括银行转账、快递记录、社交媒体及电商平台数据）识别未申报的代购收入。若从事代购生意，建议保留完整进货记录、销售记录和费用凭证，并根据规模考虑注册 ABN。
+      </div>
+    </div>
+  </div>
+
+  <!-- SECTION 4: 进口货物 -->
+  <div class="section-block">
+    <div class="section-label">进口贸易</div>
+    <div class="section-title">从中国进口货物：关税与 GST</div>
+    <div class="section-sub">从海外（包括中国）进口商品到澳大利亚用于经营，涉及两个主要费用：关税（Customs Duty）和进口 GST。</div>
+
+    <div class="import-flow">
+      <div class="import-step">
+        <div class="import-step-num">步骤一</div>
+        <div class="import-step-title">确认 HS 编码与关税税率</div>
+        <div class="import-step-body">每类商品有唯一的海关商品编码（HS Code），决定适用的关税税率。可在 ABF 的 Working Tariff 系统中查询。大多数普通商品从中国进口的关税为 0–5%，但特定品类可能更高。<a href="https://www.abf.gov.au/importing-exporting-and-manufacturing/tariff-classification" class="src-tag" target="_blank" rel="noopener">ABF</a></div>
+      </div>
+      <div class="import-step">
+        <div class="import-step-num">步骤二</div>
+        <div class="import-step-title">低价值货物的 GST</div>
+        <div class="import-step-body">自 2018年7月1日起，价值 AUD $1,000 及以下的进口商品不再享有 GST 免税。海外卖家须向澳大利亚买家收取 10% GST。若你从中国电商平台进货，供应商可能已代收 GST。<a href="https://www.ato.gov.au/businesses-and-organisations/international-tax-for-businesses/gst-on-imported-services-and-digital-products" class="src-tag" target="_blank" rel="noopener">ATO</a></div>
+      </div>
+      <div class="import-step">
+        <div class="import-step-num">步骤三</div>
+        <div class="import-step-title">申报与清关</div>
+        <div class="import-step-body">价值超过 AUD $1,000 的商业货物须提交正式进口申报（Import Declaration）并缴纳关税和 GST。可自行通过 ABF 的 ICS 系统办理，或委托持牌报关行（Licensed Customs Broker）代办。<a href="https://www.abf.gov.au/importing-exporting-and-manufacturing/importing/how-to-import" class="src-tag" target="_blank" rel="noopener">ABF</a></div>
+      </div>
+      <div class="import-step">
+        <div class="import-step-num">步骤四</div>
+        <div class="import-step-title">进口 GST 可用于抵扣</div>
+        <div class="import-step-body">若你已注册 GST 并将进口商品用于 GST 应税的经营活动，你在进口时缴纳的 GST 可作为进项税抵扣（Input Tax Credit），在 BAS 申报时申请退回。</div>
+      </div>
+    </div>
+
+    <div class="threshold-table-wrap">
+      <table class="threshold-table">
+        <thead>
+          <tr>
+            <th>商品价值</th>
+            <th>关税</th>
+            <th>进口 GST</th>
+            <th>申报要求</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="cell-amount">$0 – $1,000</td>
+            <td class="cell-green">通常无关税</td>
+            <td>海外卖家代收 10% GST</td>
+            <td>无需正式申报（随附货运单）</td>
+          </tr>
+          <tr>
+            <td class="cell-amount">$1,001 – 海关免税限额</td>
+            <td>按 HS 编码计算</td>
+            <td>10% 进口 GST</td>
+            <td>可能需要自愿申报</td>
+          </tr>
+          <tr>
+            <td class="cell-amount">超过 $1,000（商业货物）</td>
+            <td>按 HS 编码计算</td>
+            <td>10% 进口 GST</td>
+            <td class="cell-yellow">须提交正式进口申报</td>
+          </tr>
+          <tr>
+            <td class="cell-amount">超过 AUD $10,000 现金</td>
+            <td>—</td>
+            <td>—</td>
+            <td class="cell-red">须向 ABF 申报（不代表征税）</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <p style="font-size:12px;color:var(--fg3);margin-bottom:24px">注：关税税率因商品类别不同而差异较大，上表仅为一般性参考。建议通过 ABF Working Tariff 查询具体商品的准确税率。</p>
+  </div>
+
+  <!-- SECTION 5: 微信/支付宝跨境收款 -->
+  <div class="section-block">
+    <div class="section-label">数字支付</div>
+    <div class="section-title">微信支付 / 支付宝跨境收款怎么算？</div>
+    <div class="section-sub">越来越多华人小业主通过微信支付、支付宝收取来自中国客户的款项。这些收入同样受澳大利亚税法约束。</div>
+
+    <div class="payment-grid">
+      <div class="payment-card">
+        <div class="payment-platform"><span class="payment-platform-icon">💬</span> 微信支付</div>
+        <div class="payment-rule">通过微信收取的服务费或商品款项，无论金额，均为应税收入，须申报所得税。若已注册 GST 且向澳大利亚客户提供服务，须就应税交易收取 GST。</div>
+        <div class="payment-tag">须申报收入</div>
+      </div>
+      <div class="payment-card">
+        <div class="payment-platform"><span class="payment-platform-icon">📱</span> 支付宝</div>
+        <div class="payment-rule">与微信支付规则相同。ATO 通过金融情报和数据匹配协议，可追踪跨境数字支付流向。建议将收款记录与银行对账单分开整理。</div>
+        <div class="payment-tag">须申报收入</div>
+      </div>
+      <div class="payment-card">
+        <div class="payment-platform"><span class="payment-platform-icon">🏦</span> 银行电汇（T/T）</div>
+        <div class="payment-rule">最常见的中澳商业收款方式。超过 AUD $10,000 的国际汇款须由银行向 AUSTRAC 申报。这是银行的法规义务，不影响你的税务处理，但建议保留汇款合同和发票备查。</div>
+        <div class="payment-tag">银行合规申报</div>
+      </div>
+      <div class="payment-card">
+        <div class="payment-platform"><span class="payment-platform-icon">💱</span> 换汇平台（地下钱庄）</div>
+        <div class="payment-rule">通过非正规渠道换汇或转账，违反澳大利亚《反洗钱与反恐融资法》（AML/CTF Act），可能导致资金被没收及刑事处罚，与税务处理无关，须特别避免。</div>
+        <div class="payment-tag" style="background:var(--red-bg);color:var(--red)">违法风险</div>
+      </div>
+    </div>
+
+    <div class="wh-info">
+      💡 <strong>重要提示：</strong>ATO 与 AUSTRAC（澳大利亚金融情报中心）、各大银行及部分海外税务机关共享金融数据。通过数字支付工具收取的款项，即使金额较小，也可能被追踪。建议无论通过何种方式收款，均完整记录每笔交易的性质、金额和用途。
+    </div>
+  </div>
+
+  <!-- SECTION 6: 向海外付款 — 预扣税 -->
+  <div class="section-block">
+    <div class="section-label">向外付款</div>
+    <div class="section-title">向中国供应商或个人付款：预扣税规则</div>
+    <div class="section-sub">若你向海外非居民支付特定类型的款项，澳大利亚税法可能要求你代扣一定比例的税款并上缴 ATO。</div>
+
+    <div class="withholding-grid">
+      <div class="wh-card">
+        <div class="wh-rate">10–30%</div>
+        <div class="wh-type">股息</div>
+        <div class="wh-note">向外国非居民支付股息时须预扣，具体税率依中澳 DTA 规定，一般为 15%</div>
+      </div>
+      <div class="wh-card">
+        <div class="wh-rate">10%</div>
+        <div class="wh-type">利息</div>
+        <div class="wh-note">向境外关联方或非居民支付贷款利息时适用，DTA 可降至 10%</div>
+      </div>
+      <div class="wh-card">
+        <div class="wh-rate">10%</div>
+        <div class="wh-type">特许权使用费</div>
+        <div class="wh-note">向境外支付专利、商标、版权、品牌使用费时适用</div>
+      </div>
+      <div class="wh-card">
+        <div class="wh-rate">0%</div>
+        <div class="wh-type">货物贸易款</div>
+        <div class="wh-note">向中国供应商支付货款（进口贸易）通常无需预扣税，不属于特许权或服务费</div>
+      </div>
+    </div>
+
+    <div class="wh-info">
+      📌 <strong>适用范围说明：</strong>预扣税主要适用于支付给<strong>非居民</strong>的特定款项（股息、利息、特许权使用费、部分服务费）。向中国供应商支付普通货款通常无需预扣税。若有疑问，特别是涉及技术服务费、管理费或品牌授权费等，建议咨询注册税务代理。<a href="https://www.ato.gov.au/businesses-and-organisations/international-tax-for-businesses/withholding-tax" class="src-tag" target="_blank" rel="noopener">ATO</a>
+    </div>
+  </div>
+
+  <!-- SECTION 7: 实用合规清单 -->
+  <div class="section-block">
+    <div class="section-label">合规清单</div>
+    <div class="section-title">海外业务合规五步走</div>
+    <div class="section-sub">定期做好以下几点，可以大幅降低 ATO 查税的风险，也有助于正确申报、避免多缴税。</div>
+
+    <div class="checklist">
+      <div class="checklist-item">
+        <span class="check-icon">📋</span>
+        <div class="check-body">
+          <strong>确认你的税务居民身份</strong><br>
+          若你近年曾离开澳大利亚超过数月，或正在申请 PR/公民身份过渡期间，建议向税务代理确认当前税务居民身份，避免申报错误。
+        </div>
+      </div>
+      <div class="checklist-item">
+        <span class="check-icon">💱</span>
+        <div class="check-body">
+          <strong>海外收入换算成澳元</strong><br>
+          所有海外收入须按收入产生日期（或 ATO 公布的年均汇率）换算为澳元后申报。建议保留每笔收入对应的汇率记录。<a href="https://www.ato.gov.au/individuals-and-families/income-deductions-offsets-and-records/in-detail/overseas-income/foreign-income-conversion-calculator" class="src-tag" target="_blank" rel="noopener">ATO</a>
+        </div>
+      </div>
+      <div class="checklist-item">
+        <span class="check-icon">🧾</span>
+        <div class="check-body">
+          <strong>申请外国税收抵扣（Foreign Tax Offset）</strong><br>
+          若已就某笔收入在中国缴税，附上纳税证明（中文版即可），可在澳大利亚税单上申请抵扣，减少在澳应缴税额。
+        </div>
+      </div>
+      <div class="checklist-item">
+        <span class="check-icon">📦</span>
+        <div class="check-body">
+          <strong>进口贸易保留完整单据</strong><br>
+          每批进口货物的发票、提单（Bill of Lading）/ 空运单（Airway Bill）、海关申报单、付款记录，须保存 5 年（税务记录）。这些也是进项税抵扣（Input Tax Credit）的凭据。
+        </div>
+      </div>
+      <div class="checklist-item">
+        <span class="check-icon">🤝</span>
+        <div class="check-body">
+          <strong>关联方交易须保持公平交易原则</strong><br>
+          若你与中国关联方（如家人公司或关联企业）之间有业务往来（销售、服务、贷款），须按照公平市场价格进行，避免通过人为定价转移利润。ATO 的转让定价规则适用于关联方交易。<a href="https://www.ato.gov.au/businesses-and-organisations/international-tax-for-businesses/transfer-pricing" class="src-tag" target="_blank" rel="noopener">ATO</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CTA -->
+  <div class="cta-block">
+    <div class="cta-icon">🌏</div>
+    <div class="cta-title">海外业务情况复杂？我们来帮你理清</div>
+    <div class="cta-sub">跨境税务涉及多个机构和规定，不同情况差异很大。预约咨询，我们会针对你的具体业务，把要申报什么、怎么申报，翻译成你能直接用的中文。</div>
+    <div class="cta-btns">
+      <a href="consultant_cn.html#contact" class="btn-primary">预约咨询</a>
+      <a href="consultant_cn.html" class="btn-secondary">回到主页</a>
+    </div>
+  </div>
+
+</div><!-- /.main-wrap -->
+
+<!-- SERIES NAV -->
+<div class="series-nav">
+  <div class="series-nav-inner">
+    <div class="series-nav-label">🎋 带你读懂 系列全六篇</div>
+    <div class="series-links">
+      <a href="abn-structure.html" class="series-link">① ABN 与企业结构</a>
+      <a href="gst-bas.html" class="series-link">② GST 与 BAS 申报</a>
+      <a href="fair-work.html" class="series-link">③ Fair Work 雇员合规</a>
+      <a href="super.html" class="series-link">④ 超级年金（Super）</a>
+      <a href="record-keeping.html" class="series-link">⑤ 账本与记录保存</a>
+      <a href="overseas-income.html" class="series-link current">⑥ 海外收入与进出口</a>
+    </div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<p class="disclaimer">
+  本页内容仅供参考，不构成税务、法律或财务建议。具体情况因人而异，建议咨询注册税务代理（Registered Tax Agent）或相关专业人士。ATO 和 ABF 的规定可能随时调整，以官方网站最新发布为准。
+</p>
+<div class="footer">
+  <p>© 2026–27 竹 Digital · 澳大利亚华人小企业合规指南</p>
+  <p style="margin-top:6px"><a href="consultant_cn.html">中文主页</a> · <a href="consultant_en.html">English</a> · <a href="https://www.ato.gov.au" target="_blank" rel="noopener">ATO 官网</a> · <a href="https://www.abf.gov.au" target="_blank" rel="noopener">ABF 官网</a></p>
+</div>

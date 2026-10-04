@@ -1,0 +1,656 @@
+<title>竹 Digital — English Advisor</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,300&family=DM+Serif+Display:ital@0;1&display=swap">
+<style>
+/* ── Design tokens ───────────────────────────────────────────── */
+/* Layout: single-column with sticky top nav, full-bleed hero, card grid */
+:root {
+  --bg:       #0D1B2A;
+  --bg2:      #111D2C;
+  --surface:  #16253A;
+  --border:   rgba(34,211,238,.12);
+  --fg:       #F1F5F9;
+  --fg2:      #94A3B8;
+  --fg3:      #475569;
+  --accent:   #22D3EE;
+  --accent2:  #0E7490;
+  --teal:     #0D9488;
+  --teal-lit: #14B8A6;
+  --warn:     #FCD34D;
+  --serif:    "DM Serif Display", Georgia, serif;
+  --sans:     "DM Sans", system-ui, sans-serif;
+  color-scheme: dark;
+}
+@media (prefers-color-scheme: light) {
+  :root:not([data-theme="dark"]) {
+    --bg:      #F0F7FA;
+    --bg2:     #E2F0F5;
+    --surface: #FFFFFF;
+    --border:  rgba(13,148,136,.15);
+    --fg:      #0F172A;
+    --fg2:     #334155;
+    --fg3:     #64748B;
+    --accent:  #0E7490;
+    --accent2: #164E63;
+    --teal:    #0D9488;
+    --teal-lit:#0F766E;
+    color-scheme: light;
+  }
+}
+:root[data-theme="light"] {
+  --bg:      #F0F7FA;
+  --bg2:     #E2F0F5;
+  --surface: #FFFFFF;
+  --border:  rgba(13,148,136,.15);
+  --fg:      #0F172A;
+  --fg2:     #334155;
+  --fg3:     #64748B;
+  --accent:  #0E7490;
+  --accent2: #164E63;
+  --teal:    #0D9488;
+  --teal-lit:#0F766E;
+  color-scheme: light;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: var(--sans);
+  background: var(--bg);
+  color: var(--fg);
+  line-height: 1.6;
+  padding-inline: 0;
+}
+
+/* ── Nav ─────────────────────────────────────────────────────── */
+.nav {
+  position: sticky;
+  top: env(safe-area-inset-top, 0px);
+  z-index: 100;
+  background: rgba(13,27,42,.88);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border);
+  padding: 14px 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+@media (prefers-color-scheme: light) {
+  :root:not([data-theme="dark"]) .nav { background: rgba(240,247,250,.92); }
+}
+:root[data-theme="light"] .nav { background: rgba(240,247,250,.92); }
+
+.nav-brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  text-decoration: none;
+  color: var(--accent);
+  font-weight: 600;
+  font-size: 15px;
+  letter-spacing: .3px;
+}
+.nav-brand span { color: var(--fg2); font-weight: 400; font-size: 13px; }
+.nav-back {
+  font-size: 12px;
+  color: var(--fg3);
+  text-decoration: none;
+  border: 1px solid var(--border);
+  padding: 6px 14px;
+  border-radius: 20px;
+  transition: color .2s, border-color .2s;
+}
+.nav-back:hover { color: var(--accent); border-color: var(--accent); }
+
+/* ── Hero ────────────────────────────────────────────────────── */
+.hero {
+  padding: 72px 24px 56px;
+  text-align: center;
+  max-width: 680px;
+  margin: 0 auto;
+}
+.hero-flag {
+  font-size: 11px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--teal);
+  font-weight: 600;
+  margin-bottom: 20px;
+}
+.hero h1 {
+  font-family: var(--serif);
+  font-size: clamp(32px, 6vw, 52px);
+  line-height: 1.15;
+  text-wrap: balance;
+  margin-bottom: 20px;
+  color: var(--fg);
+}
+.hero h1 em {
+  font-style: italic;
+  color: var(--accent);
+}
+.hero-sub {
+  font-size: 16px;
+  color: var(--fg2);
+  max-width: 500px;
+  margin: 0 auto 36px;
+  line-height: 1.7;
+}
+.hero-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--teal);
+  color: #fff;
+  font-family: var(--sans);
+  font-size: 15px;
+  font-weight: 600;
+  padding: 14px 28px;
+  border-radius: 12px;
+  text-decoration: none;
+  border: none;
+  cursor: pointer;
+  transition: background .2s, transform .15s;
+}
+.hero-cta:hover { background: var(--teal-lit); transform: translateY(-2px); }
+
+/* ── Trust bar ───────────────────────────────────────────────── */
+.trust-bar {
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+  background: var(--bg2);
+  padding: 18px 24px;
+  display: flex;
+  justify-content: center;
+  gap: 40px;
+  flex-wrap: wrap;
+}
+.trust-item {
+  font-size: 12px;
+  color: var(--fg3);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  letter-spacing: .3px;
+}
+.trust-item strong { color: var(--fg2); font-weight: 500; }
+
+/* ── Section ─────────────────────────────────────────────────── */
+.section {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 64px 24px;
+}
+.section-label {
+  font-size: 11px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--accent);
+  font-weight: 600;
+  margin-bottom: 12px;
+}
+.section-title {
+  font-family: var(--serif);
+  font-size: clamp(24px, 4vw, 36px);
+  text-wrap: balance;
+  margin-bottom: 16px;
+  line-height: 1.2;
+}
+.section-body {
+  font-size: 15px;
+  color: var(--fg2);
+  max-width: 600px;
+  line-height: 1.75;
+}
+
+/* ── Service cards ───────────────────────────────────────────── */
+.cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 16px;
+  margin-top: 40px;
+}
+.card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 28px 24px;
+  transition: border-color .2s, transform .15s;
+}
+.card:hover { border-color: var(--accent); transform: translateY(-3px); }
+.card-icon {
+  font-size: 28px;
+  margin-bottom: 16px;
+  display: block;
+}
+.card-title {
+  font-weight: 600;
+  font-size: 16px;
+  margin-bottom: 8px;
+  color: var(--fg);
+}
+.card-body {
+  font-size: 13px;
+  color: var(--fg2);
+  line-height: 1.7;
+}
+.card-tag {
+  display: inline-block;
+  margin-top: 14px;
+  font-size: 10px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  font-weight: 600;
+  color: var(--teal);
+  background: rgba(13,148,136,.1);
+  padding: 3px 10px;
+  border-radius: 20px;
+}
+.card-link {
+  display: inline-block;
+  margin-top: 14px;
+  margin-left: 8px;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--accent);
+  text-decoration: none;
+  letter-spacing: 0.3px;
+  opacity: 0.85;
+  transition: opacity .15s;
+}
+.card-link:hover { opacity: 1; text-decoration: underline; }
+
+/* ── Who we help ─────────────────────────────────────────────── */
+.who-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 12px;
+  margin-top: 32px;
+}
+.who-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 20px;
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+}
+.who-icon { font-size: 24px; flex-shrink: 0; margin-top: 2px; }
+.who-title { font-size: 14px; font-weight: 600; margin-bottom: 4px; }
+.who-desc { font-size: 12px; color: var(--fg2); line-height: 1.6; }
+
+/* ── Process steps ───────────────────────────────────────────── */
+.steps {
+  margin-top: 40px;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+.step {
+  display: flex;
+  gap: 20px;
+  align-items: flex-start;
+  padding: 24px 0;
+  border-bottom: 1px solid var(--border);
+}
+.step:last-child { border-bottom: none; }
+.step-num {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: rgba(34,211,238,.1);
+  border: 1px solid rgba(34,211,238,.25);
+  color: var(--accent);
+  font-size: 14px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  font-variant-numeric: tabular-nums;
+}
+.step-title { font-weight: 600; font-size: 15px; margin-bottom: 4px; }
+.step-body { font-size: 13px; color: var(--fg2); line-height: 1.7; }
+
+/* ── FAQ ─────────────────────────────────────────────────────── */
+.faq { margin-top: 40px; }
+.faq-item {
+  border-bottom: 1px solid var(--border);
+}
+.faq-q {
+  width: 100%;
+  background: none;
+  border: none;
+  color: var(--fg);
+  font-family: var(--sans);
+  font-size: 14px;
+  font-weight: 500;
+  text-align: left;
+  padding: 18px 0;
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+}
+.faq-q:hover { color: var(--accent); }
+.faq-arrow {
+  width: 20px;
+  height: 20px;
+  flex-shrink: 0;
+  color: var(--fg3);
+  transition: transform .25s;
+}
+.faq-item.open .faq-arrow { transform: rotate(180deg); color: var(--accent); }
+.faq-a {
+  font-size: 13px;
+  color: var(--fg2);
+  line-height: 1.75;
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height .35s ease, padding .3s;
+}
+.faq-item.open .faq-a { max-height: 400px; padding-bottom: 18px; }
+
+/* ── Contact ─────────────────────────────────────────────────── */
+.contact-box {
+  background: linear-gradient(135deg, rgba(13,148,136,.12), rgba(34,211,238,.06));
+  border: 1px solid rgba(34,211,238,.2);
+  border-radius: 20px;
+  padding: 48px 32px;
+  text-align: center;
+}
+.contact-box h2 {
+  font-family: var(--serif);
+  font-size: clamp(22px, 4vw, 32px);
+  margin-bottom: 12px;
+}
+.contact-box p {
+  font-size: 15px;
+  color: var(--fg2);
+  margin-bottom: 32px;
+  max-width: 480px;
+  margin-inline: auto;
+  margin-bottom: 32px;
+}
+.contact-email {
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--accent);
+  letter-spacing: .5px;
+  display: block;
+  margin-bottom: 8px;
+}
+.contact-note { font-size: 12px; color: var(--fg3); }
+.copy-btn {
+  margin-top: 20px;
+  background: none;
+  border: 1px solid var(--border);
+  color: var(--fg2);
+  font-family: var(--sans);
+  font-size: 12px;
+  padding: 8px 20px;
+  border-radius: 20px;
+  cursor: pointer;
+  transition: color .2s, border-color .2s;
+}
+.copy-btn:hover { color: var(--accent); border-color: var(--accent); }
+
+/* ── Footer ──────────────────────────────────────────────────── */
+.footer {
+  text-align: center;
+  padding: 32px 24px;
+  font-size: 11px;
+  color: var(--fg3);
+  border-top: 1px solid var(--border);
+  line-height: 2;
+}
+.footer a { color: var(--fg3); text-decoration: none; }
+.footer a:hover { color: var(--accent); }
+</style>
+
+<!-- ── Navigation ─────────────────────────────────────────────── -->
+<nav class="nav">
+  <a href="竹Digital_向导.html" class="nav-brand">
+    🎋 竹 Digital <span>· Compliance Advisor</span>
+  </a>
+  <a href="竹Digital_向导.html" class="nav-back">← Change language</a>
+</nav>
+
+<!-- ── Hero ───────────────────────────────────────────────────── -->
+<header class="hero">
+  <p class="hero-flag">🇦🇺 Australian Business Compliance</p>
+  <h1>Australian compliance rules —<br><em>explained in plain English</em></h1>
+  <p class="hero-sub">Get clear, simple answers — we translate compliance into plain language for your specific situation, including the numbers, deadlines, and forms you actually need to fill in.<br><br>We help Chinese-Australian small business owners cut through the jargon around ABN, GST, Fair Work, and more.</p>
+  <a href="#contact" class="hero-cta">Book a free 15-min chat →</a>
+</header>
+
+<!-- ── Trust bar ──────────────────────────────────────────────── -->
+<div class="trust-bar">
+  <div class="trust-item">🏢 <strong>ABN 29 919 594 996</strong></div>
+  <div class="trust-item">📍 <strong>Melbourne-based</strong>, advising nationally</div>
+  <div class="trust-item">🗣️ English · 中文 · 廣東話</div>
+  <div class="trust-item">⚖️ <strong>Not legal advice</strong> — compliance guidance</div>
+</div>
+
+<!-- ── Services ────────────────────────────────────────────────── -->
+<section class="section" id="services">
+  <p class="section-label">What we cover</p>
+  <h2 class="section-title">Core compliance areas for small business</h2>
+  <p class="section-body">Whether you're just starting out or already operating, these are the areas where Chinese-Australian businesses most often need clarity.</p>
+  <div class="cards">
+    <div class="card">
+      <span class="card-icon">📋</span>
+      <div class="card-title">ABN &amp; Business Structure</div>
+      <div class="card-body">Sole trader, company, partnership or trust — choosing the right structure affects your tax, liability and how you're paid. We explain the differences before you register.</div>
+      <span class="card-tag">Starting out</span>
+      <a href="abn-structure.html" class="card-link">Read the guide →</a>
+    </div>
+    <div class="card">
+      <span class="card-icon">🧾</span>
+      <div class="card-title">GST &amp; BAS Obligations</div>
+      <div class="card-body">Once your turnover exceeds A$75,000 you must register for GST. We walk you through registration, when to charge GST, and how BAS lodgement works quarterly.</div>
+      <span class="card-tag">Tax</span>
+      <a href="gst-bas.html" class="card-link">Read the guide →</a>
+    </div>
+    <div class="card">
+      <span class="card-icon">👥</span>
+      <div class="card-title">Fair Work &amp; Employment</div>
+      <div class="card-body">Hiring staff? Understand minimum wage, pay slips, leave entitlements, and casual vs part-time rules under the Fair Work Act — before you sign anyone on.</div>
+      <span class="card-tag">Employees</span>
+      <a href="fair-work.html" class="card-link">Read the guide →</a>
+    </div>
+    <div class="card">
+      <span class="card-icon">🏦</span>
+      <div class="card-title">Superannuation</div>
+      <div class="card-body">Employers must contribute 11.5% super for eligible workers. We clarify who qualifies, when payments are due, and how to avoid the Superannuation Guarantee Charge.</div>
+      <span class="card-tag">Employees</span>
+      <a href="super.html" class="card-link">Read the guide →</a>
+    </div>
+    <div class="card">
+      <span class="card-icon">🔄</span>
+      <div class="card-title">Record Keeping</div>
+      <div class="card-body">The ATO requires you to keep most business records for 5 years. We help you set up simple systems — digital receipts, invoicing standards, and payroll records.</div>
+      <span class="card-tag">Ongoing</span>
+      <a href="record-keeping.html" class="card-link">Read the guide →</a>
+    </div>
+    <div class="card">
+      <span class="card-icon">🌏</span>
+      <div class="card-title">Overseas Income &amp; Importing</div>
+      <div class="card-body">Receiving income from China or importing goods? Australian tax rules on foreign income, GST on imported services, and customs duty explained clearly.</div>
+      <span class="card-tag">Cross-border</span>
+      <a href="overseas-income.html" class="card-link">Read the guide →</a>
+    </div>
+  </div>
+</section>
+
+<!-- ── Who we help ─────────────────────────────────────────────── -->
+<section class="section" style="padding-top:0;" id="who">
+  <p class="section-label">Who this is for</p>
+  <h2 class="section-title">Built for Chinese-Australian business owners</h2>
+  <div class="who-grid">
+    <div class="who-card">
+      <span class="who-icon">🛍️</span>
+      <div>
+        <div class="who-title">Retail &amp; E-commerce</div>
+        <div class="who-desc">Physical shops, online stores, or marketplaces like WeChat or Taobao AU</div>
+      </div>
+    </div>
+    <div class="who-card">
+      <span class="who-icon">🍜</span>
+      <div>
+        <div class="who-title">Hospitality</div>
+        <div class="who-desc">Restaurants, cafes, and catering businesses navigating wages and food handling</div>
+      </div>
+    </div>
+    <div class="who-card">
+      <span class="who-icon">🏠</span>
+      <div>
+        <div class="who-title">Property &amp; Real Estate</div>
+        <div class="who-desc">Property investors, buyers' agents, and rental property managers</div>
+      </div>
+    </div>
+    <div class="who-card">
+      <span class="who-icon">💻</span>
+      <div>
+        <div class="who-title">IT &amp; Consulting</div>
+        <div class="who-desc">Contractors and consultants billing local and overseas clients</div>
+      </div>
+    </div>
+    <div class="who-card">
+      <span class="who-icon">💅</span>
+      <div>
+        <div class="who-title">Personal Services</div>
+        <div class="who-desc">Beauty salons, massage, tutoring, and health &amp; wellness businesses</div>
+      </div>
+    </div>
+    <div class="who-card">
+      <span class="who-icon">📦</span>
+      <div>
+        <div class="who-title">Importers &amp; Wholesalers</div>
+        <div class="who-desc">Businesses sourcing goods from China for the Australian market</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── How it works ────────────────────────────────────────────── -->
+<section class="section" style="padding-top:0;" id="how">
+  <p class="section-label">How it works</p>
+  <h2 class="section-title">Simple, practical, no jargon</h2>
+  <div class="steps">
+    <div class="step">
+      <div class="step-num">1</div>
+      <div>
+        <div class="step-title">Tell us about your situation</div>
+        <div class="step-body">Send a quick email or book a free 15-minute call. No forms to fill — just a conversation about where you're at and what's confusing you.</div>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">2</div>
+      <div>
+        <div class="step-title">Get clear, plain-English answers</div>
+        <div class="step-body">We focus on your specific situation — not generic advice you could Google. We translate ATO, Fair Work, and ASIC language into plain English (or Mandarin, or Cantonese).</div>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">3</div>
+      <div>
+        <div class="step-title">Know what to do next</div>
+        <div class="step-body">You'll leave with a clear checklist: what to register for, what records to keep, and which qualified professional (accountant or lawyer) to engage if your situation needs one.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── FAQ ─────────────────────────────────────────────────────── -->
+<section class="section" style="padding-top:0;" id="faq">
+  <p class="section-label">Common questions</p>
+  <h2 class="section-title">Things we're asked most often</h2>
+  <div class="faq">
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)">
+        Do I need an ABN if I'm just doing side work?
+        <svg class="faq-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+      </button>
+      <div class="faq-a">If you're running a business — even part-time or from home — you generally need an ABN. The ATO considers you a business if you intend to make a profit and repeat your activities regularly. Sole traders can register an ABN for free at abr.gov.au. Not having one when you should can mean 47% withholding tax on your invoices.</div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)">
+        When do I have to register for GST?
+        <svg class="faq-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+      </button>
+      <div class="faq-a">You must register for GST when your GST turnover reaches or is expected to reach A$75,000 in a 12-month period. For ride-share and taxi drivers, it's mandatory from your very first dollar of income. Once registered, you charge 10% GST on most goods and services and lodge a Business Activity Statement (BAS) — usually quarterly.</div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)">
+        Can I pay my staff as contractors instead of employees?
+        <svg class="faq-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+      </button>
+      <div class="faq-a">Not automatically — the ATO and Fair Work have strict tests to determine whether someone is truly a contractor or is actually an employee. Factors include who controls the work, whether the worker can sub-contract, and whether they bring their own tools. Misclassifying an employee as a contractor can result in significant back-pay, super, and penalty obligations.</div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)">
+        Is 竹 Digital a licensed accountant or lawyer?
+        <svg class="faq-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+      </button>
+      <div class="faq-a">No — we provide compliance guidance and education, not legal or tax advice. We help you understand your obligations in plain language and point you toward the right professionals when your situation needs licensed advice. Think of us as a knowledgeable friend who's done the research, not your accountant of record.</div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)">
+        Do you help with Chinese-language customers or WeChat businesses?
+        <svg class="faq-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+      </button>
+      <div class="faq-a">Yes. We specifically understand the compliance questions that arise for businesses serving Chinese-Australian communities — selling through WeChat Mini Programs, receiving payments via Alipay or WeChat Pay, sourcing from China, and operating in communities where English-language ATO guidance is hard to follow.</div>
+    </div>
+  </div>
+</section>
+
+<!-- ── Contact ─────────────────────────────────────────────────── -->
+<section class="section" style="padding-top:0;" id="contact">
+  <div class="contact-box">
+    <h2>Ready to get clarity?</h2>
+    <p>Send us a message describing your business and your biggest compliance question. We'll respond within one business day.</p>
+    <span class="contact-email">hello@zhudigital.com.au</span>
+    <div class="contact-note">Melbourne-based · English, Mandarin &amp; Cantonese · Response within 1 business day</div>
+    <button class="copy-btn" onclick="copyEmail(this)">Copy email address</button>
+  </div>
+</section>
+
+<!-- ── Footer ──────────────────────────────────────────────────── -->
+<footer class="footer">
+  <div>🎋 竹 Digital · Melbourne, Victoria · ABN 29 919 594 996</div>
+  <div style="margin-top:6px;">
+    Compliance guidance only — not legal or financial advice ·
+    <a href="consultant_cn.html">中文版 →</a>
+  </div>
+</footer>
+
+<script>
+function toggleFaq(btn) {
+  const item = btn.closest('.faq-item');
+  const isOpen = item.classList.contains('open');
+  document.querySelectorAll('.faq-item.open').forEach(el => el.classList.remove('open'));
+  if (!isOpen) item.classList.add('open');
+}
+
+function copyEmail(btn) {
+  navigator.clipboard.writeText('hello@zhudigital.com.au').then(() => {
+    btn.textContent = '✓ Copied!';
+    setTimeout(() => btn.textContent = 'Copy email address', 2000);
+  }).catch(() => {
+    // fallback: select text
+    btn.textContent = 'hello@zhudigital.com.au';
+    btn.select && btn.select();
+  });
+}
+
+// Smooth scroll for anchor links
+document.querySelectorAll('a[href^="#"]').forEach(a => {
+  a.addEventListener('click', e => {
+    const target = document.querySelector(a.getAttribute('href'));
+    if (target) { e.preventDefault(); target.scrollIntoView({ behavior: 'smooth', block: 'start' }); }
+  });
+});
+</script>

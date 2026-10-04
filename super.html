@@ -1,0 +1,619 @@
+<!--
+  竹 Digital — 超级年金（Super）
+  ════════════════════════════════════════════════════════
+  DATA_UPDATE_SCHEDULE: 每年7月1日后更新（ATO更新缴费率和上限后）
+  LAST_UPDATED: 2026-10
+  FISCAL_YEAR: 2026-27
+
+  KEY_FIGURES (核实这些数据是否有变化):
+  - 雇主强制缴费率(SGC): 12%（2025-07-01起，已达最终目标，预计不再上调）→ 来源: ATO https://www.ato.gov.au/businesses-and-organisations/hiring-and-paying-your-workers/super/work-out-how-much-super-to-pay/super-guarantee
+  - 优惠缴费上限(concessional): $32,500（2026-27年度）→ 来源: ATO https://www.ato.gov.au/individuals-and-families/super-for-individuals-and-families/super/growing-and-keeping-track-of-your-super/caps-on-super-contributions
+  - 非优惠缴费上限(non-concessional): $130,000（2026-27年度）→ 来源: ATO
+  - 基金税率: 15%（累积阶段）→ 来源: ATO（立法规定）
+  - ⚡ PAYDAY SUPER（2026-07-01起重大变化）:
+    雇主必须在每次发放工资后7个工作日内缴纳年金
+    取消季度截止日期制度
+    → 来源: ATO https://www.ato.gov.au/businesses-and-organisations/hiring-and-paying-your-workers/super/paying-super-contributions/payday-super
+    → Fair Work: https://www.fairwork.gov.au/newsroom/news/payday-super-new-rules-starting-1-july-2026
+
+  SGC_RATE_HISTORY (了解历史变化背景):
+  2021-22: 10% | 2022-23: 10.5% | 2023-24: 11% | 2024-25: 11.5% | 2025-26+: 12%
+
+  SOURCES:
+  - ATO Super: https://www.ato.gov.au/businesses-and-organisations/hiring-and-paying-your-workers/super
+  - ATO Caps: https://www.ato.gov.au/individuals-and-families/super-for-individuals-and-families/super/growing-and-keeping-track-of-your-super/caps-on-super-contributions
+  - Payday Super: https://www.ato.gov.au/businesses-and-organisations/hiring-and-paying-your-workers/super/paying-super-contributions/payday-super
+  ════════════════════════════════════════════════════════
+-->
+<title>超级年金（Super）</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;700&family=Noto+Sans+SC:wght@300;400;500;600&display=swap">
+<style>
+:root {
+  --bg:#0D1B2A;--bg2:#0F1F30;--surface:#152233;--surface2:#1A2B3F;
+  --border:rgba(59,130,246,.13);--border2:rgba(59,130,246,.22);
+  --fg:#F1F5F9;--fg2:#94A3B8;--fg3:#475569;--accent:#60A5FA;
+  --blue:#1D4ED8;--blue-lit:#2563EB;
+  --green:#34D399;--green-bg:rgba(52,211,153,.08);
+  --yellow:#FCD34D;--yellow-bg:rgba(252,211,77,.08);
+  --red:#F87171;--red-bg:rgba(248,113,113,.08);
+  --purple:#A78BFA;--purple-bg:rgba(167,139,250,.08);
+  --serif:"Noto Serif SC",Georgia,serif;--sans:"Noto Sans SC",system-ui,sans-serif;
+  color-scheme:dark;
+}
+@media(prefers-color-scheme:light){
+  :root:not([data-theme="dark"]){
+    --bg:#F0F4FA;--bg2:#E4EBF7;--surface:#FFFFFF;--surface2:#F8FAFC;
+    --border:rgba(37,99,235,.13);--border2:rgba(37,99,235,.25);
+    --fg:#0F172A;--fg2:#334155;--fg3:#64748B;--accent:#1D4ED8;
+    --blue:#1D4ED8;--blue-lit:#2563EB;
+    --green:#059669;--green-bg:rgba(5,150,105,.07);
+    --yellow:#B45309;--yellow-bg:rgba(180,83,9,.06);
+    --red:#DC2626;--red-bg:rgba(220,38,38,.06);
+    --purple:#7C3AED;--purple-bg:rgba(124,58,237,.07);
+    color-scheme:light;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#0D1B2A;--bg2:#0F1F30;--surface:#152233;--surface2:#1A2B3F;
+  --border:rgba(59,130,246,.13);--border2:rgba(59,130,246,.22);
+  --fg:#F1F5F9;--fg2:#94A3B8;--fg3:#475569;--accent:#60A5FA;
+  --blue:#1D4ED8;--blue-lit:#2563EB;
+  --green:#34D399;--green-bg:rgba(52,211,153,.08);
+  --yellow:#FCD34D;--yellow-bg:rgba(252,211,77,.08);
+  --red:#F87171;--red-bg:rgba(248,113,113,.08);
+  --purple:#A78BFA;--purple-bg:rgba(167,139,250,.08);
+  color-scheme:dark;
+}
+/* ── Data source tags ── */
+.src-tag{display:inline-block;font-size:10px;color:var(--fg3);background:var(--surface);border:1px solid var(--border);border-radius:4px;padding:1px 5px;margin-left:4px;font-family:var(--sans);vertical-align:middle;letter-spacing:.2px;text-decoration:none;}
+.src-tag:hover{color:var(--accent);}
+.data-notice{background:var(--surface);border:1px solid var(--border2,var(--border));border-radius:10px;padding:12px 18px;font-size:12px;color:var(--fg2);margin-top:28px;line-height:1.8;}
+.data-notice strong{color:var(--accent);}
+.data-notice a{color:var(--accent);text-decoration:none;}
+.data-notice a:hover{text-decoration:underline;}
+
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:var(--sans);background:var(--bg);color:var(--fg);min-height:100vh;font-size:15px;line-height:1.7;}
+
+.nav{position:sticky;top:env(safe-area-inset-top,0px);z-index:100;background:rgba(13,27,42,.92);backdrop-filter:blur(12px);border-bottom:1px solid var(--border);padding:14px 24px;display:flex;align-items:center;gap:12px;}
+.nav-back{font-size:13px;color:var(--fg2);text-decoration:none;}
+.nav-back:hover{color:var(--accent);}
+.nav-sep{color:var(--fg3);font-size:12px;}
+.nav-current{font-size:13px;color:var(--fg);font-weight:500;}
+.nav-brand{margin-left:auto;font-size:12px;color:var(--fg3);}
+
+.hero{background:linear-gradient(160deg,#0a1628 0%,#0d1b2a 50%,#0f2035 100%);padding:64px 24px 52px;text-align:center;border-bottom:1px solid var(--border);position:relative;overflow:hidden;}
+.hero::before{content:'';position:absolute;top:-60px;left:50%;transform:translateX(-50%);width:500px;height:500px;background:radial-gradient(circle,rgba(96,165,250,.06) 0%,transparent 70%);pointer-events:none;}
+.breadcrumb{font-size:12px;color:var(--accent);letter-spacing:1px;text-transform:uppercase;margin-bottom:20px;opacity:.8;}
+.hero h1{font-family:var(--serif);font-size:clamp(26px,5vw,38px);font-weight:700;line-height:1.35;text-wrap:balance;margin-bottom:18px;}
+.hero h1 em{font-style:normal;color:var(--accent);}
+.hero-sub{font-size:15px;color:var(--fg2);max-width:560px;margin:0 auto 28px;line-height:1.8;}
+.hero-tags{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;}
+.hero-tag{font-size:11px;letter-spacing:.5px;padding:5px 14px;border-radius:20px;border:1px solid var(--border2);color:var(--fg2);background:var(--surface);}
+
+.page{max-width:760px;margin:0 auto;padding:0 20px 80px;}
+.section{margin-top:64px;}
+.section-label{font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--accent);margin-bottom:10px;opacity:.8;}
+.section-title{font-family:var(--serif);font-size:clamp(20px,3.5vw,26px);font-weight:700;margin-bottom:12px;text-wrap:balance;}
+.section-body{font-size:14px;color:var(--fg2);line-height:1.85;max-width:620px;}
+
+/* ── Rate progression timeline ── */
+.rate-timeline{display:flex;flex-direction:column;gap:0;margin-top:28px;}
+.rate-row{display:flex;align-items:center;gap:14px;padding:14px 18px;background:var(--surface);border:1px solid var(--border);position:relative;}
+.rate-row:first-child{border-radius:12px 12px 0 0;}
+.rate-row:last-child{border-radius:0 0 12px 12px;}
+.rate-row+.rate-row{border-top:none;}
+.rate-year{font-size:12px;color:var(--fg3);min-width:80px;font-variant-numeric:tabular-nums;}
+.rate-bar-wrap{flex:1;height:10px;background:var(--surface2);border-radius:5px;overflow:hidden;}
+.rate-bar{height:100%;border-radius:5px;background:linear-gradient(90deg,var(--blue),var(--accent));}
+.rate-pct{font-size:14px;font-weight:700;color:var(--accent);min-width:50px;text-align:right;font-variant-numeric:tabular-nums;}
+.rate-row.current{background:var(--surface2);border-color:var(--border2);}
+.rate-row.current .rate-pct{color:var(--yellow);}
+.rate-tag{font-size:9px;letter-spacing:.8px;text-transform:uppercase;color:var(--yellow);background:var(--yellow-bg);padding:2px 7px;border-radius:8px;font-weight:700;}
+
+/* ── Stats ── */
+.stats{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:14px;margin-top:32px;}
+.stat{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:20px 16px;text-align:center;}
+.stat-num{font-size:24px;font-weight:700;font-variant-numeric:tabular-nums;line-height:1.1;margin-bottom:6px;}
+.stat-num.accent{color:var(--accent);}
+.stat-num.green{color:var(--green);}
+.stat-num.yellow{color:var(--yellow);}
+.stat-num.red{color:var(--red);}
+.stat-label{font-size:11px;color:var(--fg2);line-height:1.5;}
+
+/* ── Who needs to get super ── */
+.who-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:12px;margin-top:24px;}
+.who-card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:18px 16px;}
+.who-icon{font-size:22px;margin-bottom:8px;}
+.who-name{font-size:13px;font-weight:600;margin-bottom:5px;}
+.who-desc{font-size:12px;color:var(--fg2);line-height:1.6;}
+.who-card.yes{border-left:3px solid var(--green);}
+.who-card.no{border-left:3px solid var(--red);}
+.who-tag{font-size:9px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;margin-bottom:8px;display:block;}
+.who-tag.yes{color:var(--green);}
+.who-tag.no{color:var(--red);}
+
+/* ── Deadline calendar ── */
+.deadline-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-top:24px;}
+@media(max-width:500px){.deadline-grid{grid-template-columns:repeat(2,1fr);}}
+.deadline-card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:16px 14px;text-align:center;}
+.dl-q{font-size:10px;letter-spacing:1.5px;text-transform:uppercase;color:var(--accent);font-weight:600;margin-bottom:8px;}
+.dl-period{font-size:12px;color:var(--fg2);margin-bottom:10px;line-height:1.5;}
+.dl-due{font-size:11px;font-weight:600;color:var(--yellow);background:var(--yellow-bg);border-radius:6px;padding:4px 8px;}
+
+/* ── SGC penalty explainer ── */
+.sgc-box{margin-top:28px;background:var(--surface);border:1px solid var(--border2);border-radius:16px;padding:24px 22px;}
+.sgc-title{font-size:14px;font-weight:600;margin-bottom:16px;}
+.sgc-steps{display:flex;flex-direction:column;gap:10px;}
+.sgc-step{display:flex;gap:12px;align-items:flex-start;font-size:13px;}
+.sgc-arrow{color:var(--red);font-weight:700;flex-shrink:0;padding-top:1px;}
+.sgc-text{color:var(--fg2);line-height:1.65;}
+.sgc-text strong{color:var(--fg);}
+
+/* ── Comparison: employed vs self-employed ── */
+.compare-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:28px;}
+@media(max-width:460px){.compare-grid{grid-template-columns:1fr;}}
+.compare-side{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:22px 18px;}
+.compare-type{font-size:10px;letter-spacing:1px;text-transform:uppercase;font-weight:600;margin-bottom:10px;display:block;}
+.compare-type.emp{color:var(--green);}
+.compare-type.self{color:var(--yellow);}
+.compare-name{font-size:15px;font-weight:600;margin-bottom:14px;}
+.compare-rows{display:flex;flex-direction:column;gap:8px;}
+.compare-row{display:flex;justify-content:space-between;align-items:center;font-size:12px;padding:8px 0;border-bottom:1px solid var(--border);}
+.compare-row:last-child{border-bottom:none;}
+.compare-row-label{color:var(--fg2);}
+.compare-row-val{font-weight:600;color:var(--fg);font-variant-numeric:tabular-nums;}
+.compare-row-val.good{color:var(--green);}
+.compare-row-val.warn{color:var(--yellow);}
+.compare-row-val.bad{color:var(--red);}
+
+/* ── Myths ── */
+.myths{display:flex;flex-direction:column;gap:14px;margin-top:28px;}
+.myth-card{border-radius:14px;overflow:hidden;border:1px solid var(--border);}
+.myth-part,.truth-part{padding:16px 20px;}
+.myth-part{background:var(--red-bg);border-bottom:1px solid var(--border);}
+.truth-part{background:var(--green-bg);}
+.myth-badge,.truth-badge{font-size:10px;letter-spacing:1px;font-weight:700;margin-bottom:6px;display:block;}
+.myth-badge{color:var(--red);}
+.truth-badge{color:var(--green);}
+.myth-text,.truth-text{font-size:13px;line-height:1.7;}
+
+/* ── Penalty cards ── */
+.penalty-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:12px;margin-top:28px;}
+.penalty-card{background:var(--surface);border:1px solid var(--red-bg);border-left:3px solid var(--red);border-radius:12px;padding:18px 16px;}
+.penalty-title{font-size:13px;font-weight:600;margin-bottom:6px;color:var(--red);}
+.penalty-body{font-size:12px;color:var(--fg2);line-height:1.65;}
+
+/* ── Checklist ── */
+.checklist{display:flex;flex-direction:column;gap:12px;margin-top:28px;}
+.check-item{display:flex;gap:14px;align-items:flex-start;background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:16px 18px;}
+.check-num{width:28px;height:28px;border-radius:50%;background:var(--blue);color:#fff;font-size:12px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px;}
+.check-title{font-size:13px;font-weight:600;margin-bottom:4px;}
+.check-body{font-size:12px;color:var(--fg2);line-height:1.65;}
+.check-link{display:inline-block;margin-top:6px;font-size:11px;color:var(--accent);text-decoration:none;}
+.check-link:hover{text-decoration:underline;}
+
+/* ── CTA ── */
+.cta-strip{margin-top:64px;background:linear-gradient(135deg,var(--surface) 0%,var(--surface2) 100%);border:1px solid var(--border2);border-radius:20px;padding:36px 28px;text-align:center;}
+.cta-strip h3{font-family:var(--serif);font-size:20px;margin-bottom:10px;}
+.cta-strip p{font-size:13px;color:var(--fg2);margin-bottom:24px;}
+.cta-buttons{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;}
+.cta-btn{display:inline-block;padding:12px 24px;border-radius:10px;font-size:14px;font-weight:600;text-decoration:none;transition:opacity .15s,transform .15s;}
+.cta-btn:hover{opacity:.88;transform:translateY(-1px);}
+.cta-primary{background:var(--blue-lit);color:#fff;}
+.cta-secondary{background:var(--surface);border:1px solid var(--border2);color:var(--fg2);}
+
+.article-nav{display:flex;justify-content:space-between;gap:16px;margin-top:48px;flex-wrap:wrap;}
+.article-nav-item{flex:1;min-width:160px;background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:16px 18px;text-decoration:none;transition:border-color .15s;}
+.article-nav-item:hover{border-color:var(--accent);}
+.article-nav-dir{font-size:10px;letter-spacing:1px;text-transform:uppercase;color:var(--fg3);margin-bottom:6px;}
+.article-nav-title{font-size:13px;font-weight:600;color:var(--fg);}
+
+footer{margin-top:80px;border-top:1px solid var(--border);padding:28px 24px;text-align:center;font-size:11px;color:var(--fg3);line-height:1.8;}
+footer a{color:var(--fg3);text-decoration:none;}
+footer a:hover{color:var(--accent);}
+</style>
+
+<nav class="nav">
+  <a href="consultant_cn.html" class="nav-back">← 返回顾问</a>
+  <span class="nav-sep">/</span>
+  <span class="nav-current">超级年金（Super）</span>
+  <span class="nav-brand">🎋 竹 Digital</span>
+</nav>
+
+<header class="hero">
+  <p class="breadcrumb">带你读懂 · 系列第四篇</p>
+  <h1>超级年金，<br><em>你没交的那部分，迟早要还</em></h1>
+  <p class="hero-sub">很多华人老板以为 Super 可以"以后再说"——但 ATO 有自己的追查系统，欠缴的 Super 不会消失，只会加上罚款越滚越多。</p>
+  <div class="hero-tags">
+    <span class="hero-tag">💰 12% 雇主缴费（2025-26起）</span>
+    <span class="hero-tag">📅 Payday Super：7工作日内到账</span>
+    <span class="hero-tag">⚠️ 欠缴全额罚款</span>
+    <span class="hero-tag">🧾 SGC 追征</span>
+  </div>
+</header>
+
+<main class="page">
+
+  <div class="data-notice">
+    📅 <strong>数据截至：2026年10月</strong> · 适用财年：2026–27 ·
+    来源：<a href="https://www.ato.gov.au/businesses-and-organisations/hiring-and-paying-your-workers/super" target="_blank" rel="noopener">ATO Super</a>、
+    <a href="https://www.fairwork.gov.au/newsroom/news/payday-super-new-rules-starting-1-july-2026" target="_blank" rel="noopener">Fair Work（Payday Super）</a>、
+    <a href="https://www.ato.gov.au/individuals-and-families/super-for-individuals-and-families/super/growing-and-keeping-track-of-your-super/caps-on-super-contributions" target="_blank" rel="noopener">ATO 缴费上限</a> ·
+    ⚡ 建议每年7月1日后核查最新比率和上限
+  </div>
+
+  <!-- 1. 什么是 Super -->
+  <section class="section">
+    <p class="section-label">基础概念</p>
+    <h2 class="section-title">超级年金是什么？和我有什么关系？</h2>
+    <p class="section-body">超级年金（Superannuation，简称 Super）是澳洲的强制退休储蓄制度。雇主必须在员工工资基础上额外缴纳一定比例的 Super，存入员工指定的 Super 基金账户，专门用于员工退休后的生活保障。这笔钱不是从员工工资里扣的，而是雇主额外承担的成本。</p>
+    <p class="section-body" style="margin-top:14px;">如果你是自雇人士（Sole Trader 或通过公司经营但给自己发工资），你没有雇主替你缴 Super——需要自己主动存，才能享受退休保障和税务优惠。</p>
+  </section>
+
+  <!-- 2. 缴费率提升轨迹 -->
+  <section class="section">
+    <p class="section-label">缴费比例</p>
+    <h2 class="section-title">Super 缴费率，每年都在涨</h2>
+    <p class="section-body">澳洲 Super 缴费率已于 2025年7月1日 达到法定最终目标 12%，不再有进一步调整计划。以下是近年调整轨迹。<a href="https://www.ato.gov.au/businesses-and-organisations/hiring-and-paying-your-workers/super/paying-super-contributions/how-much-super-to-pay" target="_blank" rel="noopener" class="src-tag">来源：ATO</a></p>
+
+    <div class="rate-timeline">
+      <div class="rate-row">
+        <span class="rate-year">2021–22</span>
+        <div class="rate-bar-wrap"><div class="rate-bar" style="width:83%"></div></div>
+        <span class="rate-pct">10.0%</span>
+      </div>
+      <div class="rate-row">
+        <span class="rate-year">2022–23</span>
+        <div class="rate-bar-wrap"><div class="rate-bar" style="width:87%"></div></div>
+        <span class="rate-pct">10.5%</span>
+      </div>
+      <div class="rate-row">
+        <span class="rate-year">2023–24</span>
+        <div class="rate-bar-wrap"><div class="rate-bar" style="width:92%"></div></div>
+        <span class="rate-pct">11.0%</span>
+      </div>
+      <div class="rate-row">
+        <span class="rate-year">2024–25</span>
+        <div class="rate-bar-wrap"><div class="rate-bar" style="width:96%"></div></div>
+        <span class="rate-pct">11.5%</span>
+      </div>
+      <div class="rate-row current">
+        <span class="rate-year">2025–26 起 <span class="rate-tag">当前 · 已达最终目标</span></span>
+        <div class="rate-bar-wrap"><div class="rate-bar" style="width:100%"></div></div>
+        <span class="rate-pct">12.0%</span>
+      </div>
+    </div>
+
+    <div class="stats" style="margin-top:24px;">
+      <div class="stat">
+        <div class="stat-num yellow">12%</div>
+        <div class="stat-label">2025-26 起雇主缴费率（已达最终目标）<a href="https://www.ato.gov.au/businesses-and-organisations/hiring-and-paying-your-workers/super/paying-super-contributions/how-much-super-to-pay" target="_blank" rel="noopener" class="src-tag">ATO</a></div>
+      </div>
+      <div class="stat">
+        <div class="stat-num accent">$32,500</div>
+        <div class="stat-label">2026-27 年度税前缴费上限（Concessional Cap）<a href="https://www.ato.gov.au/individuals-and-families/super-for-individuals-and-families/super/growing-and-keeping-track-of-your-super/caps-on-super-contributions" target="_blank" rel="noopener" class="src-tag">ATO</a></div>
+      </div>
+      <div class="stat">
+        <div class="stat-num green">15%</div>
+        <div class="stat-label">Super 基金内收益税率（远低于个人税率）<a href="https://www.ato.gov.au/individuals-and-families/super-for-individuals-and-families/super/growing-and-keeping-track-of-your-super/tax-and-super" target="_blank" rel="noopener" class="src-tag">ATO</a></div>
+      </div>
+      <div class="stat">
+        <div class="stat-num red">7天</div>
+        <div class="stat-label">Payday Super：每次发薪后须在 7 个工作日内到账（2026年7月起）<a href="https://www.fairwork.gov.au/newsroom/news/payday-super-new-rules-starting-1-july-2026" target="_blank" rel="noopener" class="src-tag">Fair Work</a></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 3. 谁需要缴 Super -->
+  <section class="section">
+    <p class="section-label">适用范围</p>
+    <h2 class="section-title">哪些人需要缴 Super？哪些不用？</h2>
+
+    <div class="who-grid">
+      <div class="who-card yes">
+        <span class="who-tag yes">✓ 必须缴</span>
+        <div class="who-icon">👤</div>
+        <div class="who-name">全职员工</div>
+        <div class="who-desc">无论年龄、收入高低，所有员工均须缴</div>
+      </div>
+      <div class="who-card yes">
+        <span class="who-tag yes">✓ 必须缴</span>
+        <div class="who-icon">🕐</div>
+        <div class="who-name">兼职 / Part-time 员工</div>
+        <div class="who-desc">按实际工资比例缴，无最低时薪门槛（2022年起取消 $450/月 门槛）</div>
+      </div>
+      <div class="who-card yes">
+        <span class="who-tag yes">✓ 必须缴</span>
+        <div class="who-icon">🎲</div>
+        <div class="who-name">Casual 临时工</div>
+        <div class="who-desc">同样需要缴，不因 Casual 身份豁免</div>
+      </div>
+      <div class="who-card yes">
+        <span class="who-tag yes">✓ 通常须缴</span>
+        <div class="who-icon">🔧</div>
+        <div class="who-name">实质性员工关系的"承包商"</div>
+        <div class="who-desc">若被认定为实质雇用关系（见 Fair Work 篇），同样须缴 Super——且 Payday Super 的 7 工作日规则同样适用 <a href="https://www.ato.gov.au/businesses-and-organisations/hiring-and-paying-your-workers/super/work-out-how-much-super-to-pay/contractors" target="_blank" rel="noopener" class="src-tag">ATO</a></div>
+      </div>
+      <div class="who-card no">
+        <span class="who-tag no">✗ 通常不适用</span>
+        <div class="who-icon">🏢</div>
+        <div class="who-name">真正的独立承包商</div>
+        <div class="who-desc">有多个客户、自担风险、自备工具的承包商——雇主无需缴 Super。但若合同条款主要以劳动力为主（labour hire），ATO 可能认定须缴，建议逐案确认 <a href="https://www.ato.gov.au/businesses-and-organisations/hiring-and-paying-your-workers/super/work-out-how-much-super-to-pay/contractors" target="_blank" rel="noopener" class="src-tag">ATO</a></div>
+      </div>
+      <div class="who-card no">
+        <span class="who-tag no">✗ 不适用</span>
+        <div class="who-icon">🌍</div>
+        <div class="who-name">非澳洲居民短期工作者</div>
+        <div class="who-desc">特定签证持有人（如 Working Holiday Maker）可在离境时申请提取部分 Super</div>
+      </div>
+    </div>
+    <p style="font-size:12px;color:var(--fg3);margin-top:16px;padding:10px 14px;background:var(--surface2);border-radius:8px;line-height:1.6;">⚠️ 2022年7月1日起，$450/月收入门槛已取消。现在只要员工受雇（无论赚多少），雇主都必须缴 Super。</p>
+  </section>
+
+  <!-- 4. 缴款截止日期 -->
+  <section class="section">
+    <p class="section-label">缴款时限 · 2026年最新规定</p>
+    <h2 class="section-title">🚨 重大变化：Payday Super 已于 2026年7月1日生效</h2>
+    <p class="section-body">从 <strong>2026年7月1日</strong> 起，澳洲 Super 缴款规则发生根本性改变。<strong>按季度缴款的时代已经结束</strong>——现在，你必须在每次发工资时同步缴 Super，资金须在 <strong>7 个工作日内</strong>到达员工的 Super 基金账户。<a href="https://www.fairwork.gov.au/newsroom/news/payday-super-new-rules-starting-1-july-2026" target="_blank" rel="noopener" class="src-tag">来源：Fair Work 官网</a></p>
+
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:24px;">
+      <div style="background:var(--red-bg);border:1px solid rgba(248,113,113,.25);border-radius:14px;padding:20px;">
+        <div style="font-size:11px;letter-spacing:1px;color:var(--red);text-transform:uppercase;font-weight:700;margin-bottom:10px;">❌ 旧规定（2026年6月30日前）</div>
+        <div style="font-size:13px;color:var(--fg2);line-height:1.8;">
+          按<strong>季度</strong>缴款<br>
+          Q1：10月28日截止<br>
+          Q2：1月28日截止<br>
+          Q3：4月28日截止<br>
+          Q4：7月28日截止
+        </div>
+      </div>
+      <div style="background:var(--green-bg);border:1px solid rgba(52,211,153,.25);border-radius:14px;padding:20px;">
+        <div style="font-size:11px;letter-spacing:1px;color:var(--green);text-transform:uppercase;font-weight:700;margin-bottom:10px;">✅ 新规定（2026年7月1日起）</div>
+        <div style="font-size:13px;color:var(--fg2);line-height:1.8;">
+          每次<strong>发薪日同步</strong>发起缴款<br>
+          资金须在 <strong style="color:var(--green);">7 个工作日内</strong>到账<br>
+          基金须在收款后 <strong>3 个工作日</strong>内分配到成员账户<br>
+          逾期按天计息，严格执行
+        </div>
+      </div>
+    </div>
+
+    <div style="background:var(--yellow-bg);border:1px solid rgba(252,211,77,.2);border-radius:12px;padding:16px 20px;margin-top:20px;font-size:13px;color:var(--fg2);line-height:1.8;">
+      ⚠️ <strong>实操提示：</strong>大多数工资软件（Xero、MYOB、Employment Hero）已更新支持 Payday Super，在你发工资时自动发起 Super 缴款。如果你还在手动操作，务必同步调整流程——每次发薪后必须立即发起，不能等到月底或季度末。
+    </div>
+
+    <div class="sgc-box" style="margin-top:24px;">
+      <div class="sgc-title">⚠️ 迟一天会发生什么？（SGC 追征链）</div>
+      <div class="sgc-steps">
+        <div class="sgc-step">
+          <div class="sgc-arrow">→</div>
+          <div class="sgc-text"><strong>触发 SGC（Super Guarantee Charge）：</strong>原本可以税前抵扣的 Super 缴费，一旦逾期，立刻变成 SGC，<strong>不能抵税</strong>，等于多交了整整一笔税</div>
+        </div>
+        <div class="sgc-step">
+          <div class="sgc-arrow">→</div>
+          <div class="sgc-text"><strong>计算基数变大：</strong>SGC 的计算基数是"全部工资"（包含加班费），而不只是普通工资，金额往往比原本的 Super 更高</div>
+        </div>
+        <div class="sgc-step">
+          <div class="sgc-arrow">→</div>
+          <div class="sgc-text"><strong>加收利息：</strong>ATO 在 SGC 基础上加收利息（目前年率约 10%），按逾期天数累积</div>
+        </div>
+        <div class="sgc-step">
+          <div class="sgc-arrow">→</div>
+          <div class="sgc-text"><strong>行政费用：</strong>每名员工每个季度另加 $20 行政费，多个员工叠加</div>
+        </div>
+        <div class="sgc-step">
+          <div class="sgc-arrow">→</div>
+          <div class="sgc-text"><strong>必须申报 SGC Statement：</strong>还要填表、提交 SGC Statement 给 ATO，占用额外时间和精力</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 5. 自雇人士 Super -->
+  <section class="section">
+    <p class="section-label">自雇人士</p>
+    <h2 class="section-title">老板自己的 Super，要自己管</h2>
+    <p class="section-body">如果你是 Sole Trader，或者公司经营但不给自己发工资——没有人替你缴 Super。很多华人小业主忽视了这一点，到退休时才发现自己几乎没有 Super 积累。</p>
+
+    <div class="compare-grid">
+      <div class="compare-side">
+        <span class="compare-type emp">有雇主（员工身份）</span>
+        <div class="compare-name">雇主帮你缴</div>
+        <div class="compare-rows">
+          <div class="compare-row">
+            <span class="compare-row-label">谁缴</span>
+            <span class="compare-row-val good">雇主强制缴</span>
+          </div>
+          <div class="compare-row">
+            <span class="compare-row-label">比例</span>
+            <span class="compare-row-val">12%（2025-26 起）</span>
+          </div>
+          <div class="compare-row">
+            <span class="compare-row-label">税务处理</span>
+            <span class="compare-row-val good">雇主税前扣除</span>
+          </div>
+          <div class="compare-row">
+            <span class="compare-row-label">风险</span>
+            <span class="compare-row-val good">法律保障</span>
+          </div>
+        </div>
+      </div>
+      <div class="compare-side">
+        <span class="compare-type self">自雇（Sole Trader 等）</span>
+        <div class="compare-name">自己主动存</div>
+        <div class="compare-rows">
+          <div class="compare-row">
+            <span class="compare-row-label">谁缴</span>
+            <span class="compare-row-val warn">自己主动缴（无强制）</span>
+          </div>
+          <div class="compare-row">
+            <span class="compare-row-label">金额</span>
+            <span class="compare-row-val">自行决定（无最低要求）</span>
+          </div>
+          <div class="compare-row">
+            <span class="compare-row-label">税务优惠</span>
+            <span class="compare-row-val good">可申请税前抵扣</span>
+          </div>
+          <div class="compare-row">
+            <span class="compare-row-label">风险</span>
+            <span class="compare-row-val bad">容易被遗忘</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <p style="font-size:13px;color:var(--fg2);margin-top:20px;padding:14px 18px;background:var(--surface);border:1px solid var(--border2);border-radius:12px;line-height:1.75;">
+      💡 <strong>自雇人士 Super 税务优惠：</strong>如果你是自雇人士，可以向自己的 Super 基金自愿缴款，并在年度报税时将这笔缴款申报为税前抵扣（Concessional Contribution），享受 15% 的基金税率，而不是你可能高达 32.5%–47% 的个人边际税率。2026-27年度税前缴费上限为 <strong>$32,500</strong>（包含雇主缴费，若有）。<a href="https://www.ato.gov.au/individuals-and-families/super-for-individuals-and-families/super/growing-and-keeping-track-of-your-super/caps-on-super-contributions" target="_blank" rel="noopener" class="src-tag">ATO 上限查询</a>
+    </p>
+  </section>
+
+  <!-- 6. 误区 -->
+  <section class="section">
+    <p class="section-label">误区澄清</p>
+    <h2 class="section-title">关于 Super，很多人想错了</h2>
+
+    <div class="myths">
+      <div class="myth-card">
+        <div class="myth-part">
+          <span class="myth-badge">❌ 常见误区</span>
+          <p class="myth-text">「每个月工资里已经包含了 Super，不用另外给。」</p>
+        </div>
+        <div class="truth-part">
+          <span class="truth-badge">✅ 实际情况</span>
+          <p class="truth-text">Super 是工资以外的额外支出，不能从工资里扣除，除非你和员工签订了明确的"Super 包含在内"协议，且员工总收入不低于法定最低工资 + Super。光口头说"包含在内"，不受法律保护。</p>
+        </div>
+      </div>
+      <div class="myth-card">
+        <div class="myth-part">
+          <span class="myth-badge">❌ 常见误区</span>
+          <p class="myth-text">「员工只是 Casual，做几个小时，不用给 Super 的。」</p>
+        </div>
+        <div class="truth-part">
+          <span class="truth-badge">✅ 实际情况</span>
+          <p class="truth-text">2022年7月后，$450/月 的 Super 门槛已经取消。哪怕员工一个月只工作一小时，也必须缴 Super。没有例外，没有最低工时要求。</p>
+        </div>
+      </div>
+      <div class="myth-card">
+        <div class="myth-part">
+          <span class="myth-badge">❌ 常见误区</span>
+          <p class="myth-text">「ATO 查不到，或者等员工离职之后再说。」</p>
+        </div>
+        <div class="truth-part">
+          <span class="truth-badge">✅ 实际情况</span>
+          <p class="truth-text">ATO 会主动比对 Single Touch Payroll（STP）的工资申报数据与 Super 基金收到的实际缴款数据。两者不匹配，ATO 会发出追征通知。员工也可以直接向 ATO 举报雇主未缴 Super，ATO 会代其追讨并加罚款。</p>
+        </div>
+      </div>
+      <div class="myth-card">
+        <div class="myth-part">
+          <span class="myth-badge">❌ 常见误区</span>
+          <p class="myth-text">「我缴到员工银行账户就好了，不用搞什么 Super 基金。」</p>
+        </div>
+        <div class="truth-part">
+          <span class="truth-badge">✅ 实际情况</span>
+          <p class="truth-text">Super 必须缴入员工指定的合规 Super 基金（Complying Superannuation Fund 或 RSA），不能打入银行账户，不能转为现金，不能由雇主"代为保管"。缴错地方同样视为未缴，触发 SGC。</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 7. 违规后果 -->
+  <section class="section">
+    <p class="section-label">法律后果</p>
+    <h2 class="section-title">不缴 Super 的代价</h2>
+
+    <div class="penalty-grid">
+      <div class="penalty-card">
+        <div class="penalty-title">SGC 不可抵税</div>
+        <div class="penalty-body">迟缴的 Super 转为 SGC，失去雇主的税前抵扣资格。等于你缴了 Super，但税还是要照交——双重损失。</div>
+      </div>
+      <div class="penalty-card">
+        <div class="penalty-title">利息 + 行政费</div>
+        <div class="penalty-body">SGC 按年率约 10% 加收利息，每名员工每季加 $20 行政费。拖得越久，越贵。</div>
+      </div>
+      <div class="penalty-card">
+        <div class="penalty-title">Part 7 追加罚款</div>
+        <div class="penalty-body">如果 ATO 发现你故意少报工资以减少 Super 义务，可加收 Part 7 惩罚性罚款，最高为 SGC 金额的 200%。</div>
+      </div>
+      <div class="penalty-card">
+        <div class="penalty-title">董事个人责任</div>
+        <div class="penalty-body">公司未缴 Super，董事（Director）个人可能被追责，须以个人资产承担 SGC 债务。</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 8. 操作步骤 -->
+  <section class="section">
+    <p class="section-label">实操指南</p>
+    <h2 class="section-title">怎么正确缴 Super？</h2>
+
+    <div class="checklist">
+      <div class="check-item">
+        <div class="check-num">1</div>
+        <div>
+          <div class="check-title">收集员工的 Super 基金信息</div>
+          <div class="check-body">入职时请员工填 Super Choice Form，选择他们自己的 Super 基金，并提供基金名称、账号（Member Number）和 SPIN/USI 码。员工若没有选择，使用 ATO 指定的 Stapled Super Fund（2021年起，ATO 会告诉你员工已有的基金）。</div>
+          <a href="https://www.ato.gov.au/businesses-and-organisations/hiring-and-paying-your-workers/super/setting-up-super-for-your-business" target="_blank" rel="noopener" class="check-link">→ ATO 雇主 Super 设置指南</a>
+        </div>
+      </div>
+      <div class="check-item">
+        <div class="check-num">2</div>
+        <div>
+          <div class="check-title">用 SuperStream 发送缴款</div>
+          <div class="check-body">Super 缴款必须通过 SuperStream 电子标准发送，不能直接 EFT 转账。大多数工资软件（Xero、MYOB）内置 SuperStream 功能，自动发送。或使用 ATO 的 Small Business Superannuation Clearing House（SBSCH）免费服务，适合雇员少于 20 人的小企业。</div>
+          <a href="https://www.ato.gov.au/businesses-and-organisations/hiring-and-paying-your-workers/super/paying-super-contributions/small-business-superannuation-clearing-house" target="_blank" rel="noopener" class="check-link">→ ATO SBSCH 免费清算服务</a>
+        </div>
+      </div>
+      <div class="check-item">
+        <div class="check-num">3</div>
+        <div>
+          <div class="check-title">【2026年新要求】发薪日当天或次日发起 Super 缴款</div>
+          <div class="check-body">Payday Super 生效后，每次发工资必须同步发起 Super 缴款，确保资金在 <strong>7 个工作日</strong>内到达员工 Super 基金。SuperStream 通常需要 1–3 个工作日处理——所以发薪日当天就发，不要等。Xero、MYOB、Employment Hero 等工资软件均已支持自动触发。</div>
+          <a href="https://www.fairwork.gov.au/newsroom/news/payday-super-new-rules-starting-1-july-2026" target="_blank" rel="noopener" class="check-link">→ Fair Work：Payday Super 详细说明</a>
+        </div>
+      </div>
+      <div class="check-item">
+        <div class="check-num">4</div>
+        <div>
+          <div class="check-title">在工资单中注明 Super 缴费信息</div>
+          <div class="check-body">每次发工资单，必须注明：本期雇主 Super 缴款金额 + Super 基金名称。这不只是好习惯，是法律要求。员工有权核对。</div>
+        </div>
+      </div>
+      <div class="check-item">
+        <div class="check-num">5</div>
+        <div>
+          <div class="check-title">年度核对：确认全年 Super 已足额缴清</div>
+          <div class="check-body">每年 6 月底前，对照全年工资记录，确认所有员工的 Super 已按正确比例缴足。如有遗漏，主动向 ATO 申报 SGC Statement，比被查到好。</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="cta-strip">
+    <h3>Super 算不清楚？</h3>
+    <p>Super 的计算、缴款和 SGC 风险评估，都可以帮你检查。预约 15 分钟，避免不必要的罚款。</p>
+    <div class="cta-buttons">
+      <a href="consultant_cn.html#contact" class="cta-btn cta-primary">免费预约咨询 →</a>
+      <a href="record-keeping.html" class="cta-btn cta-secondary">下一篇：账本与记录保存 →</a>
+    </div>
+  </div>
+
+  <div class="article-nav">
+    <a href="fair-work.html" class="article-nav-item">
+      <div class="article-nav-dir">← 上一篇</div>
+      <div class="article-nav-title">Fair Work 雇员合规</div>
+    </a>
+    <a href="record-keeping.html" class="article-nav-item" style="text-align:right">
+      <div class="article-nav-dir">下一篇 →</div>
+      <div class="article-nav-title">账本与记录保存</div>
+    </a>
+  </div>
+</main>
+
+<footer>
+  <div>🎋 竹 Digital · 墨尔本，维多利亚州 · ABN 29 919 594 996</div>
+  <div style="margin-top:6px;">
+    本页面为教育性合规资讯，不构成税务或法律建议 ·
+    <a href="consultant_cn.html">返回顾问首页</a>
+  </div>
+</footer>

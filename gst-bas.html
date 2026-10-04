@@ -1,0 +1,1115 @@
+<!--
+  竹 Digital — GST 与 BAS 申报
+  ════════════════════════════════════════════════════════
+  DATA_UPDATE_SCHEDULE: 每年7月1日后更新（ATO政策更新后）
+  LAST_UPDATED: 2026-10
+  FISCAL_YEAR: 2026-27
+
+  KEY_FIGURES (核实这些数据是否有变化):
+  - GST强制注册门槛: $75,000（自2000年起未变）→ 来源: ATO https://www.ato.gov.au/business/gst/registering-for-gst/
+  - 非营利组织门槛: $150,000 → 来源: ATO
+  - GST税率: 10% → 来源: ATO（立法规定，基本不变）
+  - BAS季度申报截止: 每季度结束后28天 → 来源: ATO
+  - BAS月度申报截止: 次月21日 → 来源: ATO
+  - 小企业PAYG预缴门槛: $8,500 → 来源: ATO（检查是否有变化）
+
+  SOURCES:
+  - ATO GST: https://www.ato.gov.au/business/gst/
+  - BAS: https://www.ato.gov.au/business/business-activity-statements-bas/
+  ════════════════════════════════════════════════════════
+-->
+<title>GST 与 BAS 申报</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;700&family=Noto+Sans+SC:wght@300;400;500;600&display=swap">
+<style>
+:root {
+  --bg:        #0D1B2A;
+  --bg2:       #0F1F30;
+  --surface:   #152233;
+  --surface2:  #1A2B3F;
+  --border:    rgba(59,130,246,.13);
+  --border2:   rgba(59,130,246,.22);
+  --fg:        #F1F5F9;
+  --fg2:       #94A3B8;
+  --fg3:       #475569;
+  --accent:    #60A5FA;
+  --blue:      #1D4ED8;
+  --blue-lit:  #2563EB;
+  --green:     #34D399;
+  --green-bg:  rgba(52,211,153,.08);
+  --yellow:    #FCD34D;
+  --yellow-bg: rgba(252,211,77,.08);
+  --red:       #F87171;
+  --red-bg:    rgba(248,113,113,.08);
+  --purple:    #A78BFA;
+  --purple-bg: rgba(167,139,250,.08);
+  --serif:     "Noto Serif SC", Georgia, serif;
+  --sans:      "Noto Sans SC", system-ui, sans-serif;
+  color-scheme: dark;
+}
+@media (prefers-color-scheme: light) {
+  :root:not([data-theme="dark"]) {
+    --bg:        #F0F4FA;
+    --bg2:       #E4EBF7;
+    --surface:   #FFFFFF;
+    --surface2:  #F8FAFC;
+    --border:    rgba(37,99,235,.13);
+    --border2:   rgba(37,99,235,.25);
+    --fg:        #0F172A;
+    --fg2:       #334155;
+    --fg3:       #64748B;
+    --accent:    #1D4ED8;
+    --blue:      #1D4ED8;
+    --blue-lit:  #2563EB;
+    --green:     #059669;
+    --green-bg:  rgba(5,150,105,.07);
+    --yellow:    #B45309;
+    --yellow-bg: rgba(180,83,9,.06);
+    --red:       #DC2626;
+    --red-bg:    rgba(220,38,38,.06);
+    --purple:    #7C3AED;
+    --purple-bg: rgba(124,58,237,.07);
+    color-scheme: light;
+  }
+}
+:root[data-theme="dark"] {
+  --bg:#0D1B2A;--bg2:#0F1F30;--surface:#152233;--surface2:#1A2B3F;
+  --border:rgba(59,130,246,.13);--border2:rgba(59,130,246,.22);
+  --fg:#F1F5F9;--fg2:#94A3B8;--fg3:#475569;--accent:#60A5FA;
+  --blue:#1D4ED8;--blue-lit:#2563EB;
+  --green:#34D399;--green-bg:rgba(52,211,153,.08);
+  --yellow:#FCD34D;--yellow-bg:rgba(252,211,77,.08);
+  --red:#F87171;--red-bg:rgba(248,113,113,.08);
+  --purple:#A78BFA;--purple-bg:rgba(167,139,250,.08);
+  color-scheme:dark;
+}
+
+*{margin:0;padding:0;box-sizing:border-box}
+body {
+  font-family: var(--sans);
+  background: var(--bg);
+  color: var(--fg);
+  min-height: 100vh;
+  font-size: 15px;
+  line-height: 1.7;
+}
+
+/* ── Nav ── */
+.nav {
+  position: sticky;
+  top: env(safe-area-inset-top, 0px);
+  z-index: 100;
+  background: rgba(13,27,42,.92);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border);
+  padding: 14px 24px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.nav-back {
+  font-size: 13px;
+  color: var(--fg2);
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+.nav-back:hover { color: var(--accent); }
+.nav-sep { color: var(--fg3); font-size: 12px; }
+.nav-current { font-size: 13px; color: var(--fg); font-weight: 500; }
+.nav-brand { margin-left: auto; font-size: 12px; color: var(--fg3); }
+
+/* ── Hero ── */
+.hero {
+  background: linear-gradient(160deg, #0a1628 0%, #0d1b2a 50%, #0f2035 100%);
+  padding: 64px 24px 52px;
+  text-align: center;
+  border-bottom: 1px solid var(--border);
+  position: relative;
+  overflow: hidden;
+}
+.hero::before {
+  content: '';
+  position: absolute;
+  top: -60px; left: 50%; transform: translateX(-50%);
+  width: 500px; height: 500px;
+  background: radial-gradient(circle, rgba(96,165,250,.06) 0%, transparent 70%);
+  pointer-events: none;
+}
+.breadcrumb {
+  font-size: 12px;
+  color: var(--accent);
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  margin-bottom: 20px;
+  opacity: 0.8;
+}
+.hero h1 {
+  font-family: var(--serif);
+  font-size: clamp(26px, 5vw, 38px);
+  font-weight: 700;
+  line-height: 1.35;
+  text-wrap: balance;
+  margin-bottom: 18px;
+}
+.hero h1 em { font-style: normal; color: var(--accent); }
+.hero-sub {
+  font-size: 15px;
+  color: var(--fg2);
+  max-width: 560px;
+  margin: 0 auto 28px;
+  line-height: 1.8;
+}
+.hero-tags {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+.hero-tag {
+  font-size: 11px;
+  letter-spacing: 0.5px;
+  padding: 5px 14px;
+  border-radius: 20px;
+  border: 1px solid var(--border2);
+  color: var(--fg2);
+  background: var(--surface);
+}
+
+/* ── Main layout ── */
+.page { max-width: 760px; margin: 0 auto; padding: 0 20px 80px; }
+.section { margin-top: 64px; }
+.section-label {
+  font-size: 11px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 10px;
+  opacity: 0.8;
+}
+.section-title {
+  font-family: var(--serif);
+  font-size: clamp(20px, 3.5vw, 26px);
+  font-weight: 700;
+  margin-bottom: 12px;
+  text-wrap: balance;
+}
+.section-body {
+  font-size: 14px;
+  color: var(--fg2);
+  line-height: 1.85;
+  max-width: 620px;
+}
+
+/* ── Key question / decision box ── */
+.decision-box {
+  margin-top: 36px;
+  background: var(--surface);
+  border: 1px solid var(--border2);
+  border-radius: 16px;
+  padding: 28px 24px;
+}
+.decision-q {
+  font-size: 15px;
+  font-weight: 600;
+  margin-bottom: 20px;
+  color: var(--fg);
+}
+.threshold-visual {
+  display: flex;
+  align-items: stretch;
+  gap: 0;
+  border-radius: 12px;
+  overflow: hidden;
+  border: 1px solid var(--border);
+  margin-bottom: 18px;
+}
+.tv-side {
+  flex: 1;
+  padding: 20px 18px;
+  position: relative;
+}
+.tv-below {
+  background: var(--green-bg);
+  border-right: 1px solid var(--border);
+}
+.tv-above {
+  background: var(--yellow-bg);
+}
+.tv-label {
+  font-size: 10px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  font-weight: 600;
+  margin-bottom: 8px;
+}
+.tv-label.green { color: var(--green); }
+.tv-label.yellow { color: var(--yellow); }
+.tv-amount {
+  font-size: 24px;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  margin-bottom: 6px;
+}
+.tv-desc { font-size: 12px; color: var(--fg2); line-height: 1.6; }
+.tv-divider {
+  width: 1px;
+  background: var(--border2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+.tv-divider span {
+  position: absolute;
+  background: var(--surface2);
+  border: 1px solid var(--border2);
+  border-radius: 50%;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--fg2);
+  z-index: 2;
+}
+.decision-note {
+  font-size: 12px;
+  color: var(--fg3);
+  padding: 10px 14px;
+  background: var(--surface2);
+  border-radius: 8px;
+  line-height: 1.6;
+}
+
+/* ── Stat tiles ── */
+.stats {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+  gap: 14px;
+  margin-top: 32px;
+}
+.stat {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 20px 16px;
+  text-align: center;
+}
+.stat-num {
+  font-size: 26px;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  line-height: 1.1;
+  margin-bottom: 6px;
+}
+.stat-num.accent { color: var(--accent); }
+.stat-num.green  { color: var(--green); }
+.stat-num.yellow { color: var(--yellow); }
+.stat-num.red    { color: var(--red); }
+.stat-label { font-size: 11px; color: var(--fg2); line-height: 1.5; }
+
+/* ── Timeline: GST calculation flow ── */
+.flow {
+  margin-top: 32px;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+.flow-step {
+  display: flex;
+  gap: 16px;
+  align-items: flex-start;
+}
+.flow-line {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex-shrink: 0;
+  width: 32px;
+}
+.flow-dot {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: var(--blue);
+  border: 2px solid var(--accent);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 13px;
+  font-weight: 700;
+  color: #fff;
+  flex-shrink: 0;
+}
+.flow-connector {
+  width: 2px;
+  height: 28px;
+  background: linear-gradient(var(--accent), transparent);
+  opacity: 0.3;
+  margin: 2px 0;
+}
+.flow-content {
+  padding-bottom: 28px;
+  flex: 1;
+}
+.flow-label {
+  font-size: 13px;
+  font-weight: 600;
+  margin-bottom: 5px;
+  padding-top: 5px;
+}
+.flow-desc { font-size: 13px; color: var(--fg2); line-height: 1.7; }
+.flow-formula {
+  margin-top: 10px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 14px 16px;
+  font-size: 13px;
+  font-family: monospace;
+  color: var(--accent);
+  letter-spacing: 0.3px;
+}
+
+/* ── BAS timeline / calendar ── */
+.bas-calendar {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
+  margin-top: 28px;
+}
+@media (max-width: 500px) {
+  .bas-calendar { grid-template-columns: repeat(2, 1fr); }
+}
+.bas-quarter {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 16px 14px;
+  text-align: center;
+}
+.bas-q-label {
+  font-size: 10px;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--accent);
+  font-weight: 600;
+  margin-bottom: 8px;
+}
+.bas-months {
+  font-size: 12px;
+  color: var(--fg2);
+  margin-bottom: 10px;
+  line-height: 1.5;
+}
+.bas-due {
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--yellow);
+  background: var(--yellow-bg);
+  border-radius: 6px;
+  padding: 4px 8px;
+}
+.bas-note {
+  margin-top: 14px;
+  font-size: 12px;
+  color: var(--fg3);
+  background: var(--surface2);
+  border-radius: 8px;
+  padding: 10px 14px;
+  line-height: 1.65;
+}
+
+/* ── What goes in BAS: tabs ── */
+.tabs { margin-top: 32px; }
+.tab-nav {
+  display: flex;
+  gap: 4px;
+  border-bottom: 1px solid var(--border);
+  overflow-x: auto;
+  scrollbar-width: none;
+  padding-bottom: 0;
+}
+.tab-nav::-webkit-scrollbar { display: none; }
+.tab-btn {
+  flex-shrink: 0;
+  padding: 10px 18px;
+  font-size: 13px;
+  font-family: var(--sans);
+  font-weight: 500;
+  color: var(--fg2);
+  background: none;
+  border: none;
+  border-bottom: 2px solid transparent;
+  cursor: pointer;
+  transition: color .15s, border-color .15s;
+  margin-bottom: -1px;
+}
+.tab-btn.active { color: var(--accent); border-bottom-color: var(--accent); }
+.tab-btn:hover { color: var(--fg); }
+.tab-panel { display: none; padding-top: 24px; }
+.tab-panel.active { display: block; }
+.bas-fields {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.bas-field {
+  display: flex;
+  gap: 14px;
+  align-items: flex-start;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 16px 18px;
+}
+.bas-field-code {
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--accent);
+  font-variant-numeric: tabular-nums;
+  min-width: 40px;
+  padding-top: 2px;
+}
+.bas-field-name { font-size: 13px; font-weight: 600; margin-bottom: 4px; }
+.bas-field-desc { font-size: 12px; color: var(--fg2); line-height: 1.6; }
+.bas-field.important { border-color: var(--border2); background: var(--surface2); }
+.bas-field-tip {
+  font-size: 11px;
+  margin-top: 6px;
+  color: var(--green);
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+/* ── Myth/truth cards ── */
+.myths { display: flex; flex-direction: column; gap: 14px; margin-top: 28px; }
+.myth-card {
+  border-radius: 14px;
+  overflow: hidden;
+  border: 1px solid var(--border);
+}
+.myth-part, .truth-part {
+  padding: 16px 20px;
+}
+.myth-part {
+  background: var(--red-bg);
+  border-bottom: 1px solid var(--border);
+}
+.truth-part { background: var(--green-bg); }
+.myth-badge, .truth-badge {
+  font-size: 10px;
+  letter-spacing: 1px;
+  font-weight: 700;
+  margin-bottom: 6px;
+  display: block;
+}
+.myth-badge { color: var(--red); }
+.truth-badge { color: var(--green); }
+.myth-text, .truth-text { font-size: 13px; line-height: 1.7; }
+
+/* ── Penalty box ── */
+.penalty-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 12px;
+  margin-top: 28px;
+}
+.penalty-card {
+  background: var(--surface);
+  border: 1px solid var(--red-bg);
+  border-left: 3px solid var(--red);
+  border-radius: 12px;
+  padding: 18px 16px;
+}
+.penalty-title { font-size: 13px; font-weight: 600; margin-bottom: 6px; color: var(--red); }
+.penalty-body { font-size: 12px; color: var(--fg2); line-height: 1.65; }
+
+/* ── Checklist ── */
+.checklist { display: flex; flex-direction: column; gap: 12px; margin-top: 28px; }
+.check-item {
+  display: flex;
+  gap: 14px;
+  align-items: flex-start;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 16px 18px;
+}
+.check-num {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: var(--blue);
+  color: #fff;
+  font-size: 12px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+.check-title { font-size: 13px; font-weight: 600; margin-bottom: 4px; }
+.check-body { font-size: 12px; color: var(--fg2); line-height: 1.65; }
+.check-link {
+  display: inline-block;
+  margin-top: 6px;
+  font-size: 11px;
+  color: var(--accent);
+  text-decoration: none;
+}
+.check-link:hover { text-decoration: underline; }
+
+/* ── CTA strip ── */
+.cta-strip {
+  margin-top: 64px;
+  background: linear-gradient(135deg, var(--surface) 0%, var(--surface2) 100%);
+  border: 1px solid var(--border2);
+  border-radius: 20px;
+  padding: 36px 28px;
+  text-align: center;
+}
+.cta-strip h3 {
+  font-family: var(--serif);
+  font-size: 20px;
+  margin-bottom: 10px;
+}
+.cta-strip p { font-size: 13px; color: var(--fg2); margin-bottom: 24px; }
+.cta-buttons {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+.cta-btn {
+  display: inline-block;
+  padding: 12px 24px;
+  border-radius: 10px;
+  font-size: 14px;
+  font-weight: 600;
+  text-decoration: none;
+  transition: opacity .15s, transform .15s;
+}
+.cta-btn:hover { opacity: 0.88; transform: translateY(-1px); }
+.cta-primary { background: var(--blue-lit); color: #fff; }
+.cta-secondary { background: var(--surface); border: 1px solid var(--border2); color: var(--fg2); }
+
+/* ── Nav bar between articles ── */
+.article-nav {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  margin-top: 48px;
+  flex-wrap: wrap;
+}
+.article-nav-item {
+  flex: 1;
+  min-width: 160px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 16px 18px;
+  text-decoration: none;
+  transition: border-color .15s;
+}
+.article-nav-item:hover { border-color: var(--accent); }
+.article-nav-dir {
+  font-size: 10px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: var(--fg3);
+  margin-bottom: 6px;
+}
+.article-nav-title { font-size: 13px; font-weight: 600; color: var(--fg); }
+
+/* ── Footer ── */
+footer {
+  margin-top: 80px;
+  border-top: 1px solid var(--border);
+  padding: 28px 24px;
+  text-align: center;
+  font-size: 11px;
+  color: var(--fg3);
+  line-height: 1.8;
+}
+footer a { color: var(--fg3); text-decoration: none; }
+footer a:hover { color: var(--accent); }
+</style>
+
+<!-- ── Nav ── -->
+<nav class="nav">
+  <a href="consultant_cn.html" class="nav-back">← 返回顾问</a>
+  <span class="nav-sep">/</span>
+  <span class="nav-current">GST 与 BAS 申报</span>
+  <span class="nav-brand">🎋 竹 Digital</span>
+</nav>
+
+<!-- ── Hero ── -->
+<header class="hero">
+  <p class="breadcrumb">带你读懂 · 系列第二篇</p>
+  <h1>GST 注册了，然后呢？<br><em>BAS 是怎么回事</em></h1>
+  <p class="hero-sub">每季度一次的 BAS 申报，是很多小业主头疼的大事——不知道算哪些、填哪格、交多少。这篇用图表帮你搞清楚。</p>
+  <div class="hero-tags">
+    <span class="hero-tag">📅 每季度</span>
+    <span class="hero-tag">💰 $75,000 起注册</span>
+    <span class="hero-tag">🧾 10% 消费税</span>
+    <span class="hero-tag">📋 BAS 申报</span>
+  </div>
+</header>
+
+<!-- ── Main ── -->
+<main class="page">
+
+  <div style="background:var(--surface);border:1px solid rgba(59,130,246,.22);border-radius:10px;padding:12px 18px;font-size:12px;color:var(--fg2);margin-top:28px;margin-bottom:0;line-height:1.8;">
+    📅 <strong style="color:var(--accent);">数据截至：2026年10月</strong> · GST 注册门槛 $75,000 自2000年起未变 ·
+    来源：<a href="https://www.ato.gov.au/businesses-and-organisations/gst-excise-and-indirect-taxes/gst/registering-for-gst" target="_blank" rel="noopener" style="color:var(--accent);text-decoration:none;">ATO（GST 注册）</a>、
+    <a href="https://www.ato.gov.au/businesses-and-organisations/gst-excise-and-indirect-taxes/gst/reporting-and-paying-gst/lodging-your-business-activity-statement" target="_blank" rel="noopener" style="color:var(--accent);text-decoration:none;">ATO（BAS 申报）</a> ·
+    ⚡ BAS 截止日期每年可能调整，建议在 myGov 确认
+  </div>
+
+  <!-- 1. GST 注册门槛 -->
+  <section class="section">
+    <p class="section-label">第一步</p>
+    <h2 class="section-title">我需要注册 GST 吗？</h2>
+    <p class="section-body">GST（Goods and Services Tax，商品及服务税）是澳洲的消费税，税率 10%。不是所有生意都要注册——关键看你的营业额。</p>
+
+    <div class="decision-box">
+      <p class="decision-q">👇 你的年营业额（12个月的总收入）是多少？</p>
+      <div class="threshold-visual">
+        <div class="tv-side tv-below">
+          <div class="tv-label green">低于门槛</div>
+          <div class="tv-amount" style="color:var(--green)">$75,000</div>
+          <div class="tv-desc">可以不注册 GST<br>也可以自愿注册（很多人选择注册，方便退税）</div>
+        </div>
+        <div class="tv-divider"><span>vs</span></div>
+        <div class="tv-side tv-above">
+          <div class="tv-label yellow">超过门槛</div>
+          <div class="tv-amount" style="color:var(--yellow)">$75,000+</div>
+          <div class="tv-desc"><strong>必须注册 GST</strong><br>注册后必须向客户收取 10% GST，并定期申报 BAS</div>
+        </div>
+      </div>
+      <p class="decision-note">⚡ <strong>特别提醒：</strong>门槛看的是"营业额"，不是"利润"。就算你亏损，只要收入超过 $75,000，就必须注册。非营利组织门槛更高，为 $150,000。出租车和网约车司机（含 Uber）：无论收入多少，必须注册。</p>
+    </div>
+  </section>
+
+  <!-- 2. 关键数字 -->
+  <section class="section">
+    <p class="section-label">关键数字</p>
+    <h2 class="section-title">这些数字，你要记住</h2>
+    <div class="stats">
+      <div class="stat">
+        <div class="stat-num accent">10%</div>
+        <div class="stat-label">GST 税率（收入的 1/11）</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num yellow">$75K</div>
+        <div class="stat-label">必须注册 GST 的年营业额门槛</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num green">4次</div>
+        <div class="stat-label">每年 BAS 申报次数（季度）</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num accent">28天</div>
+        <div class="stat-label">每季度结束后的申报截止期</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num red">$313</div>
+        <div class="stat-label">逾期不申报起步罚款（每28天）</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num green">1/11</div>
+        <div class="stat-label">从含税收入算 GST 的公式</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 3. GST 计算原理 -->
+  <section class="section">
+    <p class="section-label">带你读懂</p>
+    <h2 class="section-title">GST 怎么算？收了多少，交多少？</h2>
+    <p class="section-body">GST 不是你的钱——你只是帮 ATO 代收。每季度 BAS 申报，你要把收来的 GST 交出去，但你自己买东西付过的 GST 可以退回来。</p>
+
+    <div class="flow" style="margin-top:32px;">
+      <div class="flow-step">
+        <div class="flow-line">
+          <div class="flow-dot">1</div>
+          <div class="flow-connector"></div>
+        </div>
+        <div class="flow-content">
+          <div class="flow-label">你向客户收钱（含 GST）</div>
+          <div class="flow-desc">假设你开了一张 $1,100 的发票。其中 $1,000 是你的收入，$100 是你代 ATO 收的 GST。</div>
+          <div class="flow-formula">收入 $1,100 ÷ 11 = GST $100（这是你收到的 GST）</div>
+        </div>
+      </div>
+      <div class="flow-step">
+        <div class="flow-line">
+          <div class="flow-dot">2</div>
+          <div class="flow-connector"></div>
+        </div>
+        <div class="flow-content">
+          <div class="flow-label">你买东西也付了 GST（可以退）</div>
+          <div class="flow-desc">你花 $550 买了经营用品（含 GST $50）。这 $50 叫做 GST 进项税额（Input Tax Credit，ITC），可以从要交的 GST 里扣掉。</div>
+          <div class="flow-formula">支出 $550 ÷ 11 = ITC $50（这是你可以退回的 GST）</div>
+        </div>
+      </div>
+      <div class="flow-step">
+        <div class="flow-line">
+          <div class="flow-dot">3</div>
+          <div class="flow-connector"></div>
+        </div>
+        <div class="flow-content">
+          <div class="flow-label">净 GST = 你实际要交给 ATO 的</div>
+          <div class="flow-desc">两者相减，就是这个季度你需要交给 ATO 的 GST 金额。如果 ITC 比你收的 GST 还多，ATO 会退钱给你。</div>
+          <div class="flow-formula">净 GST = $100（收） − $50（退） = <span style="color:var(--yellow);font-weight:700">$50 需要交给 ATO</span></div>
+        </div>
+      </div>
+      <div class="flow-step">
+        <div class="flow-line">
+          <div class="flow-dot">4</div>
+        </div>
+        <div class="flow-content">
+          <div class="flow-label">每季度 BAS 申报 → 汇总全季度的数字</div>
+          <div class="flow-desc">把这个季度所有收入的 GST 和所有支出的 ITC 加起来，填进 BAS 表格，一起申报、一起结算。</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 4. BAS 申报时间表 -->
+  <section class="section">
+    <p class="section-label">申报时间</p>
+    <h2 class="section-title">BAS 什么时候交？</h2>
+    <p class="section-body">季度申报（最常见）：每三个月一次，截止日期是季度结束后第 28 天。</p>
+
+    <div class="bas-calendar">
+      <div class="bas-quarter">
+        <div class="bas-q-label">Q1</div>
+        <div class="bas-months">7月 · 8月 · 9月</div>
+        <div class="bas-due">截止 10月28日</div>
+      </div>
+      <div class="bas-quarter">
+        <div class="bas-q-label">Q2</div>
+        <div class="bas-months">10月 · 11月 · 12月</div>
+        <div class="bas-due">截止 2月28日</div>
+      </div>
+      <div class="bas-quarter">
+        <div class="bas-q-label">Q3</div>
+        <div class="bas-months">1月 · 2月 · 3月</div>
+        <div class="bas-due">截止 4月28日</div>
+      </div>
+      <div class="bas-quarter">
+        <div class="bas-q-label">Q4</div>
+        <div class="bas-months">4月 · 5月 · 6月</div>
+        <div class="bas-due">截止 7月28日</div>
+      </div>
+    </div>
+
+    <p class="bas-note">📌 <strong>通过注册会计师（Tax Agent）申报的，截止日期通常会延长约两个月。</strong>如果你自己用 myGov/ATO Online 申报，必须遵守以上日期。月度申报（营业额超过 $20M 的大企业才需要）。</p>
+  </section>
+
+  <!-- 5. BAS 里面填什么 -->
+  <section class="section">
+    <p class="section-label">填表说明</p>
+    <h2 class="section-title">BAS 表格里每一格是什么？</h2>
+    <p class="section-body">BAS 表格看起来满是代码（G1、G2、1A、1B……），其实逻辑很简单。我们按功能分类解释。</p>
+
+    <div class="tabs">
+      <div class="tab-nav">
+        <button class="tab-btn active" onclick="switchTab(this,'gst-out')">GST 收入部分</button>
+        <button class="tab-btn" onclick="switchTab(this,'gst-in')">GST 支出退税</button>
+        <button class="tab-btn" onclick="switchTab(this,'paye')">PAYG 预扣税</button>
+        <button class="tab-btn" onclick="switchTab(this,'other')">其他字段</button>
+      </div>
+
+      <div id="gst-out" class="tab-panel active">
+        <div class="bas-fields">
+          <div class="bas-field important">
+            <div class="bas-field-code">G1</div>
+            <div>
+              <div class="bas-field-name">Total sales（含税总销售额）</div>
+              <div class="bas-field-desc">这个季度你所有的销售收入，包含 GST 的金额。如果你开了 $1,100 的发票，就填 $1,100（不是 $1,000）。</div>
+              <div class="bas-field-tip">✓ 最重要的格子——填含税总收入</div>
+            </div>
+          </div>
+          <div class="bas-field">
+            <div class="bas-field-code">G2</div>
+            <div>
+              <div class="bas-field-name">Export sales（出口销售）</div>
+              <div class="bas-field-desc">出口到海外的销售金额。出口通常是 GST-free（免 GST）。如果你没有出口业务，填 $0。</div>
+            </div>
+          </div>
+          <div class="bas-field">
+            <div class="bas-field-code">G3</div>
+            <div>
+              <div class="bas-field-name">Other GST-free sales（其他免 GST 收入）</div>
+              <div class="bas-field-desc">基础食品、医疗、教育、某些政府收费等免 GST 项目的销售。大多数普通小生意填 $0。</div>
+            </div>
+          </div>
+          <div class="bas-field important">
+            <div class="bas-field-code">1A</div>
+            <div>
+              <div class="bas-field-name">GST on sales（你这季度收了多少 GST）</div>
+              <div class="bas-field-desc">系统通常自动算，或你手动填 G1 ÷ 11 的结果。这是你代收的 GST，是需要交给 ATO 的部分。</div>
+              <div class="bas-field-tip">✓ 你要交给 ATO 的 GST 金额</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div id="gst-in" class="tab-panel">
+        <div class="bas-fields">
+          <div class="bas-field important">
+            <div class="bas-field-code">G10</div>
+            <div>
+              <div class="bas-field-name">Capital purchases（资本性采购，含税）</div>
+              <div class="bas-field-desc">这季度买的设备、车辆、电脑等资本性物品的含税总价。比如买了台 $2,200 的电脑，填 $2,200。</div>
+            </div>
+          </div>
+          <div class="bas-field important">
+            <div class="bas-field-code">G11</div>
+            <div>
+              <div class="bas-field-name">Non-capital purchases（日常经营支出，含税）</div>
+              <div class="bas-field-desc">租金、办公用品、进货、水电等日常经营支出的含税金额总和。这是你的"ITC 来源"。</div>
+              <div class="bas-field-tip">✓ 填所有带 GST 的日常经营支出</div>
+            </div>
+          </div>
+          <div class="bas-field important">
+            <div class="bas-field-code">1B</div>
+            <div>
+              <div class="bas-field-name">GST on purchases（你可以退回的 GST）</div>
+              <div class="bas-field-desc">（G10 + G11）÷ 11。这是你的进项税额抵扣（Input Tax Credit），从 1A 里扣掉，剩下的才是净 GST。</div>
+              <div class="bas-field-tip">✓ 你能退回的 GST 金额，越大越省钱</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div id="paye" class="tab-panel">
+        <div class="bas-fields">
+          <div class="bas-field important">
+            <div class="bas-field-code">W1</div>
+            <div>
+              <div class="bas-field-name">Total salary &amp; wages（员工工资总额）</div>
+              <div class="bas-field-desc">这个季度你付给所有员工（含全职、兼职、Casual）的税前工资总额。没有雇员填 $0。</div>
+            </div>
+          </div>
+          <div class="bas-field important">
+            <div class="bas-field-code">W2</div>
+            <div>
+              <div class="bas-field-name">PAYG withheld from salary（从工资预扣的税）</div>
+              <div class="bas-field-desc">你帮员工扣留、需要交给 ATO 的个人所得税（PAYG Withholding）。这不是你的钱，是员工的税。</div>
+              <div class="bas-field-tip">⚠ 这笔钱必须和 BAS 一起交，不能留着</div>
+            </div>
+          </div>
+          <div class="bas-field">
+            <div class="bas-field-code">W4</div>
+            <div>
+              <div class="bas-field-name">PAYG withheld where ABN not quoted</div>
+              <div class="bas-field-desc">付款给没有提供 ABN 的供应商时，必须扣留 47% 并交给 ATO。填这里。有 ABN 的供应商不需要。</div>
+            </div>
+          </div>
+          <div class="bas-field">
+            <div class="bas-field-code">4</div>
+            <div>
+              <div class="bas-field-name">PAYG installment（PAYG 分期税款）</div>
+              <div class="bas-field-desc">针对自雇人士和小企业主的预缴个人/公司所得税。ATO 会预先算好一个金额让你分期预缴，年底汇算。</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div id="other" class="tab-panel">
+        <div class="bas-fields">
+          <div class="bas-field">
+            <div class="bas-field-code">T1</div>
+            <div>
+              <div class="bas-field-name">Estimated net income（预估净收入）</div>
+              <div class="bas-field-desc">计算 PAYG installment 用的数字。如果你选了 ATO 预算方式，这格系统会帮你填。</div>
+            </div>
+          </div>
+          <div class="bas-field">
+            <div class="bas-field-code">F</div>
+            <div>
+              <div class="bas-field-name">Fuel tax credits（燃油税退税）</div>
+              <div class="bas-field-desc">适用于用燃油进行特定生产活动的企业（农业、采矿、某些运输）。零售/服务类生意通常填 $0。</div>
+            </div>
+          </div>
+          <div class="bas-field">
+            <div class="bas-field-code">7C</div>
+            <div>
+              <div class="bas-field-name">Deferred GST on imports</div>
+              <div class="bas-field-desc">进口商品的 GST 递延申报。进口贸易类企业需要关注，普通服务类生意不涉及。</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 6. 误区澄清 -->
+  <section class="section">
+    <p class="section-label">误区澄清</p>
+    <h2 class="section-title">关于 GST，很多人搞错了这几件事</h2>
+
+    <div class="myths">
+      <div class="myth-card">
+        <div class="myth-part">
+          <span class="myth-badge">❌ 常见误区</span>
+          <p class="myth-text">「我收了 $1,100，里面有 $100 的 GST，所以我要交 $100 给 ATO？」</p>
+        </div>
+        <div class="truth-part">
+          <span class="truth-badge">✅ 实际情况</span>
+          <p class="truth-text">不一定。你要交的是"净 GST" = 你收的 GST 减去你付出去的 GST（进项税额）。如果你这季度的支出里也有 GST，可以抵扣。很多时候实际交的比你以为的少。</p>
+        </div>
+      </div>
+      <div class="myth-card">
+        <div class="myth-part">
+          <span class="myth-badge">❌ 常见误区</span>
+          <p class="myth-text">「我营业额还没到 $75,000，就算了，反正不用注册 GST。」</p>
+        </div>
+        <div class="truth-part">
+          <span class="truth-badge">✅ 实际情况</span>
+          <p class="truth-text">很多小业主选择<strong>自愿注册 GST</strong>——因为注册后可以退回所有经营支出里的 GST（进项税额），特别是有大额采购的行业，退回来的钱不少。权衡申报工作量是否值得。</p>
+        </div>
+      </div>
+      <div class="myth-card">
+        <div class="myth-part">
+          <span class="myth-badge">❌ 常见误区</span>
+          <p class="myth-text">「BAS 就是 GST 的表格，填完 GST 就好了。」</p>
+        </div>
+        <div class="truth-part">
+          <span class="truth-badge">✅ 实际情况</span>
+          <p class="truth-text">BAS（Business Activity Statement）是综合表格，除了 GST，还可能包括：PAYG Withholding（帮员工扣的个人所得税）、PAYG Installment（预缴自己的所得税）、燃油税退税等。你漏填了，ATO 可能会追问。</p>
+        </div>
+      </div>
+      <div class="myth-card">
+        <div class="myth-part">
+          <span class="myth-badge">❌ 常见误区</span>
+          <p class="myth-text">「没钱交，就先不申报，等有钱了再说。」</p>
+        </div>
+        <div class="truth-part">
+          <span class="truth-badge">✅ 实际情况</span>
+          <p class="truth-text"><strong>申报和付款是两件事！</strong>就算现在没钱付，也必须先按时申报。申报了但没钱付，可以找 ATO 申请付款计划（Payment Plan）——通常他们愿意谈。但不申报，罚款会叠加，而且还影响信用记录。</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 7. 逾期后果 -->
+  <section class="section">
+    <p class="section-label">注意事项</p>
+    <h2 class="section-title">迟申报、迟付款会怎样？</h2>
+
+    <div class="penalty-grid">
+      <div class="penalty-card">
+        <div class="penalty-title">逾期申报罚款</div>
+        <div class="penalty-body">每 28 天罚 $313（Failure to Lodge Penalty，FLP）。最高可达 $1,565（5个单位）。不申报就会一直累计。</div>
+      </div>
+      <div class="penalty-card">
+        <div class="penalty-title">迟付款利息</div>
+        <div class="penalty-body">如果申报了但没按时付款，ATO 会按年率约 11.15%（2024-25年）计算利息（GIC，General Interest Charge）。</div>
+      </div>
+      <div class="penalty-card">
+        <div class="penalty-title">欠税记录</div>
+        <div class="penalty-body">持续欠税可能影响你的 ABN 状态。ATO 有权向 credit bureau 报告超过 $100,000 的税务欠款。</div>
+      </div>
+      <div class="penalty-card">
+        <div class="penalty-title">ATO 主动核税</div>
+        <div class="penalty-body">不申报不等于不用交。ATO 会根据行业数据估算你的税额，主动出具评估通知（Default Assessment），通常比实际数字高。</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 8. 申报步骤 -->
+  <section class="section">
+    <p class="section-label">操作步骤</p>
+    <h2 class="section-title">怎么申报 BAS？一步一步来</h2>
+
+    <div class="checklist">
+      <div class="check-item">
+        <div class="check-num">1</div>
+        <div>
+          <div class="check-title">收集这个季度所有的发票和收据</div>
+          <div class="check-body">销售发票（你开给客户的）+ 采购收据（你付出去的，包含 GST 才能退）。用会计软件（Xero、MYOB）自动归类最省事，或用 Excel 手动整理。</div>
+        </div>
+      </div>
+      <div class="check-item">
+        <div class="check-num">2</div>
+        <div>
+          <div class="check-title">算出 GST Collected（1A）和 GST Credits（1B）</div>
+          <div class="check-body">1A = 所有含税销售收入 ÷ 11。1B = 所有含税经营支出 ÷ 11。注意：私人用途的支出不能退 GST，比例混用（如私家车部分用于工作）只能按业务用途比例申报。</div>
+        </div>
+      </div>
+      <div class="check-item">
+        <div class="check-num">3</div>
+        <div>
+          <div class="check-title">登录 myGov，进入 ATO Online 填写 BAS</div>
+          <div class="check-body">选"Business" → "Activity Statements" → 选对应的季度。按格子逐一填入数字，系统会自动计算净 GST（1A − 1B）。</div>
+          <a href="https://my.gov.au" target="_blank" rel="noopener" class="check-link">→ my.gov.au 登录入口</a>
+        </div>
+      </div>
+      <div class="check-item">
+        <div class="check-num">4</div>
+        <div>
+          <div class="check-title">检查 PAYG Withholding（如果有雇员）</div>
+          <div class="check-body">W2 = 你从员工工资里扣留的个人所得税总额。这笔钱必须和 BAS 一起交给 ATO——它是员工的税，不属于你。</div>
+        </div>
+      </div>
+      <div class="check-item">
+        <div class="check-num">5</div>
+        <div>
+          <div class="check-title">提交并付款（或申请付款计划）</div>
+          <div class="check-body">ATO Online 可以直接 BPAY 或银行转账付款。如果暂时没钱，先提交 BAS，再在网上申请 Payment Plan（ATO 一般接受 12-24 个月分期）。</div>
+          <a href="https://www.ato.gov.au/businesses-and-organisations/preparing-lodging-and-paying/activity-statements" target="_blank" rel="noopener" class="check-link">→ ATO BAS 官方说明</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <div class="cta-strip">
+    <h3>算不清楚？我们帮你看</h3>
+    <p>第一次申报 BAS 最容易出错。预约 15 分钟，我们帮你检查数字、确认申报口径。</p>
+    <div class="cta-buttons">
+      <a href="consultant_cn.html#contact" class="cta-btn cta-primary">免费预约咨询 →</a>
+      <a href="fair-work.html" class="cta-btn cta-secondary">下一篇：Fair Work 雇员合规 →</a>
+    </div>
+  </div>
+
+  <!-- Article nav -->
+  <div class="article-nav">
+    <a href="abn-structure.html" class="article-nav-item">
+      <div class="article-nav-dir">← 上一篇</div>
+      <div class="article-nav-title">ABN 与企业结构</div>
+    </a>
+    <a href="fair-work.html" class="article-nav-item" style="text-align:right">
+      <div class="article-nav-dir">下一篇 →</div>
+      <div class="article-nav-title">Fair Work 雇员合规</div>
+    </a>
+  </div>
+
+</main>
+
+<footer>
+  <div>🎋 竹 Digital · 墨尔本，维多利亚州 · ABN 29 919 594 996</div>
+  <div style="margin-top:6px;">
+    本页面为教育性合规资讯，不构成税务或法律建议 ·
+    <a href="consultant_cn.html">返回顾问首页</a>
+  </div>
+</footer>
+
+<script>
+// Tab switching
+function switchTab(btn, panelId) {
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+  btn.classList.add('active');
+  document.getElementById(panelId).classList.add('active');
+}
+</script>

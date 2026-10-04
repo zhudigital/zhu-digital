@@ -1,0 +1,648 @@
+<title>竹 Digital — 中文顾问</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;700&family=Noto+Sans+SC:wght@300;400;500;600&display=swap">
+<style>
+/* ── Design tokens ───────────────────────────────────────────── */
+/* Layout: single-column, sticky nav, full-bleed hero, card grid */
+:root {
+  --bg:       #0D1B2A;
+  --bg2:      #0F1F30;
+  --surface:  #152233;
+  --border:   rgba(59,130,246,.14);
+  --fg:       #F1F5F9;
+  --fg2:      #94A3B8;
+  --fg3:      #475569;
+  --accent:   #60A5FA;
+  --accent2:  #2563EB;
+  --blue:     #1D4ED8;
+  --blue-lit: #2563EB;
+  --gold:     #FCD34D;
+  --serif:    "Noto Serif SC", Georgia, serif;
+  --sans:     "Noto Sans SC", system-ui, sans-serif;
+  color-scheme: dark;
+}
+@media (prefers-color-scheme: light) {
+  :root:not([data-theme="dark"]) {
+    --bg:      #F0F4FA;
+    --bg2:     #E4EBF7;
+    --surface: #FFFFFF;
+    --border:  rgba(37,99,235,.14);
+    --fg:      #0F172A;
+    --fg2:     #334155;
+    --fg3:     #64748B;
+    --accent:  #1D4ED8;
+    --accent2: #1E40AF;
+    --blue:    #1D4ED8;
+    --blue-lit:#2563EB;
+    color-scheme: light;
+  }
+}
+:root[data-theme="light"] {
+  --bg:      #F0F4FA;
+  --bg2:     #E4EBF7;
+  --surface: #FFFFFF;
+  --border:  rgba(37,99,235,.14);
+  --fg:      #0F172A;
+  --fg2:     #334155;
+  --fg3:     #64748B;
+  --accent:  #1D4ED8;
+  --accent2: #1E40AF;
+  --blue:    #1D4ED8;
+  --blue-lit:#2563EB;
+  color-scheme: light;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: var(--sans);
+  background: var(--bg);
+  color: var(--fg);
+  line-height: 1.7;
+  padding-inline: 0;
+}
+
+/* ── Nav ─────────────────────────────────────────────────────── */
+.nav {
+  position: sticky;
+  top: env(safe-area-inset-top, 0px);
+  z-index: 100;
+  background: rgba(13,27,42,.9);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border);
+  padding: 14px 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+@media (prefers-color-scheme: light) {
+  :root:not([data-theme="dark"]) .nav { background: rgba(240,244,250,.93); }
+}
+:root[data-theme="light"] .nav { background: rgba(240,244,250,.93); }
+.nav-brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  text-decoration: none;
+  color: var(--accent);
+  font-weight: 600;
+  font-size: 15px;
+}
+.nav-brand span { color: var(--fg2); font-weight: 400; font-size: 13px; }
+.nav-back {
+  font-size: 12px;
+  color: var(--fg3);
+  text-decoration: none;
+  border: 1px solid var(--border);
+  padding: 6px 14px;
+  border-radius: 20px;
+  transition: color .2s, border-color .2s;
+}
+.nav-back:hover { color: var(--accent); border-color: var(--accent); }
+
+/* ── Hero ────────────────────────────────────────────────────── */
+.hero {
+  padding: 72px 24px 56px;
+  text-align: center;
+  max-width: 680px;
+  margin: 0 auto;
+}
+.hero-flag {
+  font-size: 11px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--accent);
+  font-weight: 600;
+  margin-bottom: 20px;
+}
+.hero h1 {
+  font-family: var(--serif);
+  font-size: clamp(28px, 5.5vw, 48px);
+  line-height: 1.2;
+  text-wrap: balance;
+  margin-bottom: 20px;
+  color: var(--fg);
+}
+.hero h1 em {
+  font-style: normal;
+  color: var(--accent);
+  border-bottom: 2px solid var(--accent);
+  padding-bottom: 1px;
+}
+.hero-sub {
+  font-size: 15px;
+  color: var(--fg2);
+  max-width: 520px;
+  margin: 0 auto 36px;
+  line-height: 1.85;
+}
+.hero-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--blue);
+  color: #fff;
+  font-family: var(--sans);
+  font-size: 15px;
+  font-weight: 600;
+  padding: 14px 28px;
+  border-radius: 12px;
+  text-decoration: none;
+  border: none;
+  cursor: pointer;
+  transition: background .2s, transform .15s;
+}
+.hero-cta:hover { background: var(--blue-lit); transform: translateY(-2px); }
+
+/* ── Trust bar ───────────────────────────────────────────────── */
+.trust-bar {
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+  background: var(--bg2);
+  padding: 18px 24px;
+  display: flex;
+  justify-content: center;
+  gap: 40px;
+  flex-wrap: wrap;
+}
+.trust-item {
+  font-size: 12px;
+  color: var(--fg3);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.trust-item strong { color: var(--fg2); font-weight: 500; }
+
+/* ── Section ─────────────────────────────────────────────────── */
+.section {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 64px 24px;
+}
+.section-label {
+  font-size: 11px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--accent);
+  font-weight: 600;
+  margin-bottom: 12px;
+}
+.section-title {
+  font-family: var(--serif);
+  font-size: clamp(22px, 4vw, 34px);
+  text-wrap: balance;
+  margin-bottom: 16px;
+  line-height: 1.3;
+}
+.section-body {
+  font-size: 14px;
+  color: var(--fg2);
+  max-width: 600px;
+  line-height: 1.85;
+}
+
+/* ── Service cards ───────────────────────────────────────────── */
+.cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 14px;
+  margin-top: 36px;
+}
+.card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 26px 22px;
+  transition: border-color .2s, transform .15s;
+}
+.card:hover { border-color: var(--accent); transform: translateY(-3px); }
+.card-icon { font-size: 28px; margin-bottom: 14px; display: block; }
+.card-title { font-weight: 600; font-size: 16px; margin-bottom: 8px; }
+.card-body { font-size: 13px; color: var(--fg2); line-height: 1.75; }
+.card-tag {
+  display: inline-block;
+  margin-top: 12px;
+  font-size: 10px;
+  letter-spacing: 1px;
+  font-weight: 600;
+  color: var(--accent);
+  background: rgba(96,165,250,.1);
+  padding: 3px 10px;
+  border-radius: 20px;
+}
+.card-link {
+  display: inline-block;
+  margin-top: 14px;
+  margin-left: 8px;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--accent);
+  text-decoration: none;
+  letter-spacing: 0.3px;
+  opacity: 0.85;
+  transition: opacity .15s;
+}
+.card-link:hover { opacity: 1; text-decoration: underline; }
+
+/* ── Who grid ────────────────────────────────────────────────── */
+.who-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 12px;
+  margin-top: 32px;
+}
+.who-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 20px;
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+}
+.who-icon { font-size: 22px; flex-shrink: 0; margin-top: 2px; }
+.who-title { font-size: 14px; font-weight: 600; margin-bottom: 4px; }
+.who-desc { font-size: 12px; color: var(--fg2); line-height: 1.65; }
+
+/* ── Myth/truth cards ────────────────────────────────────────── */
+.myths {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 14px;
+  margin-top: 36px;
+}
+.myth-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  overflow: hidden;
+}
+.myth-header {
+  background: rgba(220,38,38,.08);
+  border-bottom: 1px solid rgba(220,38,38,.15);
+  padding: 14px 18px;
+  font-size: 13px;
+  color: #F87171;
+  font-weight: 500;
+}
+.myth-header::before { content: "❌ 误区 · "; }
+.truth-header {
+  background: rgba(16,185,129,.08);
+  border-bottom: 1px solid rgba(16,185,129,.15);
+  padding: 14px 18px;
+  font-size: 13px;
+  color: #34D399;
+  font-weight: 500;
+}
+.truth-header::before { content: "✅ 事实 · "; }
+.myth-body { padding: 16px 18px; font-size: 13px; color: var(--fg2); line-height: 1.75; }
+
+/* ── Steps ───────────────────────────────────────────────────── */
+.steps { margin-top: 40px; display: flex; flex-direction: column; gap: 0; }
+.step {
+  display: flex;
+  gap: 20px;
+  align-items: flex-start;
+  padding: 24px 0;
+  border-bottom: 1px solid var(--border);
+}
+.step:last-child { border-bottom: none; }
+.step-num {
+  width: 36px; height: 36px; border-radius: 50%;
+  background: rgba(96,165,250,.1);
+  border: 1px solid rgba(96,165,250,.25);
+  color: var(--accent);
+  font-size: 14px; font-weight: 700;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+  font-variant-numeric: tabular-nums;
+}
+.step-title { font-weight: 600; font-size: 15px; margin-bottom: 6px; }
+.step-body { font-size: 13px; color: var(--fg2); line-height: 1.75; }
+
+/* ── FAQ ─────────────────────────────────────────────────────── */
+.faq { margin-top: 40px; }
+.faq-item { border-bottom: 1px solid var(--border); }
+.faq-q {
+  width: 100%; background: none; border: none;
+  color: var(--fg); font-family: var(--sans);
+  font-size: 14px; font-weight: 500;
+  text-align: left; padding: 18px 0; cursor: pointer;
+  display: flex; justify-content: space-between; align-items: center; gap: 16px;
+}
+.faq-q:hover { color: var(--accent); }
+.faq-arrow { width: 20px; height: 20px; flex-shrink: 0; color: var(--fg3); transition: transform .25s; }
+.faq-item.open .faq-arrow { transform: rotate(180deg); color: var(--accent); }
+.faq-a {
+  font-size: 13px; color: var(--fg2); line-height: 1.85;
+  max-height: 0; overflow: hidden;
+  transition: max-height .35s ease, padding .3s;
+}
+.faq-item.open .faq-a { max-height: 500px; padding-bottom: 18px; }
+
+/* ── Contact ─────────────────────────────────────────────────── */
+.contact-box {
+  background: linear-gradient(135deg, rgba(29,78,216,.12), rgba(96,165,250,.06));
+  border: 1px solid rgba(96,165,250,.2);
+  border-radius: 20px;
+  padding: 48px 32px;
+  text-align: center;
+}
+.contact-box h2 { font-family: var(--serif); font-size: clamp(22px, 4vw, 30px); margin-bottom: 12px; }
+.contact-box p { font-size: 14px; color: var(--fg2); max-width: 480px; margin: 0 auto 28px; line-height: 1.85; }
+.contact-email {
+  font-size: 18px; font-weight: 600; color: var(--accent);
+  letter-spacing: .5px; display: block; margin-bottom: 8px;
+}
+.contact-note { font-size: 12px; color: var(--fg3); }
+.copy-btn {
+  margin-top: 20px;
+  background: none; border: 1px solid var(--border);
+  color: var(--fg2); font-family: var(--sans);
+  font-size: 12px; padding: 8px 20px; border-radius: 20px;
+  cursor: pointer; transition: color .2s, border-color .2s;
+}
+.copy-btn:hover { color: var(--accent); border-color: var(--accent); }
+
+/* ── Footer ──────────────────────────────────────────────────── */
+.footer {
+  text-align: center; padding: 32px 24px;
+  font-size: 11px; color: var(--fg3);
+  border-top: 1px solid var(--border); line-height: 2;
+}
+.footer a { color: var(--fg3); text-decoration: none; }
+.footer a:hover { color: var(--accent); }
+</style>
+
+<!-- 导航 -->
+<nav class="nav">
+  <a href="竹Digital_向导.html" class="nav-brand">
+    🎋 竹 Digital <span>· 在线合规顾问</span>
+  </a>
+  <a href="竹Digital_向导.html" class="nav-back">← 切换语言</a>
+</nav>
+
+<!-- 主视觉区 -->
+<header class="hero">
+  <p class="hero-flag">🇦🇺 澳洲华人小企业合规指南</p>
+  <h1>澳洲合规规定<br><em>我们帮你读懂</em></h1>
+  <p class="hero-sub">得到简单清晰的解释——我们会针对您的具体情况，把合规翻译成你能读懂的文字，包括数字、截止日期、要填什么表。<br><br>很多华人小业主在ABN注册、GST报税、雇员合规上走了弯路——不是因为不努力，而是因为那些规定用英文写的，用政府语言写的，对大多数人来说并不容易理解。竹 Digital 就是为了解决这个问题而建的。</p>
+  <a href="#contact" class="hero-cta">免费咨询 15 分钟 →</a>
+</header>
+
+<!-- 信任条 -->
+<div class="trust-bar">
+  <div class="trust-item">🏢 <strong>ABN 29 919 594 996</strong></div>
+  <div class="trust-item">📍 <strong>墨尔本</strong>，全澳服务</div>
+  <div class="trust-item">🗣️ 普通话 · 广东话 · English</div>
+  <div class="trust-item">⚖️ <strong>合规指导</strong>，非法律意见</div>
+</div>
+
+<!-- 服务范围 -->
+<section class="section" id="services">
+  <p class="section-label">我们做什么</p>
+  <h2 class="section-title">华人小业主最常遇到的合规问题</h2>
+  <p class="section-body">从注册ABN到雇人开工资，每一步背后都有澳洲的法律规定。我们帮你把这些规定讲清楚。</p>
+  <div class="cards">
+    <div class="card">
+      <span class="card-icon">📋</span>
+      <div class="card-title">ABN 与企业结构</div>
+      <div class="card-body">个人独资、公司、合伙还是信托？结构选错了，税和责任都会出问题。我们帮你在注册前搞清楚区别，选对适合你的方式。</div>
+      <span class="card-tag">刚起步</span>
+      <a href="abn-structure.html" class="card-link">带你读懂 →</a>
+    </div>
+    <div class="card">
+      <span class="card-icon">🧾</span>
+      <div class="card-title">GST 与 BAS 申报</div>
+      <div class="card-body">年营业额超过 A$75,000 必须注册 GST、收 10% 税、每季度申报 BAS。我们一步一步带你走，不让你被 ATO 罚款。</div>
+      <span class="card-tag">税务</span>
+      <a href="gst-bas.html" class="card-link">带你读懂 →</a>
+    </div>
+    <div class="card">
+      <span class="card-icon">👥</span>
+      <div class="card-title">Fair Work 雇员合规</div>
+      <div class="card-body">请员工前必须知道：最低工资、工资单格式、年假病假权利、临时工和兼职的区别——Fair Work法不懂会吃大亏。</div>
+      <span class="card-tag">雇员</span>
+      <a href="fair-work.html" class="card-link">带你读懂 →</a>
+    </div>
+    <div class="card">
+      <span class="card-icon">🏦</span>
+      <div class="card-title">超级年金（Super）</div>
+      <div class="card-body">雇主必须为符合条件的员工缴纳 11.5% 超级年金。谁要缴、什么时候缴、怎么缴——搞错了有 SGC 罚款。</div>
+      <span class="card-tag">雇员</span>
+      <a href="super.html" class="card-link">带你读懂 →</a>
+    </div>
+    <div class="card">
+      <span class="card-icon">🌏</span>
+      <div class="card-title">海外收入与进出口</div>
+      <div class="card-body">从中国收款、代购、进货、海淘代运——这些在澳洲都有对应的税务规定。我们帮你理清 GST、关税和海外所得的关系。</div>
+      <span class="card-tag">跨境</span>
+      <a href="overseas-income.html" class="card-link">带你读懂 →</a>
+    </div>
+    <div class="card">
+      <span class="card-icon">📂</span>
+      <div class="card-title">账本与记录保存</div>
+      <div class="card-body">ATO 要求大多数商业记录保存 5 年。我们帮你建立简单好用的数字记账习惯——电子收据、发票规范、工资记录都说清楚。</div>
+      <span class="card-tag">日常运营</span>
+      <a href="record-keeping.html" class="card-link">带你读懂 →</a>
+    </div>
+  </div>
+</section>
+
+<!-- 我们服务谁 -->
+<section class="section" style="padding-top:0;" id="who">
+  <p class="section-label">适合谁</p>
+  <h2 class="section-title">为这些华人小业主而建</h2>
+  <div class="who-grid">
+    <div class="who-card">
+      <span class="who-icon">🛍️</span>
+      <div>
+        <div class="who-title">零售与电商</div>
+        <div class="who-desc">实体店、网店、微信商城、小红书带货</div>
+      </div>
+    </div>
+    <div class="who-card">
+      <span class="who-icon">🍜</span>
+      <div>
+        <div class="who-title">餐饮业</div>
+        <div class="who-desc">中餐馆、咖啡厅、外卖、餐饮公司</div>
+      </div>
+    </div>
+    <div class="who-card">
+      <span class="who-icon">🏠</span>
+      <div>
+        <div class="who-title">房产与中介</div>
+        <div class="who-desc">投资房、买家中介、短租 Airbnb 管理</div>
+      </div>
+    </div>
+    <div class="who-card">
+      <span class="who-icon">💻</span>
+      <div>
+        <div class="who-title">IT与顾问</div>
+        <div class="who-desc">自由职业者、承包商、本地及海外客户</div>
+      </div>
+    </div>
+    <div class="who-card">
+      <span class="who-icon">💅</span>
+      <div>
+        <div class="who-title">个人服务</div>
+        <div class="who-desc">美容美发、按摩、补习、健康养生</div>
+      </div>
+    </div>
+    <div class="who-card">
+      <span class="who-icon">📦</span>
+      <div>
+        <div class="who-title">进口与批发</div>
+        <div class="who-desc">从中国进货、代购、跨境批发贸易</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 常见误区 -->
+<section class="section" style="padding-top:0;" id="myths">
+  <p class="section-label">澄清误区</p>
+  <h2 class="section-title">华人圈里流传的那些"经验"</h2>
+  <p class="section-body">很多信息在微信群里传了一遍又一遍，但不一定对——或者曾经对、现在已经变了。</p>
+  <div class="myths">
+    <div class="myth-card">
+      <div class="myth-header">收入不高，不用注册 GST</div>
+      <div class="myth-body">门槛是 <strong>A$75,000</strong>，但算的是"营业额"不是"利润"。很多薄利多销的行业营业额很快就过线，不提前注册会被罚款和补税。</div>
+    </div>
+    <div class="myth-card">
+      <div class="myth-header">请"现金员工"就不用缴 Super</div>
+      <div class="myth-body">用现金支付工资不能免除超级年金义务。ATO 有专门针对现金经济的稽查，一旦查到，补缴 + 罚款 + 利息全部叠加。</div>
+    </div>
+    <div class="myth-card">
+      <div class="myth-header">中国汇来的钱不算澳洲收入</div>
+      <div class="myth-body">澳洲永居和公民对<strong>全球收入</strong>纳税，包括来自中国的租金、分红、兼职收入。只有签证特定条件下有例外，需要具体判断。</div>
+    </div>
+    <div class="myth-card">
+      <div class="myth-header">注册公司就能少缴税</div>
+      <div class="myth-body">公司税率是 25%（小企业），但你从公司取钱还要缴个人所得税。公司结构有其优势，但不是万能省税方案——适合与否取决于你的具体情况。</div>
+    </div>
+  </div>
+</section>
+
+<!-- 怎么运作 -->
+<section class="section" style="padding-top:0;" id="how">
+  <p class="section-label">怎么开始</p>
+  <h2 class="section-title">三步，说清楚你的问题</h2>
+  <div class="steps">
+    <div class="step">
+      <div class="step-num">1</div>
+      <div>
+        <div class="step-title">告诉我们你的情况</div>
+        <div class="step-body">发一封邮件或预约一个 15 分钟免费通话，不用填表，就是聊聊你现在在哪个阶段、哪些地方不确定。普通话广东话英文都可以。</div>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">2</div>
+      <div>
+        <div class="step-title">得到简单清晰的解释</div>
+        <div class="step-body">我们会针对您的具体情况，把合规翻译成你能读懂的文字——包括数字、截止日期、要填什么表。</div>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">3</div>
+      <div>
+        <div class="step-title">清楚下一步该做什么</div>
+        <div class="step-body">你会拿到一个具体的清单：要注册什么、要保存什么记录、如果你的情况复杂、该去找哪种执照的会计师或律师。</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 常见问题 -->
+<section class="section" style="padding-top:0;" id="faq">
+  <p class="section-label">常见问题</p>
+  <h2 class="section-title">我们被问最多的问题</h2>
+  <div class="faq">
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)">
+        我只是做兼职副业，需要注册 ABN 吗？
+        <svg class="faq-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+      </button>
+      <div class="faq-a">如果你的副业有盈利意图、重复进行——在 ATO 看来就算"经营业务"，就需要 ABN。没有 ABN 时，付款方会扣留 47% 作预扣税。ABN 注册免费，在 abr.gov.au 可以自己办。</div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)">
+        什么时候必须注册 GST？
+        <svg class="faq-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+      </button>
+      <div class="faq-a">当你过去或未来 12 个月的 GST 营业额达到或预计达到 <strong>$75,000</strong> 时，必须注册 GST。如果你开 Uber、DiDi 等网约车，则从第一笔收入起就必须注册，没有门槛。注册后要向客户收取 10% GST，并定期申报 BAS（商业活动报表）。</div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)">
+        我在微信上卖东西，要向 ATO 申报吗？
+        <svg class="faq-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+      </button>
+      <div class="faq-a">是的。不管通过什么平台收款——微信支付、支付宝还是银行转账——只要你在澳洲运营、有营业行为，就适用澳洲税法。ATO 对现金和电子支付都有追踪手段，平台并不能"藏"住收入。</div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)">
+        请了帮工，要签什么合同？
+        <svg class="faq-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+      </button>
+      <div class="faq-a">雇员和独立承包商的法律地位不同，不是你选哪种、就是哪种——Fair Work 和 ATO 都有判断标准。错误分类的后果很严重：补缴工资、Super、罚款。我们可以帮你理清你的具体情况适用哪种关系。</div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)">
+        竹 Digital 是会计师或律师事务所吗？
+        <svg class="faq-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+      </button>
+      <div class="faq-a">不是。我们提供合规教育和指导，不提供法律意见或税务建议。把我们理解成"懂行的朋友"——帮你搞清楚规定，指引你去找合适的专业人士，而不是代替那些专业人士。我们明确告诉你什么时候你需要一个注册会计师或律师。</div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)">
+        收费多少？
+        <svg class="faq-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+      </button>
+      <div class="faq-a">现阶段免费。我们正在收集用户反馈、打磨服务内容。15 分钟初步咨询完全免费，线上工具和指引也全部免费提供。</div>
+    </div>
+  </div>
+</section>
+
+<!-- 联系 -->
+<section class="section" style="padding-top:0;" id="contact">
+  <div class="contact-box">
+    <h2>准备好了？我们来聊聊</h2>
+    <p>发封邮件告诉我们你的业务类型和最困扰你的问题。我们会在一个工作日内回复，用你选的语言——普通话、广东话或英文都可以。</p>
+    <span class="contact-email">hello@zhudigital.com.au</span>
+    <div class="contact-note">墨尔本 · 普通话 / 广东话 / English · 工作日内回复</div>
+    <button class="copy-btn" onclick="copyEmail(this)">复制邮箱地址</button>
+  </div>
+</section>
+
+<!-- 页脚 -->
+<footer class="footer">
+  <div>🎋 竹 Digital · 墨尔本，维多利亚州 · ABN 29 919 594 996</div>
+  <div style="margin-top:6px;">
+    本网站提供合规教育资讯，不构成法律或税务建议 ·
+    <a href="consultant_en.html">English version →</a>
+  </div>
+</footer>
+
+<script>
+function toggleFaq(btn) {
+  const item = btn.closest('.faq-item');
+  const isOpen = item.classList.contains('open');
+  document.querySelectorAll('.faq-item.open').forEach(el => el.classList.remove('open'));
+  if (!isOpen) item.classList.add('open');
+}
+function copyEmail(btn) {
+  navigator.clipboard.writeText('hello@zhudigital.com.au').then(() => {
+    btn.textContent = '✓ 已复制！';
+    setTimeout(() => btn.textContent = '复制邮箱地址', 2000);
+  }).catch(() => {
+    btn.textContent = 'hello@zhudigital.com.au';
+  });
+}
+document.querySelectorAll('a[href^="#"]').forEach(a => {
+  a.addEventListener('click', e => {
+    const target = document.querySelector(a.getAttribute('href'));
+    if (target) { e.preventDefault(); target.scrollIntoView({ behavior: 'smooth', block: 'start' }); }
+  });
+});
+</script>

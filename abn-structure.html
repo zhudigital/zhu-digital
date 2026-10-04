@@ -1,0 +1,770 @@
+<!--
+  竹 Digital — ABN 与企业结构
+  ════════════════════════════════════════════════════════
+  DATA_UPDATE_SCHEDULE: 每年7月1日后更新（ATO/ASIC/ABR政策更新后）
+  LAST_UPDATED: 2026-10
+  FISCAL_YEAR: 2026-27
+
+  KEY_FIGURES (核实这些数据是否有变化):
+  - 公司税率 (小企业): 25% → 来源: ATO https://www.ato.gov.au/rates/company-tax/
+  - 公司税率 (基准税率实体以外): 30% → 来源: ATO
+  - ABN注册: 免费 → 来源: ABR https://www.abr.gov.au
+  - ASIC年费 (私人公司): 约$597 → 来源: ASIC https://asic.gov.au/for-business/running-a-company/company-officeholder-duties/company-annual-review-fee/
+  - 信托设立: 约$500–$2000 法律费用
+  - 高收入阈值: $190,100 → 来源: ATO 2026-27
+
+  SOURCES:
+  - ATO: https://www.ato.gov.au/business
+  - ASIC: https://www.asic.gov.au
+  - ABR: https://www.abr.gov.au
+  ════════════════════════════════════════════════════════
+-->
+<title>ABN 与企业结构</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;700&family=Noto+Sans+SC:wght@300;400;500;600&display=swap">
+<style>
+/* ── Tokens ── dark-first, blue accent matching consultant_cn */
+:root {
+  --bg:        #0D1B2A;
+  --bg2:       #0F1F30;
+  --surface:   #152233;
+  --surface2:  #1A2B3F;
+  --border:    rgba(59,130,246,.13);
+  --border2:   rgba(59,130,246,.22);
+  --fg:        #F1F5F9;
+  --fg2:       #94A3B8;
+  --fg3:       #475569;
+  --accent:    #60A5FA;
+  --blue:      #1D4ED8;
+  --blue-lit:  #2563EB;
+  --green:     #34D399;
+  --green-bg:  rgba(52,211,153,.08);
+  --yellow:    #FCD34D;
+  --yellow-bg: rgba(252,211,77,.08);
+  --red:       #F87171;
+  --red-bg:    rgba(248,113,113,.08);
+  --purple:    #A78BFA;
+  --purple-bg: rgba(167,139,250,.08);
+  --serif:     "Noto Serif SC", Georgia, serif;
+  --sans:      "Noto Sans SC", system-ui, sans-serif;
+  color-scheme: dark;
+}
+@media (prefers-color-scheme: light) {
+  :root:not([data-theme="dark"]) {
+    --bg:        #F0F4FA;
+    --bg2:       #E4EBF7;
+    --surface:   #FFFFFF;
+    --surface2:  #F8FAFC;
+    --border:    rgba(37,99,235,.13);
+    --border2:   rgba(37,99,235,.25);
+    --fg:        #0F172A;
+    --fg2:       #334155;
+    --fg3:       #64748B;
+    --accent:    #1D4ED8;
+    --blue:      #1D4ED8;
+    --blue-lit:  #2563EB;
+    --green:     #059669;
+    --green-bg:  rgba(5,150,105,.07);
+    --yellow:    #B45309;
+    --yellow-bg: rgba(180,83,9,.06);
+    --red:       #DC2626;
+    --red-bg:    rgba(220,38,38,.06);
+    --purple:    #7C3AED;
+    --purple-bg: rgba(124,58,237,.06);
+    color-scheme: light;
+  }
+}
+:root[data-theme="light"] {
+  --bg:        #F0F4FA;
+  --bg2:       #E4EBF7;
+  --surface:   #FFFFFF;
+  --surface2:  #F8FAFC;
+  --border:    rgba(37,99,235,.13);
+  --border2:   rgba(37,99,235,.25);
+  --fg:        #0F172A;
+  --fg2:       #334155;
+  --fg3:       #64748B;
+  --accent:    #1D4ED8;
+  --blue:      #1D4ED8;
+  --blue-lit:  #2563EB;
+  --green:     #059669;
+  --green-bg:  rgba(5,150,105,.07);
+  --yellow:    #B45309;
+  --yellow-bg: rgba(180,83,9,.06);
+  --red:       #DC2626;
+  --red-bg:    rgba(220,38,38,.06);
+  --purple:    #7C3AED;
+  --purple-bg: rgba(124,58,237,.06);
+  color-scheme: light;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: var(--sans); background: var(--bg); color: var(--fg); line-height: 1.7; }
+
+/* Nav */
+.nav {
+  position: sticky; top: env(safe-area-inset-top,0px); z-index: 100;
+  background: rgba(13,27,42,.9); backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border);
+  padding: 13px 24px; display: flex; align-items: center; justify-content: space-between; gap: 16px;
+}
+@media (prefers-color-scheme: light) { :root:not([data-theme="dark"]) .nav { background: rgba(240,244,250,.93); } }
+:root[data-theme="light"] .nav { background: rgba(240,244,250,.93); }
+.nav-brand { text-decoration: none; color: var(--accent); font-weight: 600; font-size: 15px; display: flex; align-items: center; gap: 8px; }
+.nav-brand span { color: var(--fg2); font-weight: 400; font-size: 13px; }
+.nav-back { font-size: 12px; color: var(--fg3); text-decoration: none; border: 1px solid var(--border); padding: 6px 14px; border-radius: 20px; transition: color .2s, border-color .2s; }
+.nav-back:hover { color: var(--accent); border-color: var(--accent); }
+
+/* Hero */
+.hero { max-width: 760px; margin: 0 auto; padding: 56px 24px 40px; }
+.breadcrumb { font-size: 12px; color: var(--fg3); margin-bottom: 20px; }
+.breadcrumb a { color: var(--fg3); text-decoration: none; }
+.breadcrumb a:hover { color: var(--accent); }
+.hero-eyebrow { font-size: 11px; letter-spacing: 2px; text-transform: uppercase; color: var(--accent); font-weight: 600; margin-bottom: 12px; }
+.hero h1 { font-family: var(--serif); font-size: clamp(26px, 5vw, 42px); line-height: 1.2; text-wrap: balance; margin-bottom: 16px; }
+.hero-sub { font-size: 15px; color: var(--fg2); line-height: 1.8; max-width: 580px; margin-bottom: 28px; }
+.hero-meta { display: flex; gap: 20px; flex-wrap: wrap; }
+.meta-pill { font-size: 11px; background: var(--surface); border: 1px solid var(--border); border-radius: 20px; padding: 5px 14px; color: var(--fg2); }
+
+/* Section wrapper */
+.wrap { max-width: 900px; margin: 0 auto; padding: 0 24px 56px; }
+.section-label { font-size: 11px; letter-spacing: 2px; text-transform: uppercase; color: var(--accent); font-weight: 600; margin-bottom: 10px; }
+.section-title { font-family: var(--serif); font-size: clamp(20px, 3.5vw, 30px); text-wrap: balance; margin-bottom: 8px; }
+.section-sub { font-size: 14px; color: var(--fg2); line-height: 1.8; margin-bottom: 32px; }
+
+/* ── Decision flowchart ── */
+.flow { display: flex; flex-direction: column; align-items: center; gap: 0; margin: 8px 0 16px; }
+.flow-box {
+  background: var(--surface); border: 1px solid var(--border2);
+  border-radius: 12px; padding: 16px 22px;
+  text-align: center; font-size: 14px; font-weight: 500;
+  max-width: 360px; width: 100%;
+}
+.flow-box.question { border-color: var(--accent); background: rgba(96,165,250,.06); }
+.flow-box.question .q-label { font-size: 10px; letter-spacing: 1.5px; text-transform: uppercase; color: var(--accent); font-weight: 600; margin-bottom: 6px; }
+.flow-box.question .q-text { font-size: 15px; font-weight: 600; }
+.flow-arrow { color: var(--fg3); font-size: 20px; line-height: 1; padding: 4px 0; }
+.flow-split { display: flex; gap: 12px; width: 100%; max-width: 760px; justify-content: center; flex-wrap: wrap; }
+.flow-branch { display: flex; flex-direction: column; align-items: center; gap: 0; flex: 1; min-width: 160px; max-width: 230px; }
+.branch-label { font-size: 11px; color: var(--fg3); border: 1px solid var(--border); border-radius: 20px; padding: 3px 12px; margin-bottom: 4px; }
+.flow-result {
+  width: 100%; border-radius: 12px; padding: 14px 16px; text-align: center;
+  font-size: 13px; font-weight: 600; border: 1px solid transparent;
+}
+.result-green  { background: var(--green-bg);  border-color: rgba(52,211,153,.25);  color: var(--green); }
+.result-blue   { background: rgba(96,165,250,.08); border-color: rgba(96,165,250,.25); color: var(--accent); }
+.result-yellow { background: var(--yellow-bg); border-color: rgba(252,211,77,.25);  color: var(--yellow); }
+.result-purple { background: var(--purple-bg); border-color: rgba(167,139,250,.25); color: var(--purple); }
+.result-sub { font-size: 11px; font-weight: 400; color: var(--fg2); margin-top: 4px; }
+
+/* Divider */
+.divider { border: none; border-top: 1px solid var(--border); margin: 0 0 48px; }
+
+/* ── Stat tiles ── */
+.stats { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 12px; margin-bottom: 40px; }
+.stat { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 18px 16px; }
+.stat-val { font-size: 26px; font-weight: 700; font-variant-numeric: tabular-nums; line-height: 1; margin-bottom: 4px; }
+.stat-label { font-size: 12px; color: var(--fg2); line-height: 1.5; }
+
+/* ── Structure tabs ── */
+.tabs { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 24px; }
+.tab-btn {
+  font-family: var(--sans); font-size: 13px; font-weight: 500;
+  padding: 8px 18px; border-radius: 20px; border: 1px solid var(--border);
+  background: none; color: var(--fg2); cursor: pointer; transition: all .2s;
+}
+.tab-btn:hover { border-color: var(--accent); color: var(--accent); }
+.tab-btn.active { background: var(--blue); border-color: var(--blue); color: #fff; }
+.tab-panel { display: none; }
+.tab-panel.active { display: block; }
+
+/* Structure card */
+.struct-card {
+  background: var(--surface); border: 1px solid var(--border2);
+  border-radius: 16px; overflow: hidden;
+}
+.struct-header { padding: 24px 28px 20px; border-bottom: 1px solid var(--border); }
+.struct-icon { font-size: 32px; margin-bottom: 10px; display: block; }
+.struct-name { font-family: var(--serif); font-size: 24px; margin-bottom: 4px; }
+.struct-en { font-size: 13px; color: var(--fg3); margin-bottom: 12px; }
+.struct-tagline { font-size: 14px; color: var(--fg2); line-height: 1.7; }
+.struct-body { padding: 24px 28px; display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+@media (max-width: 520px) { .struct-body { grid-template-columns: 1fr; } }
+.fact-group { }
+.fact-label { font-size: 10px; letter-spacing: 1.5px; text-transform: uppercase; color: var(--fg3); font-weight: 600; margin-bottom: 8px; }
+.fact-val { font-size: 22px; font-weight: 700; font-variant-numeric: tabular-nums; line-height: 1.2; margin-bottom: 2px; }
+.fact-note { font-size: 12px; color: var(--fg2); line-height: 1.6; }
+.struct-lists { padding: 0 28px 28px; display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+@media (max-width: 520px) { .struct-lists { grid-template-columns: 1fr; } }
+.pro-con-title { font-size: 12px; font-weight: 600; letter-spacing: .5px; margin-bottom: 10px; }
+.pro-con-title.pro { color: var(--green); }
+.pro-con-title.con { color: var(--red); }
+.pro-con-list { list-style: none; display: flex; flex-direction: column; gap: 6px; }
+.pro-con-list li { font-size: 13px; color: var(--fg2); display: flex; gap: 8px; line-height: 1.5; }
+.pro-con-list li::before { flex-shrink: 0; font-size: 13px; }
+.pro-con-list.pros li::before { content: "✓"; color: var(--green); }
+.pro-con-list.cons li::before { content: "✕"; color: var(--red); }
+.struct-best { margin: 0 28px 28px; background: var(--surface2); border: 1px solid var(--border); border-radius: 10px; padding: 14px 18px; font-size: 13px; color: var(--fg2); line-height: 1.7; }
+.struct-best strong { color: var(--fg); }
+
+/* ── Comparison table ── */
+.table-wrap { overflow-x: auto; border-radius: 14px; border: 1px solid var(--border); }
+table { width: 100%; border-collapse: collapse; min-width: 560px; }
+thead th { background: var(--surface2); padding: 13px 16px; font-size: 12px; font-weight: 600; color: var(--fg2); text-align: left; border-bottom: 1px solid var(--border); white-space: nowrap; }
+thead th:first-child { width: 140px; }
+tbody td { padding: 13px 16px; font-size: 13px; border-bottom: 1px solid var(--border); vertical-align: top; line-height: 1.6; }
+tbody tr:last-child td { border-bottom: none; }
+tbody tr:hover td { background: rgba(255,255,255,.02); }
+.row-label { font-weight: 600; font-size: 13px; color: var(--fg2); }
+.chip {
+  display: inline-block; font-size: 11px; font-weight: 600;
+  padding: 2px 9px; border-radius: 20px;
+}
+.chip-green  { background: var(--green-bg);  color: var(--green); }
+.chip-yellow { background: var(--yellow-bg); color: var(--yellow); }
+.chip-red    { background: var(--red-bg);    color: var(--red); }
+.chip-blue   { background: rgba(96,165,250,.1); color: var(--accent); }
+
+/* ── Checklist ── */
+.checklist { display: flex; flex-direction: column; gap: 12px; margin-top: 8px; }
+.check-item { display: flex; gap: 14px; align-items: flex-start; background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 16px 18px; }
+.check-num { width: 28px; height: 28px; border-radius: 50%; background: rgba(96,165,250,.1); border: 1px solid rgba(96,165,250,.25); color: var(--accent); font-size: 12px; font-weight: 700; display: flex; align-items: center; justify-content: center; flex-shrink: 0; font-variant-numeric: tabular-nums; }
+.check-title { font-weight: 600; font-size: 14px; margin-bottom: 4px; }
+.check-body { font-size: 13px; color: var(--fg2); line-height: 1.7; }
+.check-link { display: inline-block; margin-top: 6px; font-size: 12px; color: var(--accent); text-decoration: none; }
+.check-link:hover { text-decoration: underline; }
+
+/* ── Warning box ── */
+.warn-box { background: rgba(252,211,77,.06); border: 1px solid rgba(252,211,77,.2); border-radius: 12px; padding: 16px 20px; font-size: 13px; color: var(--fg2); line-height: 1.75; margin-top: 24px; }
+.warn-box strong { color: var(--yellow); }
+
+/* ── CTA footer ── */
+.cta-strip { background: var(--surface); border-top: 1px solid var(--border); padding: 40px 24px; text-align: center; }
+.cta-strip h2 { font-family: var(--serif); font-size: clamp(18px, 3vw, 26px); margin-bottom: 10px; }
+.cta-strip p { font-size: 14px; color: var(--fg2); margin-bottom: 24px; }
+.cta-btns { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+.btn-primary { background: var(--blue); color: #fff; padding: 12px 24px; border-radius: 10px; font-family: var(--sans); font-size: 14px; font-weight: 600; text-decoration: none; border: none; cursor: pointer; transition: background .2s; }
+.btn-primary:hover { background: var(--blue-lit); }
+.btn-ghost { background: none; color: var(--fg2); padding: 12px 24px; border-radius: 10px; font-family: var(--sans); font-size: 14px; font-weight: 500; text-decoration: none; border: 1px solid var(--border); cursor: pointer; transition: color .2s, border-color .2s; }
+.btn-ghost:hover { color: var(--accent); border-color: var(--accent); }
+
+/* Footer */
+.footer { text-align: center; padding: 28px 24px; font-size: 11px; color: var(--fg3); line-height: 2; }
+.footer a { color: var(--fg3); text-decoration: none; }
+.footer a:hover { color: var(--accent); }
+</style>
+
+<!-- 导航 -->
+<nav class="nav">
+  <a href="consultant_cn.html" class="nav-brand">🎋 竹 Digital <span>· 合规指南</span></a>
+  <a href="consultant_cn.html" class="nav-back">← 返回</a>
+</nav>
+
+<!-- Hero -->
+<div class="hero">
+  <div class="breadcrumb"><a href="consultant_cn.html">合规指南</a> › ABN 与企业结构</div>
+  <div class="hero-eyebrow">第一步 · 注册前必读</div>
+  <h1>选对企业结构<br>是创业最重要的第一步</h1>
+  <p class="hero-sub">在澳洲注册 ABN 之前，你需要决定用哪种企业结构来经营。结构选错了，不只是麻烦——税负、个人资产风险、日后扩张都会受影响。这页帮你在 5 分钟内搞清楚。</p>
+  <div class="hero-meta">
+    <span class="meta-pill">📅 数据截至：2026年10月 · 来源：ATO · ASIC 2026–27</span>
+    <span class="meta-pill">🕐 阅读约 5 分钟</span>
+    <span class="meta-pill">✅ 免费，无需注册</span>
+  </div>
+</div>
+
+<!-- 决策流程图 -->
+<div class="wrap">
+  <p class="section-label">决策流程图</p>
+  <h2 class="section-title">你适合哪种结构？</h2>
+  <p class="section-sub">跟着这张图走，不超过 3 步就能找到答案。</p>
+
+  <div class="flow">
+    <div class="flow-box question">
+      <div class="q-label">从这里开始</div>
+      <div class="q-text">你一个人经营，还是和别人合伙？</div>
+    </div>
+    <div class="flow-arrow">↓</div>
+    <div class="flow-split">
+      <!-- 一个人 -->
+      <div class="flow-branch">
+        <div class="branch-label">一个人</div>
+        <div class="flow-arrow">↓</div>
+        <div class="flow-box question">
+          <div class="q-label">关键问题</div>
+          <div class="q-text">你需要保护个人资产（房子、存款）吗？</div>
+        </div>
+        <div class="flow-arrow">↓</div>
+        <div class="flow-split">
+          <div class="flow-branch">
+            <div class="branch-label">不需要 / 刚起步</div>
+            <div class="flow-arrow">↓</div>
+            <div class="flow-result result-green">
+              👤 个人独资<br>Sole Trader
+              <div class="result-sub">最简单、零成本注册</div>
+            </div>
+          </div>
+          <div class="flow-branch">
+            <div class="branch-label">需要保护资产</div>
+            <div class="flow-arrow">↓</div>
+            <div class="flow-result result-blue">
+              🏢 私人公司<br>Pty Ltd
+              <div class="result-sub">有限责任，更专业</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- 合伙 -->
+      <div class="flow-branch">
+        <div class="branch-label">和别人合伙</div>
+        <div class="flow-arrow">↓</div>
+        <div class="flow-box question">
+          <div class="q-label">关键问题</div>
+          <div class="q-text">你们是家庭经营，还是有资产需要保护？</div>
+        </div>
+        <div class="flow-arrow">↓</div>
+        <div class="flow-split">
+          <div class="flow-branch">
+            <div class="branch-label">普通合伙</div>
+            <div class="flow-arrow">↓</div>
+            <div class="flow-result result-yellow">
+              🤝 合伙经营<br>Partnership
+              <div class="result-sub">简单，但联合承担风险</div>
+            </div>
+          </div>
+          <div class="flow-branch">
+            <div class="branch-label">家庭/资产规划</div>
+            <div class="flow-arrow">↓</div>
+            <div class="flow-result result-purple">
+              🏛️ 信托<br>Trust
+              <div class="result-sub">灵活省税，但设立复杂</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="warn-box">
+    <strong>⚠️ 重要提示：</strong>流程图只是起点。每种结构都有细节，你的具体情况（收入、家庭、行业）会影响最终选择。遇到疑惑，建议咨询注册会计师（CPA/CA）再做决定。
+  </div>
+</div>
+
+<hr class="divider" style="margin: 0 24px 48px;">
+
+<!-- 关键数字 -->
+<div class="wrap">
+  <p class="section-label">关键数字一览</p>
+  <h2 class="section-title">注册前，先看这几个数字</h2>
+  <p class="section-sub">2026–27 财年数据（2026年10月更新），来源：ATO · ASIC · abr.gov.au</p>
+  <div class="stats">
+    <div class="stat">
+      <div class="stat-val" style="color:var(--green)">$0</div>
+      <div class="stat-label">ABN 注册费<br>（个人独资 / 合伙）</div>
+    </div>
+    <div class="stat">
+      <div class="stat-val" style="color:var(--accent)">$636</div>
+      <div class="stat-label">公司注册费<br>（2026年7月1日起）</div>
+    </div>
+    <div class="stat">
+      <div class="stat-val" style="color:var(--accent)">$342</div>
+      <div class="stat-label">公司年度审查费<br>（每年向ASIC缴纳）</div>
+    </div>
+    <div class="stat">
+      <div class="stat-val" style="color:var(--yellow)">25%</div>
+      <div class="stat-label">公司税率<br>（营业额低于5000万）</div>
+    </div>
+    <div class="stat">
+      <div class="stat-val" style="color:var(--yellow)">47%</div>
+      <div class="stat-label">最高个人税率<br>（加2%医疗税）</div>
+    </div>
+    <div class="stat">
+      <div class="stat-val" style="color:var(--purple)">$39</div>
+      <div class="stat-label">商业名称注册<br>（1年，ASIC）</div>
+    </div>
+  </div>
+</div>
+
+<hr class="divider" style="margin: 0 24px 48px;">
+
+<!-- 四种结构详解（Tab） -->
+<div class="wrap">
+  <p class="section-label">四种结构详解</p>
+  <h2 class="section-title">点击查看每种结构的完整说明</h2>
+  <p class="section-sub">优势、风险、适合谁——全在这里。</p>
+
+  <div class="tabs">
+    <button class="tab-btn active" onclick="switchTab('sole')">👤 个人独资</button>
+    <button class="tab-btn" onclick="switchTab('company')">🏢 私人公司</button>
+    <button class="tab-btn" onclick="switchTab('partnership')">🤝 合伙经营</button>
+    <button class="tab-btn" onclick="switchTab('trust')">🏛️ 信托</button>
+  </div>
+
+  <!-- 个人独资 -->
+  <div class="tab-panel active" id="tab-sole">
+    <div class="struct-card">
+      <div class="struct-header">
+        <span class="struct-icon">👤</span>
+        <div class="struct-name">个人独资</div>
+        <div class="struct-en">Sole Trader</div>
+        <div class="struct-tagline">澳洲最常见的起步方式。你就是业主，也是公司。手续最简单，成本最低——适合刚起步、低风险、一个人做的小生意。</div>
+      </div>
+      <div class="struct-body">
+        <div class="fact-group">
+          <div class="fact-label">注册成本</div>
+          <div class="fact-val" style="color:var(--green)">$0</div>
+          <div class="fact-note">ABN 免费注册。如需商业名称，$39/年（ASIC）。</div>
+        </div>
+        <div class="fact-group">
+          <div class="fact-label">税率</div>
+          <div class="fact-val" style="color:var(--yellow)">19–47%</div>
+          <div class="fact-note">按个人所得税率征税，另加 2% 医疗税（Medicare Levy）。</div>
+        </div>
+        <div class="fact-group">
+          <div class="fact-label">个人责任</div>
+          <div class="fact-val" style="color:var(--red)">无限</div>
+          <div class="fact-note">房子、存款、车都可能被用来抵债。</div>
+        </div>
+        <div class="fact-group">
+          <div class="fact-label">设立难度</div>
+          <div class="fact-val" style="color:var(--green)">⭐ 最简单</div>
+          <div class="fact-note">在 abr.gov.au 填表，约 5 分钟完成。</div>
+        </div>
+      </div>
+      <div class="struct-lists">
+        <div>
+          <div class="pro-con-title pro">✓ 优势</div>
+          <ul class="pro-con-list pros">
+            <li>注册免费，手续最简单</li>
+            <li>完全掌控，不需要征求他人意见</li>
+            <li>税务申报简单，并入个人税单</li>
+            <li>没有最低营业额要求</li>
+          </ul>
+        </div>
+        <div>
+          <div class="pro-con-title con">✕ 劣势</div>
+          <ul class="pro-con-list cons">
+            <li>个人资产承担无限风险</li>
+            <li>难以向银行或投资者融资</li>
+            <li>收入高时，税率可能高于公司税</li>
+            <li>业主生病或去世，生意即停止</li>
+          </ul>
+        </div>
+      </div>
+      <div class="struct-best">
+        <strong>最适合：</strong>副业起步、自由职业者、家庭式小生意、年收入预计在 $75,000 以下、暂时不需要雇人的业主。
+      </div>
+    </div>
+  </div>
+
+  <!-- 私人公司 -->
+  <div class="tab-panel" id="tab-company">
+    <div class="struct-card">
+      <div class="struct-header">
+        <span class="struct-icon">🏢</span>
+        <div class="struct-name">私人有限公司</div>
+        <div class="struct-en">Proprietary Limited Company (Pty Ltd)</div>
+        <div class="struct-tagline">公司是独立的法律实体，和你个人分开。你作为股东的损失，最多只是你投入的钱——适合想保护个人资产、准备扩大规模的业主。</div>
+      </div>
+      <div class="struct-body">
+        <div class="fact-group">
+          <div class="fact-label">注册成本</div>
+          <div class="fact-val" style="color:var(--accent)">$636</div>
+          <div class="fact-note">向 ASIC 一次性缴纳（2026年7月1日起）。另加每年 $342 年度审查费。</div>
+        </div>
+        <div class="fact-group">
+          <div class="fact-label">公司税率</div>
+          <div class="fact-val" style="color:var(--yellow)">25%</div>
+          <div class="fact-note">营业额低于 $5,000万 的小企业适用。大企业税率为 30%。</div>
+        </div>
+        <div class="fact-group">
+          <div class="fact-label">个人责任</div>
+          <div class="fact-val" style="color:var(--green)">有限</div>
+          <div class="fact-note">个人资产受保护。但董事有法律责任，严重失职可追究个人责任。</div>
+        </div>
+        <div class="fact-group">
+          <div class="fact-label">设立难度</div>
+          <div class="fact-val" style="color:var(--yellow)">⭐⭐ 中等</div>
+          <div class="fact-note">需要 Director ID、公司章程，可通过 ASIC 或中介注册。</div>
+        </div>
+      </div>
+      <div class="struct-lists">
+        <div>
+          <div class="pro-con-title pro">✓ 优势</div>
+          <ul class="pro-con-list pros">
+            <li>有限责任，保护个人资产</li>
+            <li>税率可能低于高收入个人税率</li>
+            <li>更易向银行融资、吸引投资者</li>
+            <li>公司永久存在，不因业主变化而解散</li>
+          </ul>
+        </div>
+        <div>
+          <div class="pro-con-title con">✕ 劣势</div>
+          <ul class="pro-con-list cons">
+            <li>设立成本和年度合规费用较高</li>
+            <li>需单独报公司税（更复杂）</li>
+            <li>分红给自己还要缴个人所得税</li>
+            <li>董事有明确法律义务，违规有罚款</li>
+          </ul>
+        </div>
+      </div>
+      <div class="struct-best">
+        <strong>最适合：</strong>收入较高（年利润超过 $8万）、需要保护个人资产、计划雇人或扩张、需要签大合同或招投标的业主。
+      </div>
+    </div>
+  </div>
+
+  <!-- 合伙 -->
+  <div class="tab-panel" id="tab-partnership">
+    <div class="struct-card">
+      <div class="struct-header">
+        <span class="struct-icon">🤝</span>
+        <div class="struct-name">合伙经营</div>
+        <div class="struct-en">Partnership</div>
+        <div class="struct-tagline">两个或以上的人共同经营一门生意。利润和损失按约定比例分配，各人分别缴纳个人所得税。合伙协议不是法律要求，但强烈建议签订。</div>
+      </div>
+      <div class="struct-body">
+        <div class="fact-group">
+          <div class="fact-label">注册成本</div>
+          <div class="fact-val" style="color:var(--green)">$0起</div>
+          <div class="fact-note">ABN 免费。建议请律师起草合伙协议，约 $500–$1,500。</div>
+        </div>
+        <div class="fact-group">
+          <div class="fact-label">税率</div>
+          <div class="fact-val" style="color:var(--yellow)">19–47%</div>
+          <div class="fact-note">合伙本身不缴税；利润分配给合伙人，各人按个人税率缴税。</div>
+        </div>
+        <div class="fact-group">
+          <div class="fact-label">个人责任</div>
+          <div class="fact-val" style="color:var(--red)">联合无限</div>
+          <div class="fact-note">每个合伙人对所有合伙债务负责，包括他人造成的债务。</div>
+        </div>
+        <div class="fact-group">
+          <div class="fact-label">设立难度</div>
+          <div class="fact-val" style="color:var(--green)">⭐ 简单</div>
+          <div class="fact-note">注册 ABN 即可，但合伙协议非常重要。</div>
+        </div>
+      </div>
+      <div class="struct-lists">
+        <div>
+          <div class="pro-con-title pro">✓ 优势</div>
+          <ul class="pro-con-list pros">
+            <li>共享资源、技能和风险</li>
+            <li>灵活分配利润比例</li>
+            <li>税务透明，无双重征税</li>
+            <li>比公司设立简单</li>
+          </ul>
+        </div>
+        <div>
+          <div class="pro-con-title con">✕ 劣势</div>
+          <ul class="pro-con-list cons">
+            <li>一个合伙人的失误，全体承担</li>
+            <li>合伙人离开，合伙关系可能解散</li>
+            <li>个人资产仍然面临风险</li>
+            <li>合伙纠纷处理复杂</li>
+          </ul>
+        </div>
+      </div>
+      <div class="struct-best">
+        <strong>最适合：</strong>夫妻店、朋友合伙的小生意、专业人士合作（如设计师、顾问）——前提是彼此信任，且已签订清晰的合伙协议。
+      </div>
+    </div>
+  </div>
+
+  <!-- 信托 -->
+  <div class="tab-panel" id="tab-trust">
+    <div class="struct-card">
+      <div class="struct-header">
+        <span class="struct-icon">🏛️</span>
+        <div class="struct-name">信托</div>
+        <div class="struct-en">Trust</div>
+        <div class="struct-tagline">信托是一种法律安排：受托人（Trustee）管理资产，为受益人（Beneficiaries）的利益服务。在家族生意中很常见，可以灵活分配收入给税率较低的家庭成员。</div>
+      </div>
+      <div class="struct-body">
+        <div class="fact-group">
+          <div class="fact-label">设立成本</div>
+          <div class="fact-val" style="color:var(--purple)">$500+</div>
+          <div class="fact-note">信托契约（Trust Deed）起草约 $500–$1,500；如设公司受托人，另加 $636 注册费。</div>
+        </div>
+        <div class="fact-group">
+          <div class="fact-label">税率</div>
+          <div class="fact-val" style="color:var(--yellow)">灵活</div>
+          <div class="fact-note">分配给受益人，按其个人税率。若未分配，按最高税率 47% 征税。</div>
+        </div>
+        <div class="fact-group">
+          <div class="fact-label">个人责任</div>
+          <div class="fact-val" style="color:var(--yellow)">视结构</div>
+          <div class="fact-note">资产归信托所有，受益人个人资产有一定保护；受托人责任视类型而定。</div>
+        </div>
+        <div class="fact-group">
+          <div class="fact-label">设立难度</div>
+          <div class="fact-val" style="color:var(--red)">⭐⭐⭐ 复杂</div>
+          <div class="fact-note">需要专业律师和会计师参与，后期合规成本较高。</div>
+        </div>
+      </div>
+      <div class="struct-lists">
+        <div>
+          <div class="pro-con-title pro">✓ 优势</div>
+          <ul class="pro-con-list pros">
+            <li>可将收入分配给低税率家庭成员</li>
+            <li>资产保护，不易被个人债权人追索</li>
+            <li>有利于遗产规划和家族财富传承</li>
+            <li>可享资本利得税（CGT）折扣</li>
+          </ul>
+        </div>
+        <div>
+          <div class="pro-con-title con">✕ 劣势</div>
+          <ul class="pro-con-list cons">
+            <li>设立和管理成本最高</li>
+            <li>亏损不能直接分配给受益人</li>
+            <li>ATO 对 Section 100A 审查日趋严格</li>
+            <li>不适合需要外部融资的业务</li>
+          </ul>
+        </div>
+      </div>
+      <div class="struct-best">
+        <strong>最适合：</strong>有家庭成员参与、需要资产保护、关注遗产规划的家族生意——但必须配合有经验的会计师使用。
+      </div>
+    </div>
+  </div>
+</div>
+
+<hr class="divider" style="margin: 0 24px 48px;">
+
+<!-- 对比表 -->
+<div class="wrap">
+  <p class="section-label">快速对比</p>
+  <h2 class="section-title">四种结构一张表看清楚</h2>
+  <p class="section-sub">数据来源：ATO · ASIC 2025–26 财年</p>
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th>对比项目</th>
+          <th>👤 个人独资</th>
+          <th>🤝 合伙</th>
+          <th>🏢 私人公司</th>
+          <th>🏛️ 信托</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="row-label">注册成本</td>
+          <td><span class="chip chip-green">$0</span></td>
+          <td><span class="chip chip-green">$0起</span></td>
+          <td><span class="chip chip-yellow">$636</span></td>
+          <td><span class="chip chip-yellow">$500+</span></td>
+        </tr>
+        <tr>
+          <td class="row-label">税率</td>
+          <td>个人税率<br>19–47%</td>
+          <td>各人个人税率<br>19–47%</td>
+          <td>公司税率<br>25–30%</td>
+          <td>灵活分配<br>按受益人税率</td>
+        </tr>
+        <tr>
+          <td class="row-label">个人责任</td>
+          <td><span class="chip chip-red">无限</span></td>
+          <td><span class="chip chip-red">联合无限</span></td>
+          <td><span class="chip chip-green">有限</span></td>
+          <td><span class="chip chip-yellow">视结构</span></td>
+        </tr>
+        <tr>
+          <td class="row-label">设立难度</td>
+          <td><span class="chip chip-green">最简单</span></td>
+          <td><span class="chip chip-green">简单</span></td>
+          <td><span class="chip chip-yellow">中等</span></td>
+          <td><span class="chip chip-red">复杂</span></td>
+        </tr>
+        <tr>
+          <td class="row-label">年度合规成本</td>
+          <td>低<br>（并入个人税单）</td>
+          <td>低–中<br>（需报合伙税单）</td>
+          <td>中–高<br>（$342/年 + 会计费）</td>
+          <td>高<br>（需专业会计师）</td>
+        </tr>
+        <tr>
+          <td class="row-label">适合阶段</td>
+          <td>刚起步<br>副业 / 低风险</td>
+          <td>合伙小生意<br>夫妻店</td>
+          <td>成长期<br>有利润 / 要扩张</td>
+          <td>家族生意<br>资产规划</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<hr class="divider" style="margin: 0 24px 48px;">
+
+<!-- 注册步骤 -->
+<div class="wrap">
+  <p class="section-label">注册 ABN — 操作步骤</p>
+  <h2 class="section-title">决定好了？这样注册 ABN</h2>
+  <p class="section-sub">以下是个人独资 / 合伙注册 ABN 的步骤（最常见）。公司注册需通过 ASIC，步骤略有不同。</p>
+  <div class="checklist">
+    <div class="check-item">
+      <div class="check-num">1</div>
+      <div>
+        <div class="check-title">准备你的 TFN（税务文件号）</div>
+        <div class="check-body">注册 ABN 需要提供你的个人 TFN。如果还没有，先在 ATO 官网申请，约需 28 天。澳洲公民和永居持有者均可申请。</div>
+        <a href="https://www.ato.gov.au/individuals-and-families/tax-file-number" target="_blank" class="check-link">→ ATO 官网申请 TFN</a>
+      </div>
+    </div>
+    <div class="check-item">
+      <div class="check-num">2</div>
+      <div>
+        <div class="check-title">去 ABR 官网注册 ABN</div>
+        <div class="check-body">打开 abr.gov.au，点击"Apply for an ABN"。填写你的姓名、TFN、业务类型和地址。约 5–10 分钟，免费，大部分申请当天批准。</div>
+        <a href="https://www.abr.gov.au/business-super-funds-charities/applying-for-an-abn" target="_blank" class="check-link">→ abr.gov.au 注册 ABN</a>
+      </div>
+    </div>
+    <div class="check-item">
+      <div class="check-num">3</div>
+      <div>
+        <div class="check-title">考虑注册商业名称（可选）</div>
+        <div class="check-body">如果你用自己的真实姓名经营，不需要注册商业名称。如果你想用一个品牌名（例如"竹 Digital"），需在 ASIC 注册，费用 $39/年 或 $92/3年。</div>
+        <a href="https://www.asic.gov.au/for-business/registering-a-business-name/" target="_blank" class="check-link">→ ASIC 注册商业名称</a>
+      </div>
+    </div>
+    <div class="check-item">
+      <div class="check-num">4</div>
+      <div>
+        <div class="check-title">判断是否需要注册 GST</div>
+        <div class="check-body">如果你预计年营业额超过 <strong>$75,000</strong>，必须同时注册 GST。注册后需每季度申报 BAS。营业额低于门槛可选择不注册，但一旦超过，必须在 21 天内完成注册。</div>
+        <a href="gst-bas.html" class="check-link">→ 查看 GST 与 BAS 指南</a>
+      </div>
+    </div>
+    <div class="check-item">
+      <div class="check-num">5</div>
+      <div>
+        <div class="check-title">开始保存商业记录</div>
+        <div class="check-body">ATO 要求从开始经营起，保存大多数商业记录至少 5 年。包括：发票、收据、银行记录、工资记录。从第一天起养成习惯，省去日后的麻烦。</div>
+        <a href="record-keeping.html" class="check-link">→ 查看记录保存指南</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- CTA -->
+<div class="cta-strip">
+  <h2>还有疑问？</h2>
+  <p>我们的情况讲清楚了，但你的情况可能更复杂——发邮件告诉我们，我们帮你理清楚。</p>
+  <div class="cta-btns">
+    <a href="consultant_cn.html#contact" class="btn-primary">联系竹 Digital →</a>
+    <a href="gst-bas.html" class="btn-ghost">下一篇：GST 与 BAS →</a>
+  </div>
+</div>
+
+<footer class="footer">
+  <div>🎋 竹 Digital · 墨尔本，维多利亚州 · ABN 29 919 594 996</div>
+  <div style="margin-top:4px;">资料来源：<a href="https://www.ato.gov.au" target="_blank">ATO</a> · <a href="https://www.asic.gov.au" target="_blank">ASIC</a> · <a href="https://www.abr.gov.au" target="_blank">ABR</a> — 2026–27 财年（2026年10月更新）· 本页为教育资讯，不构成法律或税务建议</div>
+</footer>
+
+<script>
+function switchTab(id) {
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+  document.getElementById('tab-' + id).classList.add('active');
+  event.target.classList.add('active');
+}
+</script>

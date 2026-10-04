@@ -1,0 +1,562 @@
+<!--
+  竹 Digital — 账本与记录保存
+  ════════════════════════════════════════════════════════
+  DATA_UPDATE_SCHEDULE: 每年7月1日后更新（ATO罚款单位金额每年调整）
+  LAST_UPDATED: 2026-10
+  FISCAL_YEAR: 2026-27
+
+  KEY_FIGURES (核实这些数据是否有变化):
+  - ATO税务记录保存年限: 5年（从提交税表之日起）→ 来源: ATO https://www.ato.gov.au/businesses-and-organisations/income-deductions-and-concessions/income-and-deductions-for-business/record-keeping
+  - Fair Work雇员记录保存年限: 7年（从记录创建之日起）→ 来源: Fair Work Act 2009 s.535
+  - CGT资产记录: 持有期间 + 出售后5年
+  - 公司章程/股东名册: 永久保存
+  - ATO罚款单位: $313/单位（2026-27，每年调整）→ 来源: ATO https://www.ato.gov.au/about-ato/commitments-and-reporting/in-detail/penalties/
+  - 记录保存违规最高罚款: 20个罚款单位（约$6,260）→ 来源: ATO
+  - 电子记录: ATO接受清晰、可读、完整的扫描/照片代替纸质原件
+
+  SOURCES:
+  - ATO记录保存: https://www.ato.gov.au/businesses-and-organisations/income-deductions-and-concessions/income-and-deductions-for-business/record-keeping
+  - Fair Work记录保存: https://www.fairwork.gov.au/employment-conditions/record-keeping-and-pay-slips
+  - Fair Work工资单: https://www.fairwork.gov.au/pay-and-wages/paying-wages/pay-slips
+  ════════════════════════════════════════════════════════
+-->
+<title>账本与记录保存</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;700&family=Noto+Sans+SC:wght@300;400;500;600&display=swap">
+<style>
+/* ── 竹 Digital 设计系统 · 深色优先 ── */
+:root {
+  --bg:#0D1B2A;--bg2:#0F1F30;--surface:#152233;--surface2:#1A2B3F;
+  --border:rgba(59,130,246,.13);--border2:rgba(59,130,246,.22);
+  --fg:#F1F5F9;--fg2:#94A3B8;--fg3:#475569;--accent:#60A5FA;
+  --blue:#1D4ED8;--blue-lit:#2563EB;
+  --green:#34D399;--green-bg:rgba(52,211,153,.08);
+  --yellow:#FCD34D;--yellow-bg:rgba(252,211,77,.08);
+  --red:#F87171;--red-bg:rgba(248,113,113,.08);
+  --orange:#FB923C;--orange-bg:rgba(251,146,60,.08);
+  --serif:"Noto Serif SC",Georgia,serif;
+  --sans:"Noto Sans SC",system-ui,sans-serif;
+  color-scheme:dark;
+}
+@media(prefers-color-scheme:light){
+  :root:not([data-theme="dark"]){
+    --bg:#F0F4FA;--bg2:#E4EBF7;--surface:#FFFFFF;--surface2:#F8FAFC;
+    --border:rgba(37,99,235,.13);--border2:rgba(37,99,235,.25);
+    --fg:#0F172A;--fg2:#334155;--fg3:#64748B;--accent:#1D4ED8;
+    --blue:#1D4ED8;--blue-lit:#2563EB;
+    --green:#059669;--green-bg:rgba(5,150,105,.07);
+    --yellow:#B45309;--yellow-bg:rgba(180,83,9,.06);
+    --red:#DC2626;--red-bg:rgba(220,38,38,.06);
+    --orange:#C2410C;--orange-bg:rgba(194,65,12,.06);
+    color-scheme:light;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#0D1B2A;--bg2:#0F1F30;--surface:#152233;--surface2:#1A2B3F;
+  --border:rgba(59,130,246,.13);--border2:rgba(59,130,246,.22);
+  --fg:#F1F5F9;--fg2:#94A3B8;--fg3:#475569;--accent:#60A5FA;
+  --green:#34D399;--green-bg:rgba(52,211,153,.08);
+  --yellow:#FCD34D;--yellow-bg:rgba(252,211,77,.08);
+  --red:#F87171;--red-bg:rgba(248,113,113,.08);
+  --orange:#FB923C;--orange-bg:rgba(251,146,60,.08);
+  color-scheme:dark;
+}
+.src-tag{display:inline-block;font-size:10px;color:var(--fg3);background:var(--surface);border:1px solid var(--border);border-radius:4px;padding:1px 5px;margin-left:4px;font-family:var(--sans);vertical-align:middle;letter-spacing:.2px;text-decoration:none;}
+.src-tag:hover{color:var(--accent);}
+.data-notice{background:var(--surface);border:1px solid var(--border2,var(--border));border-radius:10px;padding:12px 18px;font-size:12px;color:var(--fg2);margin-top:28px;line-height:1.8;}
+.data-notice strong{color:var(--accent);}
+.data-notice a{color:var(--accent);text-decoration:none;}
+.data-notice a:hover{text-decoration:underline;}
+
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:var(--sans);background:var(--bg);color:var(--fg);min-height:100vh;font-size:15px;line-height:1.7;}
+
+/* ── Nav ── */
+.nav{position:sticky;top:env(safe-area-inset-top,0px);z-index:100;background:rgba(13,27,42,.92);backdrop-filter:blur(12px);border-bottom:1px solid var(--border);padding:14px 24px;display:flex;align-items:center;gap:12px;}
+@media(prefers-color-scheme:light){:root:not([data-theme="dark"]) .nav{background:rgba(240,244,250,.92);}}
+:root[data-theme="light"] .nav{background:rgba(240,244,250,.92);}
+.nav-back{font-size:13px;color:var(--fg2);text-decoration:none;}
+.nav-back:hover{color:var(--accent);}
+.nav-sep{color:var(--fg3);}
+.nav-title{font-size:13px;color:var(--fg);font-weight:500;}
+
+/* ── Hero ── */
+.hero{padding:56px 24px 40px;max-width:860px;margin:0 auto;}
+.breadcrumb{font-size:12px;color:var(--fg3);letter-spacing:.08em;text-transform:uppercase;margin-bottom:16px;}
+.hero-title{font-family:var(--serif);font-size:clamp(28px,5vw,44px);font-weight:700;line-height:1.2;text-wrap:balance;margin-bottom:16px;}
+.hero-sub{font-size:16px;color:var(--fg2);max-width:600px;line-height:1.8;}
+.hero-tags{display:flex;flex-wrap:wrap;gap:8px;margin-top:20px;}
+.hero-tag{font-size:12px;padding:4px 12px;border-radius:20px;font-weight:500;border:1px solid var(--border2);}
+.tag-blue{background:rgba(96,165,250,.1);color:var(--accent);border-color:rgba(96,165,250,.25);}
+.tag-green{background:var(--green-bg);color:var(--green);border-color:rgba(52,211,153,.25);}
+.tag-yellow{background:var(--yellow-bg);color:var(--yellow);border-color:rgba(252,211,77,.25);}
+.tag-orange{background:var(--orange-bg);color:var(--orange);border-color:rgba(251,146,60,.25);}
+
+/* ── Page layout ── */
+.page{max-width:860px;margin:0 auto;padding:0 24px 80px;}
+
+/* ── Section ── */
+.section{margin-top:56px;}
+.section-label{font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);font-weight:600;margin-bottom:8px;}
+.section-title{font-family:var(--serif);font-size:clamp(20px,3.5vw,28px);font-weight:700;margin-bottom:12px;text-wrap:balance;}
+.section-body{color:var(--fg2);line-height:1.85;font-size:15px;}
+
+/* ── Retention table ── */
+.ret-table{width:100%;border-collapse:collapse;margin-top:20px;font-size:14px;}
+.ret-table th{text-align:left;padding:10px 14px;font-size:11px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--fg2);background:var(--surface);border-bottom:1px solid var(--border2);}
+.ret-table td{padding:13px 14px;border-bottom:1px solid var(--border);vertical-align:top;}
+.ret-table tr:last-child td{border-bottom:none;}
+.ret-table tr:hover td{background:var(--surface);}
+.ret-badge{display:inline-block;font-size:11px;font-weight:700;padding:2px 9px;border-radius:20px;white-space:nowrap;font-variant-numeric:tabular-nums;}
+.badge-5{background:var(--green-bg);color:var(--green);}
+.badge-7{background:var(--yellow-bg);color:var(--yellow);}
+.badge-perm{background:var(--orange-bg);color:var(--orange);}
+.badge-cgit{background:rgba(96,165,250,.1);color:var(--accent);}
+.ret-wrap{overflow-x:auto;border:1px solid var(--border);border-radius:10px;}
+
+/* ── Two-col record types ── */
+.rec-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:16px;margin-top:20px;}
+.rec-card{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:18px 20px;}
+.rec-icon{font-size:22px;margin-bottom:10px;}
+.rec-title{font-weight:600;font-size:15px;margin-bottom:8px;}
+.rec-list{list-style:none;display:flex;flex-direction:column;gap:5px;}
+.rec-list li{font-size:13px;color:var(--fg2);padding-left:14px;position:relative;}
+.rec-list li::before{content:"·";position:absolute;left:0;color:var(--accent);}
+
+/* ── Payslip section ── */
+.payslip-box{background:var(--surface);border:1px solid var(--border2);border-radius:12px;padding:24px;margin-top:20px;}
+.payslip-header{display:flex;align-items:center;gap:10px;margin-bottom:16px;}
+.payslip-icon{font-size:24px;}
+.payslip-title{font-weight:700;font-size:16px;}
+.payslip-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+@media(max-width:480px){.payslip-grid{grid-template-columns:1fr;}}
+.payslip-item{display:flex;align-items:flex-start;gap:8px;font-size:13px;color:var(--fg2);}
+.payslip-check{color:var(--green);flex-shrink:0;font-weight:700;margin-top:1px;}
+.payslip-timing{background:var(--yellow-bg);border:1px solid rgba(252,211,77,.2);border-radius:8px;padding:12px 16px;margin-top:16px;font-size:13px;color:var(--fg2);}
+.payslip-timing strong{color:var(--yellow);}
+
+/* ── Digital records ── */
+.digital-box{background:var(--green-bg);border:1px solid rgba(52,211,153,.2);border-radius:12px;padding:22px 24px;margin-top:20px;}
+.digital-title{color:var(--green);font-weight:700;font-size:15px;margin-bottom:12px;display:flex;align-items:center;gap:8px;}
+.digital-rules{display:flex;flex-direction:column;gap:8px;margin-top:4px;}
+.digital-rule{display:flex;align-items:flex-start;gap:10px;font-size:14px;color:var(--fg2);}
+.digital-rule-icon{color:var(--green);flex-shrink:0;font-weight:700;}
+
+/* ── Audit risk ── */
+.risk-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:14px;margin-top:20px;}
+.risk-card{border-radius:10px;padding:16px 18px;border:1px solid transparent;}
+.risk-high{background:var(--red-bg);border-color:rgba(248,113,113,.2);}
+.risk-med{background:var(--yellow-bg);border-color:rgba(252,211,77,.2);}
+.risk-low{background:var(--green-bg);border-color:rgba(52,211,153,.2);}
+.risk-level{font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;margin-bottom:6px;}
+.risk-high .risk-level{color:var(--red);}
+.risk-med .risk-level{color:var(--yellow);}
+.risk-low .risk-level{color:var(--green);}
+.risk-title{font-weight:600;font-size:14px;margin-bottom:4px;}
+.risk-body{font-size:12px;color:var(--fg2);line-height:1.6;}
+
+/* ── Penalty box ── */
+.penalty-box{background:var(--red-bg);border:1px solid rgba(248,113,113,.2);border-radius:12px;padding:22px 24px;margin-top:20px;}
+.penalty-title{color:var(--red);font-weight:700;font-size:15px;margin-bottom:14px;display:flex;align-items:center;gap:8px;}
+.penalty-row{display:flex;justify-content:space-between;align-items:flex-start;padding:10px 0;border-bottom:1px solid rgba(248,113,113,.12);font-size:14px;gap:16px;}
+.penalty-row:last-child{border-bottom:none;padding-bottom:0;}
+.penalty-label{color:var(--fg2);flex:1;}
+.penalty-amount{font-weight:700;color:var(--fg);font-variant-numeric:tabular-nums;white-space:nowrap;}
+
+/* ── Checklist ── */
+.checklist{display:flex;flex-direction:column;gap:10px;margin-top:20px;}
+.check-item{display:flex;align-items:flex-start;gap:12px;background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:14px 16px;}
+.check-num{width:24px;height:24px;border-radius:50%;background:var(--accent);color:#fff;font-size:11px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px;}
+.check-body{font-size:14px;color:var(--fg2);line-height:1.6;}
+.check-body strong{color:var(--fg);}
+
+/* ── App tools ── */
+.tools-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:14px;margin-top:20px;}
+.tool-card{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:16px 18px;}
+.tool-name{font-weight:600;font-size:14px;margin-bottom:4px;}
+.tool-desc{font-size:12px;color:var(--fg2);line-height:1.5;}
+.tool-tag{display:inline-block;font-size:10px;padding:2px 7px;border-radius:10px;margin-top:6px;font-weight:600;}
+.tool-free{background:var(--green-bg);color:var(--green);}
+.tool-paid{background:rgba(96,165,250,.1);color:var(--accent);}
+
+/* ── CTA ── */
+.cta-box{background:var(--surface2);border:1px solid var(--border);border-radius:14px;padding:32px;text-align:center;margin-top:56px;}
+.cta-box h2{font-family:var(--serif);font-size:clamp(20px,3.5vw,26px);margin-bottom:10px;text-wrap:balance;}
+.cta-box p{font-size:14px;color:var(--fg2);max-width:480px;margin:0 auto 24px;line-height:1.85;}
+.cta-btns{display:flex;justify-content:center;gap:12px;flex-wrap:wrap;}
+.btn-primary{background:var(--accent);color:#fff;padding:11px 24px;border-radius:8px;text-decoration:none;font-size:14px;font-weight:600;}
+.btn-primary:hover{opacity:.9;}
+.btn-ghost{border:1px solid var(--border2);color:var(--fg2);padding:11px 24px;border-radius:8px;text-decoration:none;font-size:14px;}
+.btn-ghost:hover{color:var(--accent);}
+
+/* ── Footer ── */
+.footer{border-top:1px solid var(--border);padding:24px;text-align:center;font-size:12px;color:var(--fg3);line-height:1.8;margin-top:0;}
+.footer a{color:var(--fg3);text-decoration:none;}
+.footer a:hover{color:var(--accent);}
+</style>
+
+<!-- ── Nav ── -->
+<nav class="nav">
+  <a href="consultant_cn.html" class="nav-back">← 竹 Digital</a>
+  <span class="nav-sep">·</span>
+  <span class="nav-title">账本与记录保存</span>
+</nav>
+
+<!-- ── Hero ── -->
+<div class="hero">
+  <p class="breadcrumb">带你读懂 · 系列第五篇</p>
+  <h1 class="hero-title">账本与记录保存</h1>
+  <p class="hero-sub">ATO 要你保留多少年？Fair Work 呢？哪些记录不能丢——以及如何用手机照片代替一整柜纸质收据。</p>
+  <div class="hero-tags">
+    <span class="hero-tag tag-blue">税务记录 5 年</span>
+    <span class="hero-tag tag-yellow">雇员记录 7 年</span>
+    <span class="hero-tag tag-green">电子记录合法</span>
+    <span class="hero-tag tag-orange">日常运营</span>
+  </div>
+</div>
+
+<main class="page">
+
+  <div class="data-notice">
+    📅 <strong>数据截至：2026年10月</strong> · 适用财年：2026–27 ·
+    来源：<a href="https://www.ato.gov.au/businesses-and-organisations/income-deductions-and-concessions/income-and-deductions-for-business/record-keeping" target="_blank" rel="noopener">ATO 记录保存</a>、
+    <a href="https://www.fairwork.gov.au/employment-conditions/record-keeping-and-pay-slips" target="_blank" rel="noopener">Fair Work 记录保存</a> ·
+    ⚡ ATO罚款单位金额每年7月1日调整，建议每年核查
+  </div>
+
+  <!-- 1. 保存年限一览 -->
+  <section class="section">
+    <p class="section-label">核心规定</p>
+    <h2 class="section-title">不同记录，保存年限不同</h2>
+    <p class="section-body">最常见的误解：以为"7年"是统一标准。实际上 ATO 要求税务记录保存 <strong>5年</strong>，Fair Work 要求雇员记录保存 <strong>7年</strong>，而公司文件则要永久保存。</p>
+    <div class="ret-wrap">
+      <table class="ret-table">
+        <thead>
+          <tr>
+            <th>记录类型</th>
+            <th>保存年限</th>
+            <th>起算时间</th>
+            <th>来源</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>一般税务记录</strong>（收入、支出、BAS、GST）</td>
+            <td><span class="ret-badge badge-5">5 年</span></td>
+            <td>提交税表之日起</td>
+            <td><a href="https://www.ato.gov.au/businesses-and-organisations/income-deductions-and-concessions/income-and-deductions-for-business/record-keeping" target="_blank" rel="noopener" class="src-tag">ATO</a></td>
+          </tr>
+          <tr>
+            <td><strong>雇员记录</strong>（工时、工资、Super、假期）</td>
+            <td><span class="ret-badge badge-7">7 年</span></td>
+            <td>记录创建之日起（含离职后）</td>
+            <td><a href="https://www.fairwork.gov.au/employment-conditions/record-keeping-and-pay-slips" target="_blank" rel="noopener" class="src-tag">Fair Work</a></td>
+          </tr>
+          <tr>
+            <td><strong>资本增值税（CGT）资产记录</strong></td>
+            <td><span class="ret-badge badge-cgit">持有期 + 5 年</span></td>
+            <td>资产出售后起算</td>
+            <td><a href="https://www.ato.gov.au/individuals-and-families/investments-and-assets/capital-gains-tax/keeping-records-for-capital-gains-tax" target="_blank" rel="noopener" class="src-tag">ATO CGT</a></td>
+          </tr>
+          <tr>
+            <td><strong>折旧资产记录</strong>（设备、车辆等）</td>
+            <td><span class="ret-badge badge-5">5 年</span></td>
+            <td>最后一次申报折旧后</td>
+            <td><a href="https://www.ato.gov.au/businesses-and-organisations/income-deductions-and-concessions/income-and-deductions-for-business/record-keeping" target="_blank" rel="noopener" class="src-tag">ATO</a></td>
+          </tr>
+          <tr>
+            <td><strong>亏损结转记录</strong></td>
+            <td><span class="ret-badge badge-5">5 年</span></td>
+            <td>亏损完全弥补后起算</td>
+            <td><a href="https://www.ato.gov.au/businesses-and-organisations/income-deductions-and-concessions/income-and-deductions-for-business/record-keeping" target="_blank" rel="noopener" class="src-tag">ATO</a></td>
+          </tr>
+          <tr>
+            <td><strong>公司章程、股东名册</strong></td>
+            <td><span class="ret-badge badge-perm">永久</span></td>
+            <td>公司存续期间</td>
+            <td><a href="https://asic.gov.au/for-business/running-a-company/company-officeholder-duties/books-and-records/" target="_blank" rel="noopener" class="src-tag">ASIC</a></td>
+          </tr>
+          <tr>
+            <td><strong>董事会会议记录、决议</strong></td>
+            <td><span class="ret-badge badge-7">7 年</span></td>
+            <td>决议作出之日起</td>
+            <td><a href="https://asic.gov.au/for-business/running-a-company/company-officeholder-duties/books-and-records/" target="_blank" rel="noopener" class="src-tag">ASIC</a></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- 2. 要保存哪些记录 -->
+  <section class="section">
+    <p class="section-label">记录清单</p>
+    <h2 class="section-title">你需要保存什么</h2>
+    <p class="section-body">ATO 要求保留所有能证明交易真实发生、支持退税申报的文件。以下是华人小业主最常涉及的类别：</p>
+    <div class="rec-grid">
+      <div class="rec-card">
+        <div class="rec-icon">🧾</div>
+        <div class="rec-title">收入记录</div>
+        <ul class="rec-list">
+          <li>销售发票（含微信/支付宝收款截图）</li>
+          <li>银行对账单</li>
+          <li>现金收入记录</li>
+          <li>退款记录</li>
+          <li>PayID / 收款二维码交易记录</li>
+        </ul>
+      </div>
+      <div class="rec-card">
+        <div class="rec-icon">🛒</div>
+        <div class="rec-title">支出记录</div>
+        <ul class="rec-list">
+          <li>采购收据（纸质或电子）</li>
+          <li>租金合同与付款记录</li>
+          <li>水电费、电话费账单</li>
+          <li>车辆行驶日志（公务用途）</li>
+          <li>差旅与餐饮记录（有业务目的）</li>
+        </ul>
+      </div>
+      <div class="rec-card">
+        <div class="rec-icon">👥</div>
+        <div class="rec-title">雇员记录 <span style="font-size:10px;background:var(--yellow-bg);color:var(--yellow);padding:1px 6px;border-radius:4px;margin-left:4px;">7年</span></div>
+        <ul class="rec-list">
+          <li>雇用合同</li>
+          <li>工作时间记录（含加班）</li>
+          <li>工资单（Payslip）副本</li>
+          <li>Super 缴费记录</li>
+          <li>年假、病假累积与使用记录</li>
+        </ul>
+      </div>
+      <div class="rec-card">
+        <div class="rec-icon">📊</div>
+        <div class="rec-title">税务合规记录</div>
+        <ul class="rec-list">
+          <li>BAS 申报表副本</li>
+          <li>GST 缴纳/退税记录</li>
+          <li>PAYG 预扣税记录</li>
+          <li>年度税表副本</li>
+          <li>ATO 往来信函</li>
+        </ul>
+      </div>
+      <div class="rec-card">
+        <div class="rec-icon">🏢</div>
+        <div class="rec-title">资产与合同</div>
+        <ul class="rec-list">
+          <li>设备采购发票与资产登记</li>
+          <li>租约与商业合同</li>
+          <li>贷款协议</li>
+          <li>保险单据</li>
+          <li>车辆登记（公务用途）</li>
+        </ul>
+      </div>
+      <div class="rec-card">
+        <div class="rec-icon">🌏</div>
+        <div class="rec-title">跨境交易记录</div>
+        <ul class="rec-list">
+          <li>海外汇款凭证（支付宝/微信/银行）</li>
+          <li>进口报关单与关税收据</li>
+          <li>供应商合同（含中文版本）</li>
+          <li>海外收入汇率换算记录</li>
+          <li>转账截图（注明日期、金额、用途）</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- 3. 工资单必须包含什么 -->
+  <section class="section">
+    <p class="section-label">Fair Work 强制要求</p>
+    <h2 class="section-title">工资单（Payslip）必须包含什么</h2>
+    <p class="section-body">每次发工资必须同时提供工资单——Fair Work 对内容有明确要求。缺少任何一项都算违规，可被罚款。</p>
+    <div class="payslip-box">
+      <div class="payslip-header">
+        <span class="payslip-icon">📄</span>
+        <span class="payslip-title">每张工资单必须包含的内容 <a href="https://www.fairwork.gov.au/pay-and-wages/paying-wages/pay-slips" target="_blank" rel="noopener" class="src-tag">Fair Work</a></span>
+      </div>
+      <div class="payslip-grid">
+        <div class="payslip-item"><span class="payslip-check">✓</span> 雇主名称及 ABN</div>
+        <div class="payslip-item"><span class="payslip-check">✓</span> 员工姓名</div>
+        <div class="payslip-item"><span class="payslip-check">✓</span> 发薪周期（起止日期）</div>
+        <div class="payslip-item"><span class="payslip-check">✓</span> 税前总工资（Gross pay）</div>
+        <div class="payslip-item"><span class="payslip-check">✓</span> 税后实收工资（Net pay）</div>
+        <div class="payslip-item"><span class="payslip-check">✓</span> 普通时薪及工时数</div>
+        <div class="payslip-item"><span class="payslip-check">✓</span> 加班费、津贴、附加费（如有）</div>
+        <div class="payslip-item"><span class="payslip-check">✓</span> 扣款明细（税款、其他）</div>
+        <div class="payslip-item"><span class="payslip-check">✓</span> Super 缴费金额及基金名称</div>
+        <div class="payslip-item"><span class="payslip-check">✓</span> 付款方式（银行转账等）</div>
+      </div>
+      <div class="payslip-timing">
+        ⏰ <strong>时限：</strong>工资发放后 <strong>1 个工作日内</strong>必须提供工资单——可以是电子版（邮件、App 均可），不需要纸质。
+      </div>
+    </div>
+  </section>
+
+  <!-- 4. 电子记录 -->
+  <section class="section">
+    <p class="section-label">好消息</p>
+    <h2 class="section-title">手机照片 = 合法记录</h2>
+    <p class="section-body">ATO 明确接受电子记录代替纸质原件——不需要保留一柜子收据，只要满足以下条件。</p>
+    <div class="digital-box">
+      <div class="digital-title">✅ ATO 接受电子记录的条件 <a href="https://www.ato.gov.au/businesses-and-organisations/income-deductions-and-concessions/income-and-deductions-for-business/record-keeping" target="_blank" rel="noopener" class="src-tag">ATO</a></div>
+      <div class="digital-rules">
+        <div class="digital-rule"><span class="digital-rule-icon">✓</span> <span><strong>清晰可读</strong>——金额、日期、供应商名称都看得清楚</span></div>
+        <div class="digital-rule"><span class="digital-rule-icon">✓</span> <span><strong>完整</strong>——整张收据/发票，不是局部截图</span></div>
+        <div class="digital-rule"><span class="digital-rule-icon">✓</span> <span><strong>可访问</strong>——ATO 审计时能立即调出，5年内随时可查</span></div>
+        <div class="digital-rule"><span class="digital-rule-icon">✓</span> <span><strong>不可篡改</strong>——建议存入云端（Google Drive、iCloud），不要只存在手机本地</span></div>
+        <div class="digital-rule"><span class="digital-rule-icon">✓</span> <span><strong>有备份</strong>——至少一个异地备份，防止手机丢失或损坏</span></div>
+      </div>
+    </div>
+    <div style="margin-top:16px;background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:16px 20px;font-size:13px;color:var(--fg2);">
+      💡 <strong>实用建议：</strong>每次消费后立刻拍照，文件名加上日期和金额（如 <code style="background:var(--surface2);padding:1px 5px;border-radius:3px;font-size:12px;">2026-10-04_办公用品_$45.html</code>），比事后整理容易得多。微信支付和支付宝的交易记录也要定期导出保存。
+    </div>
+  </section>
+
+  <!-- 5. 推荐工具 -->
+  <section class="section">
+    <p class="section-label">工具推荐</p>
+    <h2 class="section-title">简单好用的记账方式</h2>
+    <p class="section-body">不需要买昂贵软件。以下工具适合不同规模的华人小业主：</p>
+    <div class="tools-grid">
+      <div class="tool-card">
+        <div class="tool-name">📱 ATO 官方 App</div>
+        <div class="tool-desc">扫描收据、记录车辆行驶、追踪工作相关支出。免费，直接连接 myGov。</div>
+        <span class="tool-tag tool-free">免费</span>
+      </div>
+      <div class="tool-card">
+        <div class="tool-name">📂 Google Drive / iCloud</div>
+        <div class="tool-desc">按月创建文件夹存电子收据。简单、免费、有自动备份，适合刚起步的小业主。</div>
+        <span class="tool-tag tool-free">免费</span>
+      </div>
+      <div class="tool-card">
+        <div class="tool-name">📊 Excel / Google Sheets</div>
+        <div class="tool-desc">自建收支表格，每周更新一次。免费模板很多，适合业务简单的个体户。</div>
+        <span class="tool-tag tool-free">免费</span>
+      </div>
+      <div class="tool-card">
+        <div class="tool-name">🔢 Xero</div>
+        <div class="tool-desc">澳洲最流行的云会计软件，自动对接银行、生成BAS、管理工资单。适合年营业额 $75K+ 的业主。</div>
+        <span class="tool-tag tool-paid">付费 ~$35/月起</span>
+      </div>
+      <div class="tool-card">
+        <div class="tool-name">📒 MYOB</div>
+        <div class="tool-desc">本地老牌会计软件，功能全面，有中文客服支持。适合有雇员、业务较复杂的企业。</div>
+        <span class="tool-tag tool-paid">付费 ~$27/月起</span>
+      </div>
+      <div class="tool-card">
+        <div class="tool-name">🧮 QuickBooks</div>
+        <div class="tool-desc">操作简单、价格适中，适合初次使用会计软件的业主。支持手机拍照上传收据。</div>
+        <span class="tool-tag tool-paid">付费 ~$20/月起</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- 6. 审计风险 -->
+  <section class="section">
+    <p class="section-label">ATO 审计</p>
+    <h2 class="section-title">哪些情况容易被 ATO 盯上</h2>
+    <p class="section-body">ATO 每年对数万家小企业进行数据比对。记录保存好的业主即使被查，通常也能平安过关。</p>
+    <div class="risk-grid">
+      <div class="risk-card risk-high">
+        <div class="risk-level">⚠️ 高风险</div>
+        <div class="risk-title">现金业务比例过高</div>
+        <div class="risk-body">餐饮、美容、零售现金收入如与同行业差距过大，容易触发比对。</div>
+      </div>
+      <div class="risk-card risk-high">
+        <div class="risk-level">⚠️ 高风险</div>
+        <div class="risk-title">大量扣税项目</div>
+        <div class="risk-body">车辆、家庭办公室、差旅等比例明显高于行业平均，需要有完整记录支撑。</div>
+      </div>
+      <div class="risk-card risk-high">
+        <div class="risk-level">⚠️ 高风险</div>
+        <div class="risk-title">长期亏损</div>
+        <div class="risk-body">连续多年申报亏损的业务，ATO 可能质疑是否属于真实经营活动。</div>
+      </div>
+      <div class="risk-card risk-med">
+        <div class="risk-level">📋 中风险</div>
+        <div class="risk-title">海外收入或转账</div>
+        <div class="risk-body">从中国汇款、境外账户收入，需与申报收入对得上，否则会被追问。</div>
+      </div>
+      <div class="risk-card risk-med">
+        <div class="risk-level">📋 中风险</div>
+        <div class="risk-title">BAS 与税表数字不符</div>
+        <div class="risk-body">GST 申报与年度所得税申报的营业额不一致，系统会自动标记。</div>
+      </div>
+      <div class="risk-card risk-low">
+        <div class="risk-level">✅ 低风险</div>
+        <div class="risk-title">记录完整、按时申报</div>
+        <div class="risk-body">记录齐全、按期申报的业主即使被随机抽查，也能快速通过。</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 7. 违规罚款 -->
+  <section class="section">
+    <p class="section-label">后果</p>
+    <h2 class="section-title">记录保存违规的罚款</h2>
+    <div class="penalty-box">
+      <div class="penalty-title">⚠️ ATO 与 Fair Work 违规处罚</div>
+      <div class="penalty-row">
+        <span class="penalty-label">ATO — 未保存记录（行政罚款，最高 20 罚款单位）<a href="https://www.ato.gov.au/about-ato/commitments-and-reporting/in-detail/penalties/" target="_blank" rel="noopener" class="src-tag">ATO</a></span>
+        <span class="penalty-amount">约 $6,260</span>
+      </div>
+      <div class="penalty-row">
+        <span class="penalty-label">ATO — 税务申报不足导致的短缴罚款（25–75% 附加）</span>
+        <span class="penalty-amount">25%–75% 税额</span>
+      </div>
+      <div class="penalty-row">
+        <span class="penalty-label">Fair Work — 未向员工提供工资单（个人）<a href="https://www.fairwork.gov.au/employment-conditions/record-keeping-and-pay-slips" target="_blank" rel="noopener" class="src-tag">Fair Work</a></span>
+        <span class="penalty-amount">最高 $109,200</span>
+      </div>
+      <div class="penalty-row">
+        <span class="penalty-label">Fair Work — 未向员工提供工资单（公司）</span>
+        <span class="penalty-amount">最高 $546,000</span>
+      </div>
+      <div class="penalty-row">
+        <span class="penalty-label">Fair Work — 未保存雇员记录（每项违规）</span>
+        <span class="penalty-amount">最高 $109,200</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- 8. 行动清单 -->
+  <section class="section">
+    <p class="section-label">现在就做</p>
+    <h2 class="section-title">5步建立记录保存习惯</h2>
+    <div class="checklist">
+      <div class="check-item">
+        <div class="check-num">1</div>
+        <div class="check-body"><strong>建立文件夹结构</strong>——按年度/月份，分"收入""支出""雇员""税务"四个文件夹，存入 Google Drive 或 iCloud。</div>
+      </div>
+      <div class="check-item">
+        <div class="check-num">2</div>
+        <div class="check-body"><strong>每次消费后立刻拍照</strong>——不要等到月底才整理。模糊或褪色的收据不被 ATO 接受，热感纸收据最容易褪色。</div>
+      </div>
+      <div class="check-item">
+        <div class="check-num">3</div>
+        <div class="check-body"><strong>工资单同步留档</strong>——每次发工资的同时，把工资单副本存入雇员文件夹，保存 <strong>7年</strong>，即使员工已离职。</div>
+      </div>
+      <div class="check-item">
+        <div class="check-num">4</div>
+        <div class="check-body"><strong>每季度核对银行对账单</strong>——把收支记录与银行账单对一遍，防止漏录或重复。这也是 BAS 前的必要准备。</div>
+      </div>
+      <div class="check-item">
+        <div class="check-num">5</div>
+        <div class="check-body"><strong>年底前整理一次</strong>——6月30日财年结束后，把全年记录归档，确认所有记录清晰可读、备份完整，为税表申报做准备。</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <div class="cta-box">
+    <h2>你的记录保存方式合规吗？</h2>
+    <p>每个业务的情况不一样——现金业务、微信收款、海外进货，都有各自的记录要求。发邮件告诉我们你的具体情况，我们帮你理清楚。</p>
+    <div class="cta-btns">
+      <a href="consultant_cn.html#contact" class="btn-primary">联系竹 Digital →</a>
+      <a href="overseas-income.html" class="btn-ghost">下一篇：海外收入与进出口 →</a>
+    </div>
+  </div>
+
+</main>
+
+<footer class="footer">
+  <div>🎋 竹 Digital · 墨尔本，维多利亚州 · ABN 29 919 594 996</div>
+  <div style="margin-top:4px;">资料来源：<a href="https://www.ato.gov.au" target="_blank">ATO</a> · <a href="https://www.fairwork.gov.au" target="_blank">Fair Work</a> · <a href="https://asic.gov.au" target="_blank">ASIC</a> — 2026–27 财年（2026年10月更新）· 本页为教育资讯，不构成法律或税务建议</div>
+</footer>
