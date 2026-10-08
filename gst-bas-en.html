@@ -1,0 +1,219 @@
+<!--
+  竹 Digital — GST & BAS (English)
+  LAST_UPDATED: 2026-10 | FISCAL_YEAR: 2026-27
+  Sources: ATO
+-->
+<title>GST & BAS — 竹 Digital</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,300&family=DM+Serif+Display:ital@0;1&display=swap">
+<style>
+:root{--bg:#0D1B2A;--bg2:#0F1F30;--surface:#152233;--surface2:#1A2B3F;--border:rgba(59,130,246,.13);--border2:rgba(59,130,246,.22);--fg:#F1F5F9;--fg2:#94A3B8;--fg3:#475569;--accent:#60A5FA;--blue:#1D4ED8;--blue-lit:#2563EB;--green:#34D399;--green-bg:rgba(52,211,153,.08);--yellow:#FCD34D;--yellow-bg:rgba(252,211,77,.08);--red:#F87171;--red-bg:rgba(248,113,113,.08);--purple:#A78BFA;--purple-bg:rgba(167,139,250,.08);--serif:"DM Serif Display",Georgia,serif;--sans:"DM Sans",system-ui,sans-serif;color-scheme:dark}
+@media(prefers-color-scheme:light){:root:not([data-theme="dark"]){--bg:#F0F4FA;--bg2:#E4EBF7;--surface:#FFF;--surface2:#F8FAFC;--border:rgba(37,99,235,.13);--border2:rgba(37,99,235,.25);--fg:#0F172A;--fg2:#334155;--fg3:#64748B;--accent:#1D4ED8;--blue:#1D4ED8;--blue-lit:#2563EB;--green:#059669;--green-bg:rgba(5,150,105,.07);--yellow:#B45309;--yellow-bg:rgba(180,83,9,.06);--red:#DC2626;--red-bg:rgba(220,38,38,.06);--purple:#7C3AED;--purple-bg:rgba(124,58,237,.06);color-scheme:light}}
+:root[data-theme="light"]{--bg:#F0F4FA;--bg2:#E4EBF7;--surface:#FFF;--surface2:#F8FAFC;--border:rgba(37,99,235,.13);--border2:rgba(37,99,235,.25);--fg:#0F172A;--fg2:#334155;--fg3:#64748B;--accent:#1D4ED8;--blue:#1D4ED8;--blue-lit:#2563EB;--green:#059669;--green-bg:rgba(5,150,105,.07);--yellow:#B45309;--yellow-bg:rgba(180,83,9,.06);--red:#DC2626;--red-bg:rgba(220,38,38,.06);--purple:#7C3AED;--purple-bg:rgba(124,58,237,.06);color-scheme:light}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{font-family:var(--sans);background:var(--bg);color:var(--fg);line-height:1.7}
+.nav{position:sticky;top:env(safe-area-inset-top,0px);z-index:100;background:rgba(13,27,42,.9);backdrop-filter:blur(12px);border-bottom:1px solid var(--border);padding:13px 24px;display:flex;align-items:center;justify-content:space-between;gap:16px}
+@media(prefers-color-scheme:light){:root:not([data-theme="dark"]) .nav{background:rgba(240,244,250,.93)}}
+:root[data-theme="light"] .nav{background:rgba(240,244,250,.93)}
+.nav-brand{text-decoration:none;color:var(--accent);font-weight:600;font-size:15px;display:flex;align-items:center;gap:8px}
+.nav-brand span{color:var(--fg2);font-weight:400;font-size:13px}
+.nav-back{font-size:12px;color:var(--fg3);text-decoration:none;border:1px solid var(--border);padding:6px 14px;border-radius:20px;transition:color .2s,border-color .2s}
+.nav-back:hover{color:var(--accent);border-color:var(--accent)}
+.hero{max-width:760px;margin:0 auto;padding:56px 24px 40px}
+.breadcrumb{font-size:12px;color:var(--fg3);margin-bottom:20px}
+.breadcrumb a{color:var(--fg3);text-decoration:none}
+.breadcrumb a:hover{color:var(--accent)}
+.hero-eyebrow{font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--accent);font-weight:600;margin-bottom:12px}
+.hero h1{font-family:var(--serif);font-size:clamp(26px,5vw,42px);line-height:1.2;text-wrap:balance;margin-bottom:16px}
+.hero-sub{font-size:15px;color:var(--fg2);line-height:1.8;max-width:580px;margin-bottom:28px}
+.hero-meta{display:flex;gap:20px;flex-wrap:wrap}
+.meta-pill{font-size:11px;background:var(--surface);border:1px solid var(--border);border-radius:20px;padding:5px 14px;color:var(--fg2)}
+.wrap{max-width:900px;margin:0 auto;padding:0 24px 56px}
+.section-label{font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--accent);font-weight:600;margin-bottom:10px}
+.section-title{font-family:var(--serif);font-size:clamp(20px,3.5vw,30px);text-wrap:balance;margin-bottom:8px}
+.section-sub{font-size:14px;color:var(--fg2);line-height:1.8;margin-bottom:32px}
+.divider{border:none;border-top:1px solid var(--border);margin:0 0 48px}
+.stats{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:12px;margin-bottom:40px}
+.stat{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:18px 16px}
+.stat-val{font-size:26px;font-weight:700;font-variant-numeric:tabular-nums;line-height:1;margin-bottom:4px}
+.stat-label{font-size:12px;color:var(--fg2);line-height:1.5}
+.info-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:16px;margin-bottom:32px}
+.info-card{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:20px 22px}
+.info-card-icon{font-size:24px;margin-bottom:10px}
+.info-card-title{font-weight:600;font-size:15px;margin-bottom:6px}
+.info-card-body{font-size:13px;color:var(--fg2);line-height:1.7}
+.checklist{display:flex;flex-direction:column;gap:12px;margin-top:8px}
+.check-item{display:flex;gap:14px;align-items:flex-start;background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:16px 18px}
+.check-num{width:28px;height:28px;border-radius:50%;background:rgba(96,165,250,.1);border:1px solid rgba(96,165,250,.25);color:var(--accent);font-size:12px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-variant-numeric:tabular-nums}
+.check-title{font-weight:600;font-size:14px;margin-bottom:4px}
+.check-body{font-size:13px;color:var(--fg2);line-height:1.7}
+.check-link{display:inline-block;margin-top:6px;font-size:12px;color:var(--accent);text-decoration:none}
+.check-link:hover{text-decoration:underline}
+.warn-box{background:rgba(252,211,77,.06);border:1px solid rgba(252,211,77,.2);border-radius:12px;padding:16px 20px;font-size:13px;color:var(--fg2);line-height:1.75;margin-top:24px}
+.warn-box strong{color:var(--yellow)}
+.good-box{background:rgba(52,211,153,.06);border:1px solid rgba(52,211,153,.2);border-radius:12px;padding:16px 20px;font-size:13px;color:var(--fg2);line-height:1.75;margin-top:16px}
+.good-box strong{color:var(--green)}
+.table-wrap{overflow-x:auto;border-radius:14px;border:1px solid var(--border)}
+table{width:100%;border-collapse:collapse;min-width:400px}
+thead th{background:var(--surface2);padding:13px 16px;font-size:12px;font-weight:600;color:var(--fg2);text-align:left;border-bottom:1px solid var(--border);white-space:nowrap}
+tbody td{padding:13px 16px;font-size:13px;border-bottom:1px solid var(--border);vertical-align:top;line-height:1.6}
+tbody tr:last-child td{border-bottom:none}
+tbody tr:hover td{background:rgba(255,255,255,.02)}
+.row-label{font-weight:600;font-size:13px;color:var(--fg2)}
+.chip{display:inline-block;font-size:11px;font-weight:600;padding:2px 9px;border-radius:20px}
+.chip-green{background:var(--green-bg);color:var(--green)}
+.chip-yellow{background:var(--yellow-bg);color:var(--yellow)}
+.chip-red{background:var(--red-bg);color:var(--red)}
+.cta-strip{background:var(--surface);border-top:1px solid var(--border);padding:40px 24px;text-align:center}
+.cta-strip h2{font-family:var(--serif);font-size:clamp(18px,3vw,26px);margin-bottom:10px}
+.cta-strip p{font-size:14px;color:var(--fg2);margin-bottom:24px}
+.cta-btns{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
+.btn-primary{background:var(--blue);color:#fff;padding:12px 24px;border-radius:10px;font-family:var(--sans);font-size:14px;font-weight:600;text-decoration:none;border:none;cursor:pointer;transition:background .2s}
+.btn-primary:hover{background:var(--blue-lit)}
+.btn-ghost{background:none;color:var(--fg2);padding:12px 24px;border-radius:10px;font-family:var(--sans);font-size:14px;font-weight:500;text-decoration:none;border:1px solid var(--border);cursor:pointer;transition:color .2s,border-color .2s}
+.btn-ghost:hover{color:var(--accent);border-color:var(--accent)}
+.footer{text-align:center;padding:28px 24px;font-size:11px;color:var(--fg3);line-height:2}
+.footer a{color:var(--fg3);text-decoration:none}
+.footer a:hover{color:var(--accent)}
+</style>
+
+<nav class="nav">
+  <a href="consultant_en.html" class="nav-brand">🎋 Zhu Digital <span>· Compliance Guides</span></a>
+  <a href="consultant_en.html" class="nav-back">← Back</a>
+</nav>
+
+<div class="hero">
+  <div class="breadcrumb"><a href="consultant_en.html">Compliance Guides</a> › GST &amp; BAS</div>
+  <div class="hero-eyebrow">Tax Obligations · GST Registration &amp; BAS Lodgement</div>
+  <h1>GST &amp; BAS:<br>What Every Small Business Must Know</h1>
+  <p class="hero-sub">GST (Goods and Services Tax) is a 10% tax on most sales in Australia. Once your turnover hits $75,000, registration is compulsory — and every registered business must lodge a Business Activity Statement (BAS). This guide explains what that means for you.</p>
+  <div class="hero-meta">
+    <span class="meta-pill">📅 Data current: October 2026 · ATO 2026–27</span>
+    <span class="meta-pill">🕐 6 min read</span>
+    <span class="meta-pill">✅ Free, no sign-up</span>
+  </div>
+</div>
+
+<div class="wrap">
+  <p class="section-label">Key Numbers</p>
+  <h2 class="section-title">GST at a glance</h2>
+  <p class="section-sub">2026–27 financial year — Source: ATO</p>
+  <div class="stats">
+    <div class="stat"><div class="stat-val" style="color:var(--accent)">$75,000</div><div class="stat-label">GST registration threshold<br>(mandatory above this)</div></div>
+    <div class="stat"><div class="stat-val" style="color:var(--yellow)">10%</div><div class="stat-label">GST rate on most goods<br>and services</div></div>
+    <div class="stat"><div class="stat-val" style="color:var(--green)">$150,000</div><div class="stat-label">Threshold for non-profits<br>to register for GST</div></div>
+    <div class="stat"><div class="stat-val" style="color:var(--purple)">21 days</div><div class="stat-label">Time to register once<br>you exceed the threshold</div></div>
+    <div class="stat"><div class="stat-val" style="color:var(--accent)">Quarterly</div><div class="stat-label">Most common BAS<br>lodgement frequency</div></div>
+    <div class="stat"><div class="stat-val" style="color:var(--red)">$1,100+</div><div class="stat-label">Minimum penalty for<br>late BAS lodgement</div></div>
+  </div>
+</div>
+
+<hr class="divider" style="margin:0 24px 48px">
+
+<div class="wrap">
+  <p class="section-label">Do You Need to Register?</p>
+  <h2 class="section-title">GST registration: mandatory vs optional</h2>
+  <p class="section-sub">The $75,000 rule is simple — but there are a few situations worth knowing.</p>
+  <div class="info-grid">
+    <div class="info-card">
+      <div class="info-card-icon">⚠️</div>
+      <div class="info-card-title">Mandatory registration</div>
+      <div class="info-card-body">Your GST turnover is at or above <strong>$75,000/year</strong> ($150,000 for non-profits). You must register within 21 days of reaching this threshold. Failure to do so means the ATO can back-calculate the GST you should have collected and make you pay it — even if you didn't charge it to clients.</div>
+    </div>
+    <div class="info-card">
+      <div class="info-card-icon">✅</div>
+      <div class="info-card-title">Voluntary registration</div>
+      <div class="info-card-body">If you're under $75,000, you can still choose to register. Benefits include claiming GST credits on business purchases. Drawback: you must add GST to your invoices and lodge BAS regularly — adding compliance work.</div>
+    </div>
+    <div class="info-card">
+      <div class="info-card-icon">🚗</div>
+      <div class="info-card-title">Ride-share &amp; taxi drivers</div>
+      <div class="info-card-body">If you drive for Uber, DiDi, or any taxi/ride-share service, you must register for GST regardless of income — even if you earn under $75,000. This rule applies from your very first trip.</div>
+    </div>
+    <div class="info-card">
+      <div class="info-card-icon">🌏</div>
+      <div class="info-card-title">International sales</div>
+      <div class="info-card-body">Most exports are GST-free. But if you sell digital products to Australian consumers through overseas platforms, GST rules may still apply. This area is complex — seek specific advice if relevant.</div>
+    </div>
+  </div>
+  <div class="warn-box"><strong>⚠️ Important:</strong> "GST turnover" means your gross income from taxable sales — not profit. Even if your business is losing money, you must register if your revenue crosses $75,000.</div>
+</div>
+
+<hr class="divider" style="margin:0 24px 48px">
+
+<div class="wrap">
+  <p class="section-label">GST-Free vs Taxable</p>
+  <h2 class="section-title">Not everything attracts GST</h2>
+  <p class="section-sub">Some supplies are GST-free or input-taxed. Know what applies to your business.</p>
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>Category</th><th>GST Treatment</th><th>Examples</th></tr></thead>
+      <tbody>
+        <tr><td class="row-label">Taxable supplies</td><td><span class="chip chip-yellow">10% GST</span></td><td>Most goods, services, rent on commercial property, software, consulting</td></tr>
+        <tr><td class="row-label">GST-free supplies</td><td><span class="chip chip-green">0% GST</span></td><td>Basic food, most medical services, education courses, exports, some childcare</td></tr>
+        <tr><td class="row-label">Input-taxed supplies</td><td><span class="chip chip-red">No GST charged, no credit</span></td><td>Residential rent, financial services (bank interest, insurance premiums)</td></tr>
+        <tr><td class="row-label">Out of scope</td><td><span class="chip chip-yellow">Not subject to GST</span></td><td>Wages, private sales between non-registered parties, some government charges</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<hr class="divider" style="margin:0 24px 48px">
+
+<div class="wrap">
+  <p class="section-label">BAS — Business Activity Statement</p>
+  <h2 class="section-title">What is BAS and how often do you lodge it?</h2>
+  <p class="section-sub">BAS is your regular report to the ATO — it summarises your GST collected, GST credits claimed, and any PAYG withholding if you have employees.</p>
+  <div class="info-grid">
+    <div class="info-card">
+      <div class="info-card-icon">📅</div>
+      <div class="info-card-title">Quarterly lodgement (most common)</div>
+      <div class="info-card-body">Q1: July–September → due 28 October<br>Q2: October–December → due 28 February<br>Q3: January–March → due 28 April<br>Q4: April–June → due 28 July<br><br>Most small businesses lodge quarterly.</div>
+    </div>
+    <div class="info-card">
+      <div class="info-card-icon">📆</div>
+      <div class="info-card-title">Monthly lodgement</div>
+      <div class="info-card-body">Required if your annual GST turnover exceeds <strong>$20 million</strong>. Some businesses choose monthly voluntarily for better cash flow management. Due 21 days after the end of each month.</div>
+    </div>
+    <div class="info-card">
+      <div class="info-card-icon">📝</div>
+      <div class="info-card-title">Annual lodgement</div>
+      <div class="info-card-body">Available to some small businesses (usually voluntarily registered for GST or those under certain thresholds). Due 31 October. You may still pay GST instalments quarterly even if you lodge annually.</div>
+    </div>
+    <div class="info-card">
+      <div class="info-card-icon">💳</div>
+      <div class="info-card-title">What goes in BAS</div>
+      <div class="info-card-body">GST collected on your sales (1A)<br>GST credits on your purchases (1B)<br>PAYG withholding (if you have employees)<br>PAYG income tax instalments (if applicable)<br>Other taxes (wine equalisation, fuel tax credits)</div>
+    </div>
+  </div>
+  <div class="good-box"><strong>✓ Good news:</strong> If GST credits (what you paid on purchases) exceed GST collected (what you charged customers), the ATO will refund you the difference. Keep all receipts and invoices.</div>
+</div>
+
+<hr class="divider" style="margin:0 24px 48px">
+
+<div class="wrap">
+  <p class="section-label">How to Register &amp; Lodge</p>
+  <h2 class="section-title">Step-by-step: getting set up</h2>
+  <p class="section-sub">Once registered, lodging BAS becomes a regular part of running your business.</p>
+  <div class="checklist">
+    <div class="check-item"><div class="check-num">1</div><div><div class="check-title">Register for GST via the ATO</div><div class="check-body">Log in to your <strong>myGov</strong> account linked to the ATO, or use the Business Portal. Select "Register for GST" under your ABN. You'll be asked your expected annual turnover and preferred BAS lodgement cycle. Most businesses choose quarterly.</div><a href="https://www.ato.gov.au/business/gst/registering-for-gst/" target="_blank" class="check-link">→ ATO: Register for GST</a></div></div>
+    <div class="check-item"><div class="check-num">2</div><div><div class="check-title">Add GST to your invoices</div><div class="check-body">From the date of registration, you must charge 10% GST on taxable sales. Your tax invoices must include: your ABN, "Tax Invoice" in the heading, the date, a description of goods/services, the GST amount (or a statement that the price includes GST), and your name/business name. Invoices over $1,000 must also show the purchaser's identity.</div></div></div>
+    <div class="check-item"><div class="check-num">3</div><div><div class="check-title">Keep records of all GST transactions</div><div class="check-body">Save every tax invoice for purchases where you want to claim a GST credit. The ATO can audit you up to 5 years later. Good record-keeping software (Xero, MYOB, QuickBooks) automates most of this.</div><a href="record-keeping-en.html" class="check-link">→ Read the record-keeping guide</a></div></div>
+    <div class="check-item"><div class="check-num">4</div><div><div class="check-title">Lodge your BAS on time</div><div class="check-body">Lodge through myGov, the ATO Business Portal, or via your registered tax agent. Calculate: GST collected (1A) minus GST credits (1B) = amount owed to ATO (or refunded to you). Pay or claim the difference by the due date.</div><a href="https://www.ato.gov.au/business/bus/business-activity-statements/" target="_blank" class="check-link">→ ATO: Business Activity Statements</a></div></div>
+    <div class="check-item"><div class="check-num">5</div><div><div class="check-title">Know the penalties for late lodgement</div><div class="check-body">The ATO charges a Failure to Lodge (FTL) penalty: $330 per 28-day period (or part thereof), up to $1,650 for small entities. Interest also accrues on unpaid amounts. If you're struggling, call the ATO early — they may arrange a payment plan.</div></div></div>
+  </div>
+</div>
+
+<div class="cta-strip">
+  <h2>Questions about GST or BAS?</h2>
+  <p>Every business situation is different. Get in touch and we'll help you understand your specific obligations.</p>
+  <div class="cta-btns">
+    <a href="consultant_en.html#contact" class="btn-primary">Contact Zhu Digital →</a>
+    <a href="fair-work-en.html" class="btn-ghost">Next: Fair Work →</a>
+  </div>
+</div>
+
+<footer class="footer">
+  <div>🎋 Zhu Digital · Melbourne, Victoria · ABN 29 919 594 996</div>
+  <div style="margin-top:4px">Source: <a href="https://www.ato.gov.au/business/gst/" target="_blank">ATO — GST</a> — 2026–27 (updated October 2026) · Educational information only, not legal or tax advice</div>
+</footer>
+<script>if(sessionStorage.getItem('zd_auth')!=='1'){window.location.href='index.html'}</script>

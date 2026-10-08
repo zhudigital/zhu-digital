@@ -1,0 +1,624 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Overseas Income & Cross-Border Tax</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #F8FAFC;
+  --surface: #FFFFFF;
+  --border: #E2E8F0;
+  --fg: #0F172A;
+  --muted: #64748B;
+  --accent: #1D4ED8;
+  --accent-light: #DBEAFE;
+  --warn: #F59E0B;
+  --warn-light: #FEF3C7;
+  --success: #10B981;
+  --success-light: #D1FAE5;
+  color-scheme: light;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #0D1B2A;
+    --surface: #1A2A3A;
+    --border: #2A3A4A;
+    --fg: #F1F5F9;
+    --muted: #94A3B8;
+    --accent: #60A5FA;
+    --accent-light: #1E3A5F;
+    --warn: #FBBF24;
+    --warn-light: #2D2000;
+    --success: #34D399;
+    --success-light: #0A2A1A;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #0D1B2A;
+  --surface: #1A2A3A;
+  --border: #2A3A4A;
+  --fg: #F1F5F9;
+  --muted: #94A3B8;
+  --accent: #60A5FA;
+  --accent-light: #1E3A5F;
+  --warn: #FBBF24;
+  --warn-light: #2D2000;
+  --success: #34D399;
+  --success-light: #0A2A1A;
+  color-scheme: dark;
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0 }
+body {
+  background: var(--bg);
+  color: var(--fg);
+  font-family: 'DM Sans', system-ui, sans-serif;
+  font-size: 1rem;
+  line-height: 1.6;
+  padding: 0 0 env(safe-area-inset-bottom, 0px);
+}
+a { color: var(--accent); text-decoration: none }
+a:hover { text-decoration: underline }
+
+/* NAV */
+.topnav {
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
+  padding: 0.75rem 1.5rem;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  position: sticky;
+  top: env(safe-area-inset-top, 0px);
+  z-index: 10;
+}
+.topnav a { color: var(--muted); font-size: 0.875rem; display: flex; align-items: center; gap: 0.4rem }
+.topnav a:hover { color: var(--fg); text-decoration: none }
+.topnav .brand { margin-left: auto; font-family: 'DM Serif Display', serif; color: var(--fg); font-size: 1rem }
+
+/* HERO */
+.hero {
+  background: linear-gradient(135deg, var(--accent-light) 0%, var(--bg) 60%);
+  padding: 3rem 1.5rem 2.5rem;
+  border-bottom: 1px solid var(--border);
+}
+.hero-inner { max-width: 760px; margin: 0 auto }
+.tag {
+  display: inline-block;
+  background: var(--accent-light);
+  color: var(--accent);
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 0.3rem 0.75rem;
+  border-radius: 99px;
+  margin-bottom: 1rem;
+}
+.hero h1 {
+  font-family: 'DM Serif Display', serif;
+  font-size: clamp(1.75rem, 4vw, 2.75rem);
+  line-height: 1.2;
+  text-wrap: balance;
+  margin-bottom: 0.75rem;
+}
+.hero p {
+  color: var(--muted);
+  font-size: 1.05rem;
+  max-width: 560px;
+}
+
+/* MAIN */
+.main { max-width: 760px; margin: 0 auto; padding: 2.5rem 1.5rem; }
+
+/* SECTION */
+.section { margin-bottom: 2.5rem }
+.section h2 {
+  font-family: 'DM Serif Display', serif;
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 2px solid var(--accent-light);
+}
+.section h3 {
+  font-size: 1.05rem;
+  font-weight: 600;
+  margin: 1.25rem 0 0.5rem;
+}
+.section p { margin-bottom: 0.75rem; color: var(--fg) }
+
+/* CALLOUT */
+.callout {
+  border-left: 4px solid var(--accent);
+  background: var(--accent-light);
+  padding: 1rem 1.25rem;
+  border-radius: 0 8px 8px 0;
+  margin: 1.25rem 0;
+}
+.callout.warn { border-color: var(--warn); background: var(--warn-light) }
+.callout.success { border-color: var(--success); background: var(--success-light) }
+.callout strong { display: block; margin-bottom: 0.25rem }
+
+/* CARD GRID */
+.card-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1rem; margin: 1.25rem 0 }
+.card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 1.25rem;
+}
+.card-icon { font-size: 1.5rem; margin-bottom: 0.5rem }
+.card h4 { font-size: 0.9rem; font-weight: 600; margin-bottom: 0.4rem }
+.card p { font-size: 0.875rem; color: var(--muted); margin: 0 }
+.card .big { font-size: 1.5rem; font-weight: 700; color: var(--accent); font-variant-numeric: tabular-nums }
+
+/* TABLE */
+.tbl-wrap { overflow-x: auto; margin: 1.25rem 0 }
+table { width: 100%; border-collapse: collapse; font-size: 0.875rem; min-width: 420px }
+th {
+  background: var(--accent-light);
+  color: var(--accent);
+  font-weight: 600;
+  padding: 0.6rem 0.875rem;
+  text-align: left;
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+td { padding: 0.6rem 0.875rem; border-bottom: 1px solid var(--border); vertical-align: top }
+tr:last-child td { border-bottom: none }
+
+/* CHECKLIST */
+.checklist { list-style: none; margin: 1rem 0 }
+.checklist li {
+  display: flex;
+  gap: 0.75rem;
+  padding: 0.6rem 0;
+  border-bottom: 1px solid var(--border);
+  font-size: 0.9rem;
+}
+.checklist li:last-child { border: none }
+.checklist .ico { flex-shrink: 0; margin-top: 0.1rem }
+
+/* SCENARIO TABS */
+.tabs { margin: 1.25rem 0 }
+.tab-btns { display: flex; gap: 0.5rem; flex-wrap: wrap; margin-bottom: 1rem }
+.tab-btn {
+  background: var(--surface);
+  border: 1.5px solid var(--border);
+  color: var(--fg);
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.8rem;
+  font-weight: 500;
+  padding: 0.45rem 1rem;
+  border-radius: 99px;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+.tab-btn.active, .tab-btn:hover {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: #fff;
+}
+.tab-panel { display: none }
+.tab-panel.active { display: block }
+
+/* STEPS */
+.steps { counter-reset: step; list-style: none; margin: 1rem 0 }
+.steps li {
+  counter-increment: step;
+  display: flex;
+  gap: 1rem;
+  padding: 0.75rem 0;
+  border-bottom: 1px solid var(--border);
+  align-items: flex-start;
+}
+.steps li:last-child { border: none }
+.steps li::before {
+  content: counter(step);
+  background: var(--accent);
+  color: #fff;
+  width: 1.6rem;
+  height: 1.6rem;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.8rem;
+  font-weight: 700;
+  flex-shrink: 0;
+  margin-top: 0.15rem;
+}
+
+/* CTA */
+.cta-box {
+  background: var(--accent-light);
+  border: 1px solid var(--accent);
+  border-radius: 12px;
+  padding: 1.75rem 1.5rem;
+  text-align: center;
+  margin-top: 2.5rem;
+}
+.cta-box h2 {
+  font-family: 'DM Serif Display', serif;
+  font-size: 1.4rem;
+  margin-bottom: 0.5rem;
+}
+.cta-box p { color: var(--muted); margin-bottom: 1.25rem; font-size: 0.95rem }
+.btn-group { display: flex; gap: 0.75rem; justify-content: center; flex-wrap: wrap }
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.6rem 1.4rem;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 0.9rem;
+  transition: opacity 0.15s;
+}
+.btn:hover { opacity: 0.85; text-decoration: none }
+.btn-primary { background: var(--accent); color: #fff }
+.btn-ghost { background: var(--surface); border: 1.5px solid var(--border); color: var(--fg) }
+
+/* FOOTER */
+footer {
+  text-align: center;
+  padding: 2rem 1.5rem;
+  font-size: 0.8rem;
+  color: var(--muted);
+  border-top: 1px solid var(--border);
+}
+footer p { margin-bottom: 0.25rem }
+</style>
+</head>
+<body>
+
+<nav class="topnav">
+  <a href="consultant_en.html">← Back</a>
+  <span class="brand">🎋 Zhu Digital</span>
+</nav>
+
+<header class="hero">
+  <div class="hero-inner">
+    <span class="tag">Guide 6 of 6</span>
+    <h1>Overseas Income &amp; Cross-Border Tax</h1>
+    <p>How Australia taxes foreign income, the foreign income tax offset, tax treaty protections, and what to disclose — for residents with overseas earnings and international business activity.</p>
+  </div>
+</header>
+
+<main class="main">
+
+  <!-- KEY FACTS -->
+  <section class="section">
+    <h2>Key Numbers at a Glance</h2>
+    <div class="card-grid">
+      <div class="card">
+        <div class="card-icon">🌏</div>
+        <h4>Australian Tax Resident</h4>
+        <p>Taxed on <strong>worldwide income</strong> — Australian and foreign sources combined</p>
+      </div>
+      <div class="card">
+        <div class="card-icon">💱</div>
+        <div class="big">FITO</div>
+        <h4>Foreign Income Tax Offset</h4>
+        <p>Credit for tax already paid overseas — reduces your Australian tax liability dollar-for-dollar</p>
+      </div>
+      <div class="card">
+        <div class="card-icon">📅</div>
+        <div class="big">30 Jun</div>
+        <h4>Currency Date</h4>
+        <p>Convert foreign income to AUD using the exchange rate on the date received or the ATO's average annual rate</p>
+      </div>
+      <div class="card">
+        <div class="card-icon">⏱️</div>
+        <div class="big">5 yrs</div>
+        <h4>FITO Time Limit</h4>
+        <p>Unused foreign tax offsets can be carried forward for up to 5 income years</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- RESIDENCY -->
+  <section class="section">
+    <h2>Step 1: Confirm Your Tax Residency</h2>
+    <p>Your tax residency status determines <em>what</em> income Australia can tax. It is not the same as citizenship, PR status, or how long you've lived here.</p>
+
+    <div class="callout">
+      <strong>🏠 Australian Tax Resident</strong>
+      Taxed on income from <strong>all sources worldwide</strong>. You receive the tax-free threshold ($18,200 in 2025–26) and can claim the FITO for foreign taxes paid.
+    </div>
+
+    <div class="callout warn">
+      <strong>✈️ Foreign Resident for Tax Purposes</strong>
+      Taxed only on income with an <strong>Australian source</strong> (e.g. rent from Australian property, wages from Australian employment). No tax-free threshold. No FITO.
+    </div>
+
+    <h3>The ATO's Residency Tests</h3>
+    <p>The ATO applies four tests in order. Passing <em>any one</em> makes you an Australian tax resident:</p>
+    <div class="tbl-wrap">
+      <table>
+        <thead>
+          <tr><th>Test</th><th>Key Criterion</th><th>Notes</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>Resides test</strong></td><td>Ordinary factual residence in Australia</td><td>Based on physical presence, habits, family, business ties — the primary test</td></tr>
+          <tr><td><strong>Domicile test</strong></td><td>Domicile in Australia and no permanent place of abode overseas</td><td>Relevant for those who leave Australia</td></tr>
+          <tr><td><strong>183-day test</strong></td><td>Present in Australia for ≥183 days in the income year</td><td>Does not apply if your usual place of abode is outside Australia</td></tr>
+          <tr><td><strong>Superannuation test</strong></td><td>Member of certain Commonwealth super funds</td><td>Covers government employees posted overseas</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="callout warn">
+      <strong>⚠️ Residency is a complex legal determination</strong>
+      The ATO looks at all facts and circumstances. If you have recently moved to or from Australia, or split time between countries, seek advice specific to your situation. The ATO's Tax Residency tool on ato.gov.au provides a starting point.
+    </div>
+  </section>
+
+  <!-- FOREIGN INCOME TYPES -->
+  <section class="section">
+    <h2>Types of Overseas Income — What to Declare</h2>
+    <p>As an Australian tax resident, you must declare all of the following in your Australian tax return:</p>
+
+    <div class="tabs">
+      <div class="tab-btns">
+        <button class="tab-btn active" onclick="showTab('employment')">Employment</button>
+        <button class="tab-btn" onclick="showTab('investment')">Investments</button>
+        <button class="tab-btn" onclick="showTab('business')">Business</button>
+        <button class="tab-btn" onclick="showTab('pension')">Pensions &amp; Super</button>
+      </div>
+
+      <div class="tab-panel active" id="tab-employment">
+        <div class="card" style="border-left:4px solid var(--accent)">
+          <h4>Foreign Employment Income</h4>
+          <p style="margin-bottom:0.5rem">Wages, salary, bonuses, or contractor payments received from an overseas employer — even if the money stays in an overseas bank account.</p>
+          <ul style="padding-left:1.25rem;font-size:0.875rem;color:var(--muted)">
+            <li>Convert to AUD at the exchange rate when received (or ATO annual average)</li>
+            <li>Claim FITO for income tax withheld by the overseas employer</li>
+            <li>Some income may be exempt under a tax treaty (seek advice)</li>
+            <li>Allowances and fringe benefits from foreign employers are also assessable</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="tab-panel" id="tab-investment">
+        <div class="card" style="border-left:4px solid var(--accent)">
+          <h4>Foreign Investment Income</h4>
+          <p style="margin-bottom:0.5rem">Dividends, interest, rent, and capital gains from assets held overseas are all assessable in Australia.</p>
+          <ul style="padding-left:1.25rem;font-size:0.875rem;color:var(--muted)">
+            <li><strong>Dividends:</strong> Gross dividend (before foreign withholding tax) is assessable; claim FITO for the withholding tax</li>
+            <li><strong>Interest:</strong> Full amount assessable; claim FITO for any withholding tax deducted</li>
+            <li><strong>Foreign rental property:</strong> Declare rent; claim allowable deductions (loan interest, rates, depreciation)</li>
+            <li><strong>Capital gains:</strong> CGT applies to foreign property sold after you became a resident; 50% discount may apply for assets held 12+ months</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="tab-panel" id="tab-business">
+        <div class="card" style="border-left:4px solid var(--accent)">
+          <h4>Foreign Business Income</h4>
+          <p style="margin-bottom:0.5rem">Profits from a business you operate overseas (sole trader, partnership, or via a foreign company you control) are generally assessable in Australia.</p>
+          <ul style="padding-left:1.25rem;font-size:0.875rem;color:var(--muted)">
+            <li>Controlled Foreign Company (CFC) rules may attribute undistributed foreign profits to you as an Australian resident shareholder</li>
+            <li>Transferring pricing rules apply to transactions between your Australian and overseas entities</li>
+            <li>GST generally doesn't apply to overseas services sold to overseas customers (GST-free supply)</li>
+            <li>ATO's Offshore Tax Avoidance regime (MAAL, DPT) targets large multinationals — less relevant for small business, but the framework exists</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="tab-panel" id="tab-pension">
+        <div class="card" style="border-left:4px solid var(--accent)">
+          <h4>Foreign Pensions &amp; Superannuation</h4>
+          <p style="margin-bottom:0.5rem">Pension payments received from overseas schemes are generally assessable. The tax treatment depends on whether a tax treaty applies and whether contributions were taxed.</p>
+          <ul style="padding-left:1.25rem;font-size:0.875rem;color:var(--muted)">
+            <li>Some foreign pensions may be partially or fully exempt under a tax treaty (e.g. US Social Security, UK State Pension — rules differ)</li>
+            <li>Lump sums from foreign super funds: generally assessable, though the taxable component depends on when contributions were made</li>
+            <li>Transfers from a foreign super fund to an Australian super fund: the applicable fund earnings are generally assessable</li>
+            <li>Seek advice before transferring overseas super — the rules are highly scheme-specific</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FITO -->
+  <section class="section">
+    <h2>Foreign Income Tax Offset (FITO)</h2>
+    <p>The FITO prevents double taxation — if you've paid tax on the same income overseas, you can offset that against your Australian tax bill.</p>
+
+    <div class="tbl-wrap">
+      <table>
+        <thead>
+          <tr><th>Aspect</th><th>Detail</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>What qualifies</strong></td><td>Foreign income tax paid on income that is also assessable in Australia (withholding tax, income tax, profits tax)</td></tr>
+          <tr><td><strong>How much</strong></td><td>Up to the Australian tax payable on that foreign income — you can't use it to create a refund</td></tr>
+          <tr><td><strong>Currency</strong></td><td>Convert foreign tax paid to AUD at the exchange rate on the date paid</td></tr>
+          <tr><td><strong>Proof required</strong></td><td>Foreign tax assessment notices, withholding tax certificates, or equivalent official documents</td></tr>
+          <tr><td><strong>Carry forward</strong></td><td>Unused offset (where the limit exceeds Australian tax) can be carried forward up to 5 years</td></tr>
+          <tr><td><strong>Where to claim</strong></td><td>Individual Tax Return (Item 20 — Foreign income); Business Activity Schedule if via a business</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="callout success">
+      <strong>✅ Example</strong>
+      You earned $20,000 dividend income from a US company. The US withheld 15% ($3,000) in withholding tax. In Australia, your marginal rate on this income is 37%. Australian tax on $20,000 = $7,400. You claim $3,000 FITO. Net Australian tax payable = $4,400. Total tax: $7,400 — no double taxation.
+    </div>
+  </section>
+
+  <!-- TAX TREATIES -->
+  <section class="section">
+    <h2>Tax Treaties (Double Tax Agreements)</h2>
+    <p>Australia has tax treaties with over 40 countries. Treaties can reduce or eliminate withholding tax on dividends, interest and royalties — and determine which country has the primary right to tax certain income.</p>
+
+    <div class="tbl-wrap">
+      <table>
+        <thead>
+          <tr><th>Country</th><th>Dividend WHT (treaty rate)</th><th>Interest WHT</th><th>Royalties WHT</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>🇺🇸 USA</td><td>5–15% (vs 30% default)</td><td>10%</td><td>5%</td></tr>
+          <tr><td>🇨🇳 China</td><td>15%</td><td>10%</td><td>10%</td></tr>
+          <tr><td>🇬🇧 UK</td><td>15%</td><td>10%</td><td>5%</td></tr>
+          <tr><td>🇯🇵 Japan</td><td>10–15%</td><td>10%</td><td>5%</td></tr>
+          <tr><td>🇸🇬 Singapore</td><td>15%</td><td>10%</td><td>10%</td></tr>
+          <tr><td>🇳🇿 New Zealand</td><td>15%</td><td>10%</td><td>5%</td></tr>
+          <tr><td>(No treaty)</td><td>Up to 30% default WHT</td><td>Up to 10%</td><td>Up to 30%</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p style="font-size:0.8rem;color:var(--muted)">Rates above are indicative only. Treaty rates depend on the level of ownership and type of payment. Always check the specific treaty and ATO guidance for the exact rates applicable to your situation.</p>
+
+    <h3>Treaty Benefits — How to Access Them</h3>
+    <div class="callout">
+      <strong>📋 Generally, to claim treaty benefits:</strong>
+      <ul style="padding-left:1.25rem;margin-top:0.5rem;font-size:0.9rem">
+        <li>Provide a Certificate of Australian Tax Residency (from the ATO) to the overseas payer</li>
+        <li>Complete the overseas country's withholding tax exemption or reduced rate form</li>
+        <li>Keep documentation of the treaty claim in your records for 5 years</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- FOREIGN ASSETS -->
+  <section class="section">
+    <h2>Reporting Foreign Assets &amp; Bank Accounts</h2>
+
+    <h3>Foreign Bank Accounts</h3>
+    <p>Interest earned in foreign bank accounts must be declared in your Australian tax return. You do not need to report the account balance itself to the ATO, but you must declare the income earned.</p>
+
+    <h3>Foreign Property</h3>
+    <p>If you own real estate overseas:</p>
+    <ul class="checklist">
+      <li><span class="ico">📋</span><span>Declare any rental income (net of allowable expenses) in your tax return each year</span></li>
+      <li><span class="ico">📋</span><span>When you sell, a capital gain or loss arises — CGT applies as if it were an Australian asset (acquired after becoming a resident)</span></li>
+      <li><span class="ico">📋</span><span>The 50% CGT discount is available for properties held for 12+ months (for individual residents)</span></li>
+      <li><span class="ico">📋</span><span>Overseas property sold while you were a non-resident is generally not subject to Australian CGT</span></li>
+    </ul>
+
+    <h3>Foreign Shares &amp; Investments</h3>
+    <div class="callout warn">
+      <strong>⚠️ Taxable Australian Property (TAP) vs Non-TAP</strong>
+      When you leave Australia and become a foreign resident, you may make a deemed disposal of your foreign shares — triggering a CGT event — unless you elect to defer (and remain subject to Australian CGT on future gains). This is a significant decision requiring advice.
+    </div>
+
+    <h3>Common Reporting Forms</h3>
+    <div class="tbl-wrap">
+      <table>
+        <thead>
+          <tr><th>Form / Schedule</th><th>When Required</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Individual Tax Return — Item 20</td><td>All foreign income (employment, investment, pension)</td></tr>
+          <tr><td>Capital Gains Tax Schedule</td><td>Capital gains from foreign asset disposals above the threshold</td></tr>
+          <tr><td>Foreign Income Return Form (FIRF)</td><td>Certain offshore structures and foreign super interests</td></tr>
+          <tr><td>International Dealings Schedule</td><td>Businesses with cross-border related-party transactions &gt;$2M</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- COMMON SCENARIOS -->
+  <section class="section">
+    <h2>Common Scenarios for Small Business Owners</h2>
+
+    <div class="callout">
+      <strong>🛍️ Selling to Overseas Customers (Export)</strong>
+      <p style="margin-top:0.4rem;font-size:0.9rem">Services or goods exported to overseas customers are generally GST-free. Your Australian business income is still assessable in Australia — you declare the AUD equivalent of all revenue.</p>
+    </div>
+
+    <div class="callout">
+      <strong>💻 Receiving Payment via Overseas Platforms (Stripe, PayPal, Amazon)</strong>
+      <p style="margin-top:0.4rem;font-size:0.9rem">Income is assessable when earned, not when transferred to your Australian account. Keep records of all transactions. Convert to AUD at the exchange rate on the date of each receipt, or use the RBA's monthly average rate with ATO approval.</p>
+    </div>
+
+    <div class="callout">
+      <strong>👤 Employing Overseas Contractors</strong>
+      <p style="margin-top:0.4rem;font-size:0.9rem">Payments to genuine overseas contractors for services performed outside Australia are generally deductible business expenses. Superannuation obligations do not apply to overseas contractors who are not Australian residents. Confirm the contractor's non-resident status in writing.</p>
+    </div>
+
+    <div class="callout">
+      <strong>🏢 Paying for Overseas Software / Subscriptions</strong>
+      <p style="margin-top:0.4rem;font-size:0.9rem">Digital services purchased from overseas suppliers for business use are deductible. Since 1 July 2017, overseas digital service providers with Australian revenue &gt;$75,000 are required to register for and charge GST (Netflix Tax / Low Value Imported Goods rules) — so you may see GST charged on your business subscriptions.</p>
+    </div>
+  </section>
+
+  <!-- ACTION CHECKLIST -->
+  <section class="section">
+    <h2>Cross-Border Tax — Action Checklist</h2>
+    <ul class="checklist">
+      <li><span class="ico">☐</span><span><strong>Confirm your tax residency status</strong> at the start of each income year, especially if you've recently moved</span></li>
+      <li><span class="ico">☐</span><span><strong>Track all foreign income</strong> throughout the year — employment, dividends, rent, business profits</span></li>
+      <li><span class="ico">☐</span><span><strong>Record exchange rates</strong> on the date each payment is received, or use the ATO's published average annual rates</span></li>
+      <li><span class="ico">☐</span><span><strong>Collect evidence of foreign tax paid</strong> — withholding tax certificates, foreign tax assessments, payment receipts</span></li>
+      <li><span class="ico">☐</span><span><strong>Check if a tax treaty applies</strong> and whether it reduces your overseas withholding tax obligation</span></li>
+      <li><span class="ico">☐</span><span><strong>Declare all foreign income</strong> in your Australian tax return (Item 20 and relevant schedules)</span></li>
+      <li><span class="ico">☐</span><span><strong>Claim the FITO</strong> for any foreign income tax paid — don't pay tax twice</span></li>
+      <li><span class="ico">☐</span><span><strong>Consider capital gains implications</strong> before selling foreign assets or changing your residency status</span></li>
+    </ul>
+  </section>
+
+  <!-- SOURCE REFERENCES -->
+  <section class="section">
+    <h2>ATO &amp; Government Resources</h2>
+    <div class="tbl-wrap">
+      <table>
+        <thead>
+          <tr><th>Topic</th><th>ATO Reference</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Tax residency tests</td><td>ato.gov.au → "Work out your tax residency"</td></tr>
+          <tr><td>Foreign income</td><td>ato.gov.au → "Foreign income for individuals"</td></tr>
+          <tr><td>FITO</td><td>ato.gov.au → "Foreign income tax offset"</td></tr>
+          <tr><td>Tax treaties</td><td>ato.gov.au → "Tax treaties"</td></tr>
+          <tr><td>Currency conversion</td><td>ato.gov.au → "Foreign currency — converting to Australian dollars"</td></tr>
+          <tr><td>Foreign super</td><td>ato.gov.au → "Foreign super funds"</td></tr>
+          <tr><td>Capital gains for foreign residents</td><td>ato.gov.au → "Capital gains tax — foreign residents"</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <div class="cta-box">
+    <h2>You've Completed All 6 Compliance Guides 🎉</h2>
+    <p>You now have a solid foundation across ABN structure, GST, Fair Work, superannuation, record keeping, and overseas income. Every business is different — this guide is educational and not a substitute for professional advice.</p>
+    <div class="btn-group">
+      <a href="consultant_en.html#contact" class="btn btn-primary">📅 Book a Consultation</a>
+      <a href="consultant_en.html" class="btn btn-ghost">← Back to Guide List</a>
+    </div>
+  </div>
+
+  <div style="margin-top:2rem;padding:1rem;background:var(--surface);border:1px solid var(--border);border-radius:8px;font-size:0.8rem;color:var(--muted)">
+    <strong style="color:var(--fg)">Disclaimer:</strong> This page provides general educational information about Australian tax obligations. It does not constitute legal, tax, or financial advice. Tax laws change regularly. Always verify current rules with the ATO at ato.gov.au or consult a registered tax agent for advice specific to your circumstances.
+  </div>
+</main>
+
+<footer>
+  <p>🎋 Zhu Digital · Melbourne, Victoria · ABN 29 919 594 996</p>
+  <p>Sources: Australian Taxation Office (ato.gov.au) · Treasury.gov.au · ATO Tax Treaties Register</p>
+  <p style="margin-top:0.5rem"><a href="consultant_en.html">← Return to Compliance Hub</a></p>
+</footer>
+
+<script>
+// Password gate
+if (sessionStorage.getItem('zd_auth') !== '1') {
+  window.location.href = 'index.html';
+}
+
+// Tabs
+function showTab(id) {
+  document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('tab-' + id).classList.add('active');
+  event.target.classList.add('active');
+}
+</script>
+</body>
+</html>

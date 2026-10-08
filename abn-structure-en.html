@@ -1,0 +1,402 @@
+<!--
+  竹 Digital — ABN & Business Structure (English)
+  DATA_UPDATE_SCHEDULE: Update after 1 July each year (ATO/ASIC/ABR policy changes)
+  LAST_UPDATED: 2026-10
+  FISCAL_YEAR: 2026-27
+  Sources: ATO, ASIC, ABR
+-->
+<title>ABN & Business Structure — 竹 Digital</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,300&family=DM+Serif+Display:ital@0;1&display=swap">
+<style>
+:root {
+  --bg:#0D1B2A; --bg2:#0F1F30; --surface:#152233; --surface2:#1A2B3F;
+  --border:rgba(59,130,246,.13); --border2:rgba(59,130,246,.22);
+  --fg:#F1F5F9; --fg2:#94A3B8; --fg3:#475569;
+  --accent:#60A5FA; --blue:#1D4ED8; --blue-lit:#2563EB;
+  --green:#34D399; --green-bg:rgba(52,211,153,.08);
+  --yellow:#FCD34D; --yellow-bg:rgba(252,211,77,.08);
+  --red:#F87171; --red-bg:rgba(248,113,113,.08);
+  --purple:#A78BFA; --purple-bg:rgba(167,139,250,.08);
+  --serif:"DM Serif Display",Georgia,serif; --sans:"DM Sans",system-ui,sans-serif;
+  color-scheme:dark;
+}
+@media(prefers-color-scheme:light){:root:not([data-theme="dark"]){
+  --bg:#F0F4FA;--bg2:#E4EBF7;--surface:#FFF;--surface2:#F8FAFC;
+  --border:rgba(37,99,235,.13);--border2:rgba(37,99,235,.25);
+  --fg:#0F172A;--fg2:#334155;--fg3:#64748B;
+  --accent:#1D4ED8;--blue:#1D4ED8;--blue-lit:#2563EB;
+  --green:#059669;--green-bg:rgba(5,150,105,.07);
+  --yellow:#B45309;--yellow-bg:rgba(180,83,9,.06);
+  --red:#DC2626;--red-bg:rgba(220,38,38,.06);
+  --purple:#7C3AED;--purple-bg:rgba(124,58,237,.06);
+  color-scheme:light;
+}}
+:root[data-theme="light"]{
+  --bg:#F0F4FA;--bg2:#E4EBF7;--surface:#FFF;--surface2:#F8FAFC;
+  --border:rgba(37,99,235,.13);--border2:rgba(37,99,235,.25);
+  --fg:#0F172A;--fg2:#334155;--fg3:#64748B;
+  --accent:#1D4ED8;--blue:#1D4ED8;--blue-lit:#2563EB;
+  --green:#059669;--green-bg:rgba(5,150,105,.07);
+  --yellow:#B45309;--yellow-bg:rgba(180,83,9,.06);
+  --red:#DC2626;--red-bg:rgba(220,38,38,.06);
+  --purple:#7C3AED;--purple-bg:rgba(124,58,237,.06);
+  color-scheme:light;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{font-family:var(--sans);background:var(--bg);color:var(--fg);line-height:1.7}
+.nav{position:sticky;top:env(safe-area-inset-top,0px);z-index:100;background:rgba(13,27,42,.9);backdrop-filter:blur(12px);border-bottom:1px solid var(--border);padding:13px 24px;display:flex;align-items:center;justify-content:space-between;gap:16px}
+@media(prefers-color-scheme:light){:root:not([data-theme="dark"]) .nav{background:rgba(240,244,250,.93)}}
+:root[data-theme="light"] .nav{background:rgba(240,244,250,.93)}
+.nav-brand{text-decoration:none;color:var(--accent);font-weight:600;font-size:15px;display:flex;align-items:center;gap:8px}
+.nav-brand span{color:var(--fg2);font-weight:400;font-size:13px}
+.nav-back{font-size:12px;color:var(--fg3);text-decoration:none;border:1px solid var(--border);padding:6px 14px;border-radius:20px;transition:color .2s,border-color .2s}
+.nav-back:hover{color:var(--accent);border-color:var(--accent)}
+.hero{max-width:760px;margin:0 auto;padding:56px 24px 40px}
+.breadcrumb{font-size:12px;color:var(--fg3);margin-bottom:20px}
+.breadcrumb a{color:var(--fg3);text-decoration:none}
+.breadcrumb a:hover{color:var(--accent)}
+.hero-eyebrow{font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--accent);font-weight:600;margin-bottom:12px}
+.hero h1{font-family:var(--serif);font-size:clamp(26px,5vw,42px);line-height:1.2;text-wrap:balance;margin-bottom:16px}
+.hero-sub{font-size:15px;color:var(--fg2);line-height:1.8;max-width:580px;margin-bottom:28px}
+.hero-meta{display:flex;gap:20px;flex-wrap:wrap}
+.meta-pill{font-size:11px;background:var(--surface);border:1px solid var(--border);border-radius:20px;padding:5px 14px;color:var(--fg2)}
+.wrap{max-width:900px;margin:0 auto;padding:0 24px 56px}
+.section-label{font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--accent);font-weight:600;margin-bottom:10px}
+.section-title{font-family:var(--serif);font-size:clamp(20px,3.5vw,30px);text-wrap:balance;margin-bottom:8px}
+.section-sub{font-size:14px;color:var(--fg2);line-height:1.8;margin-bottom:32px}
+.flow{display:flex;flex-direction:column;align-items:center;gap:0;margin:8px 0 16px}
+.flow-box{background:var(--surface);border:1px solid var(--border2);border-radius:12px;padding:16px 22px;text-align:center;font-size:14px;font-weight:500;max-width:360px;width:100%}
+.flow-box.question{border-color:var(--accent);background:rgba(96,165,250,.06)}
+.flow-box.question .q-label{font-size:10px;letter-spacing:1.5px;text-transform:uppercase;color:var(--accent);font-weight:600;margin-bottom:6px}
+.flow-box.question .q-text{font-size:15px;font-weight:600}
+.flow-arrow{color:var(--fg3);font-size:20px;line-height:1;padding:4px 0}
+.flow-split{display:flex;gap:12px;width:100%;max-width:760px;justify-content:center;flex-wrap:wrap}
+.flow-branch{display:flex;flex-direction:column;align-items:center;gap:0;flex:1;min-width:160px;max-width:230px}
+.branch-label{font-size:11px;color:var(--fg3);border:1px solid var(--border);border-radius:20px;padding:3px 12px;margin-bottom:4px}
+.flow-result{width:100%;border-radius:12px;padding:14px 16px;text-align:center;font-size:13px;font-weight:600;border:1px solid transparent}
+.result-green{background:var(--green-bg);border-color:rgba(52,211,153,.25);color:var(--green)}
+.result-blue{background:rgba(96,165,250,.08);border-color:rgba(96,165,250,.25);color:var(--accent)}
+.result-yellow{background:var(--yellow-bg);border-color:rgba(252,211,77,.25);color:var(--yellow)}
+.result-purple{background:var(--purple-bg);border-color:rgba(167,139,250,.25);color:var(--purple)}
+.result-sub{font-size:11px;font-weight:400;color:var(--fg2);margin-top:4px}
+.divider{border:none;border-top:1px solid var(--border);margin:0 0 48px}
+.stats{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:12px;margin-bottom:40px}
+.stat{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:18px 16px}
+.stat-val{font-size:26px;font-weight:700;font-variant-numeric:tabular-nums;line-height:1;margin-bottom:4px}
+.stat-label{font-size:12px;color:var(--fg2);line-height:1.5}
+.tabs{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:24px}
+.tab-btn{font-family:var(--sans);font-size:13px;font-weight:500;padding:8px 18px;border-radius:20px;border:1px solid var(--border);background:none;color:var(--fg2);cursor:pointer;transition:all .2s}
+.tab-btn:hover{border-color:var(--accent);color:var(--accent)}
+.tab-btn.active{background:var(--blue);border-color:var(--blue);color:#fff}
+.tab-panel{display:none}
+.tab-panel.active{display:block}
+.struct-card{background:var(--surface);border:1px solid var(--border2);border-radius:16px;overflow:hidden}
+.struct-header{padding:24px 28px 20px;border-bottom:1px solid var(--border)}
+.struct-icon{font-size:32px;margin-bottom:10px;display:block}
+.struct-name{font-family:var(--serif);font-size:24px;margin-bottom:4px}
+.struct-en{font-size:13px;color:var(--fg3);margin-bottom:12px}
+.struct-tagline{font-size:14px;color:var(--fg2);line-height:1.7}
+.struct-body{padding:24px 28px;display:grid;grid-template-columns:1fr 1fr;gap:20px}
+@media(max-width:520px){.struct-body{grid-template-columns:1fr}}
+.fact-label{font-size:10px;letter-spacing:1.5px;text-transform:uppercase;color:var(--fg3);font-weight:600;margin-bottom:8px}
+.fact-val{font-size:22px;font-weight:700;font-variant-numeric:tabular-nums;line-height:1.2;margin-bottom:2px}
+.fact-note{font-size:12px;color:var(--fg2);line-height:1.6}
+.struct-lists{padding:0 28px 28px;display:grid;grid-template-columns:1fr 1fr;gap:20px}
+@media(max-width:520px){.struct-lists{grid-template-columns:1fr}}
+.pro-con-title{font-size:12px;font-weight:600;letter-spacing:.5px;margin-bottom:10px}
+.pro-con-title.pro{color:var(--green)}
+.pro-con-title.con{color:var(--red)}
+.pro-con-list{list-style:none;display:flex;flex-direction:column;gap:6px}
+.pro-con-list li{font-size:13px;color:var(--fg2);display:flex;gap:8px;line-height:1.5}
+.pro-con-list li::before{flex-shrink:0;font-size:13px}
+.pro-con-list.pros li::before{content:"✓";color:var(--green)}
+.pro-con-list.cons li::before{content:"✕";color:var(--red)}
+.struct-best{margin:0 28px 28px;background:var(--surface2);border:1px solid var(--border);border-radius:10px;padding:14px 18px;font-size:13px;color:var(--fg2);line-height:1.7}
+.struct-best strong{color:var(--fg)}
+.table-wrap{overflow-x:auto;border-radius:14px;border:1px solid var(--border)}
+table{width:100%;border-collapse:collapse;min-width:560px}
+thead th{background:var(--surface2);padding:13px 16px;font-size:12px;font-weight:600;color:var(--fg2);text-align:left;border-bottom:1px solid var(--border);white-space:nowrap}
+thead th:first-child{width:140px}
+tbody td{padding:13px 16px;font-size:13px;border-bottom:1px solid var(--border);vertical-align:top;line-height:1.6}
+tbody tr:last-child td{border-bottom:none}
+tbody tr:hover td{background:rgba(255,255,255,.02)}
+.row-label{font-weight:600;font-size:13px;color:var(--fg2)}
+.chip{display:inline-block;font-size:11px;font-weight:600;padding:2px 9px;border-radius:20px}
+.chip-green{background:var(--green-bg);color:var(--green)}
+.chip-yellow{background:var(--yellow-bg);color:var(--yellow)}
+.chip-red{background:var(--red-bg);color:var(--red)}
+.chip-blue{background:rgba(96,165,250,.1);color:var(--accent)}
+.checklist{display:flex;flex-direction:column;gap:12px;margin-top:8px}
+.check-item{display:flex;gap:14px;align-items:flex-start;background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:16px 18px}
+.check-num{width:28px;height:28px;border-radius:50%;background:rgba(96,165,250,.1);border:1px solid rgba(96,165,250,.25);color:var(--accent);font-size:12px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-variant-numeric:tabular-nums}
+.check-title{font-weight:600;font-size:14px;margin-bottom:4px}
+.check-body{font-size:13px;color:var(--fg2);line-height:1.7}
+.check-link{display:inline-block;margin-top:6px;font-size:12px;color:var(--accent);text-decoration:none}
+.check-link:hover{text-decoration:underline}
+.warn-box{background:rgba(252,211,77,.06);border:1px solid rgba(252,211,77,.2);border-radius:12px;padding:16px 20px;font-size:13px;color:var(--fg2);line-height:1.75;margin-top:24px}
+.warn-box strong{color:var(--yellow)}
+.cta-strip{background:var(--surface);border-top:1px solid var(--border);padding:40px 24px;text-align:center}
+.cta-strip h2{font-family:var(--serif);font-size:clamp(18px,3vw,26px);margin-bottom:10px}
+.cta-strip p{font-size:14px;color:var(--fg2);margin-bottom:24px}
+.cta-btns{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
+.btn-primary{background:var(--blue);color:#fff;padding:12px 24px;border-radius:10px;font-family:var(--sans);font-size:14px;font-weight:600;text-decoration:none;border:none;cursor:pointer;transition:background .2s}
+.btn-primary:hover{background:var(--blue-lit)}
+.btn-ghost{background:none;color:var(--fg2);padding:12px 24px;border-radius:10px;font-family:var(--sans);font-size:14px;font-weight:500;text-decoration:none;border:1px solid var(--border);cursor:pointer;transition:color .2s,border-color .2s}
+.btn-ghost:hover{color:var(--accent);border-color:var(--accent)}
+.footer{text-align:center;padding:28px 24px;font-size:11px;color:var(--fg3);line-height:2}
+.footer a{color:var(--fg3);text-decoration:none}
+.footer a:hover{color:var(--accent)}
+</style>
+
+<nav class="nav">
+  <a href="consultant_en.html" class="nav-brand">🎋 Zhu Digital <span>· Compliance Guides</span></a>
+  <a href="consultant_en.html" class="nav-back">← Back</a>
+</nav>
+
+<div class="hero">
+  <div class="breadcrumb"><a href="consultant_en.html">Compliance Guides</a> › ABN &amp; Business Structure</div>
+  <div class="hero-eyebrow">Step One · Read Before You Register</div>
+  <h1>Choosing Your Business Structure<br>Is the Most Important First Step</h1>
+  <p class="hero-sub">Before registering an ABN in Australia, you need to decide how you'll operate. The wrong structure means higher tax, personal liability, and headaches when you grow. This guide helps you choose in under 5 minutes.</p>
+  <div class="hero-meta">
+    <span class="meta-pill">📅 Data current: October 2026 · ATO · ASIC 2026–27</span>
+    <span class="meta-pill">🕐 5 min read</span>
+    <span class="meta-pill">✅ Free, no sign-up</span>
+  </div>
+</div>
+
+<div class="wrap">
+  <p class="section-label">Decision Flowchart</p>
+  <h2 class="section-title">Which structure suits you?</h2>
+  <p class="section-sub">Follow this chart — 3 steps or fewer to your answer.</p>
+  <div class="flow">
+    <div class="flow-box question">
+      <div class="q-label">Start here</div>
+      <div class="q-text">Are you operating alone or with others?</div>
+    </div>
+    <div class="flow-arrow">↓</div>
+    <div class="flow-split">
+      <div class="flow-branch">
+        <div class="branch-label">Alone</div>
+        <div class="flow-arrow">↓</div>
+        <div class="flow-box question">
+          <div class="q-label">Key question</div>
+          <div class="q-text">Do you need to protect personal assets (home, savings)?</div>
+        </div>
+        <div class="flow-arrow">↓</div>
+        <div class="flow-split">
+          <div class="flow-branch">
+            <div class="branch-label">No / just starting</div>
+            <div class="flow-arrow">↓</div>
+            <div class="flow-result result-green">👤 Sole Trader<div class="result-sub">Simplest, free to register</div></div>
+          </div>
+          <div class="flow-branch">
+            <div class="branch-label">Yes, need protection</div>
+            <div class="flow-arrow">↓</div>
+            <div class="flow-result result-blue">🏢 Pty Ltd<div class="result-sub">Limited liability, more professional</div></div>
+          </div>
+        </div>
+      </div>
+      <div class="flow-branch">
+        <div class="branch-label">With others</div>
+        <div class="flow-arrow">↓</div>
+        <div class="flow-box question">
+          <div class="q-label">Key question</div>
+          <div class="q-text">Family business or need asset protection?</div>
+        </div>
+        <div class="flow-arrow">↓</div>
+        <div class="flow-split">
+          <div class="flow-branch">
+            <div class="branch-label">General partnership</div>
+            <div class="flow-arrow">↓</div>
+            <div class="flow-result result-yellow">🤝 Partnership<div class="result-sub">Simple, but joint liability</div></div>
+          </div>
+          <div class="flow-branch">
+            <div class="branch-label">Family / asset planning</div>
+            <div class="flow-arrow">↓</div>
+            <div class="flow-result result-purple">🏛️ Trust<div class="result-sub">Flexible tax, complex to set up</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="warn-box"><strong>⚠️ Important:</strong> This flowchart is a starting point only. Your income, family situation, and industry all affect the best choice. When in doubt, speak with a registered tax agent or CPA before deciding.</div>
+</div>
+
+<hr class="divider" style="margin:0 24px 48px">
+
+<div class="wrap">
+  <p class="section-label">Key Numbers</p>
+  <h2 class="section-title">Know these figures before you register</h2>
+  <p class="section-sub">2026–27 financial year data (updated October 2026) — Sources: ATO · ASIC · abr.gov.au</p>
+  <div class="stats">
+    <div class="stat"><div class="stat-val" style="color:var(--green)">$0</div><div class="stat-label">ABN registration fee<br>(sole trader / partnership)</div></div>
+    <div class="stat"><div class="stat-val" style="color:var(--accent)">$636</div><div class="stat-label">Company registration fee<br>(from 1 July 2026)</div></div>
+    <div class="stat"><div class="stat-val" style="color:var(--accent)">$342</div><div class="stat-label">Annual review fee<br>(paid to ASIC each year)</div></div>
+    <div class="stat"><div class="stat-val" style="color:var(--yellow)">25%</div><div class="stat-label">Company tax rate<br>(turnover under $50M)</div></div>
+    <div class="stat"><div class="stat-val" style="color:var(--yellow)">47%</div><div class="stat-label">Top personal tax rate<br>(incl. 2% Medicare Levy)</div></div>
+    <div class="stat"><div class="stat-val" style="color:var(--purple)">$39</div><div class="stat-label">Business name registration<br>(1 year, via ASIC)</div></div>
+  </div>
+</div>
+
+<hr class="divider" style="margin:0 24px 48px">
+
+<div class="wrap">
+  <p class="section-label">The Four Structures</p>
+  <h2 class="section-title">Click to explore each structure in full</h2>
+  <p class="section-sub">Pros, cons, costs, and who each one suits — all here.</p>
+  <div class="tabs">
+    <button class="tab-btn active" onclick="switchTab('sole',this)">👤 Sole Trader</button>
+    <button class="tab-btn" onclick="switchTab('company',this)">🏢 Pty Ltd</button>
+    <button class="tab-btn" onclick="switchTab('partnership',this)">🤝 Partnership</button>
+    <button class="tab-btn" onclick="switchTab('trust',this)">🏛️ Trust</button>
+  </div>
+
+  <div class="tab-panel active" id="tab-sole">
+    <div class="struct-card">
+      <div class="struct-header">
+        <span class="struct-icon">👤</span>
+        <div class="struct-name">Sole Trader</div>
+        <div class="struct-en">The most common starting structure in Australia</div>
+        <div class="struct-tagline">You and your business are one and the same. Simplest to set up, cheapest to run — ideal when you're starting small, working alone, and keeping costs low.</div>
+      </div>
+      <div class="struct-body">
+        <div><div class="fact-label">Registration Cost</div><div class="fact-val" style="color:var(--green)">$0</div><div class="fact-note">ABN is free. Business name costs $39/yr if you trade under a name other than your own.</div></div>
+        <div><div class="fact-label">Tax Rate</div><div class="fact-val" style="color:var(--yellow)">19–47%</div><div class="fact-note">Taxed at personal income tax rates plus 2% Medicare Levy.</div></div>
+        <div><div class="fact-label">Personal Liability</div><div class="fact-val" style="color:var(--red)">Unlimited</div><div class="fact-note">Your home, savings, and car can be used to pay business debts.</div></div>
+        <div><div class="fact-label">Complexity</div><div class="fact-val" style="color:var(--green)">⭐ Easiest</div><div class="fact-note">Register at abr.gov.au — about 5 minutes, free.</div></div>
+      </div>
+      <div class="struct-lists">
+        <div><div class="pro-con-title pro">✓ Advantages</div><ul class="pro-con-list pros"><li>Free to register, minimal paperwork</li><li>Full control — no need to consult others</li><li>Tax reported in your personal return</li><li>No minimum turnover required</li></ul></div>
+        <div><div class="pro-con-title con">✕ Disadvantages</div><ul class="pro-con-list cons"><li>Unlimited personal liability</li><li>Harder to raise finance from banks</li><li>High earners pay more tax than a company</li><li>Business may cease if you become ill or pass away</li></ul></div>
+      </div>
+      <div class="struct-best"><strong>Best for:</strong> Side projects, freelancers, family micro-businesses, expected annual income under $75,000, and anyone not yet ready to hire staff.</div>
+    </div>
+  </div>
+
+  <div class="tab-panel" id="tab-company">
+    <div class="struct-card">
+      <div class="struct-header">
+        <span class="struct-icon">🏢</span>
+        <div class="struct-name">Proprietary Limited Company</div>
+        <div class="struct-en">Pty Ltd — a separate legal entity from you personally</div>
+        <div class="struct-tagline">The company exists independently. As a shareholder, your losses are capped at what you invested — suitable for owners who want asset protection and plan to grow.</div>
+      </div>
+      <div class="struct-body">
+        <div><div class="fact-label">Registration Cost</div><div class="fact-val" style="color:var(--accent)">$636</div><div class="fact-note">Paid to ASIC once. Plus $342/year annual review fee.</div></div>
+        <div><div class="fact-label">Tax Rate</div><div class="fact-val" style="color:var(--yellow)">25%</div><div class="fact-note">Small business company rate (turnover under $50M). Base rate entities pay 30%.</div></div>
+        <div><div class="fact-label">Personal Liability</div><div class="fact-val" style="color:var(--green)">Limited</div><div class="fact-note">Personal assets protected. However, directors have legal duties and can be held personally liable for serious breaches.</div></div>
+        <div><div class="fact-label">Complexity</div><div class="fact-val" style="color:var(--yellow)">⭐⭐ Moderate</div><div class="fact-note">Requires Director ID, a constitution, registered with ASIC or an agent.</div></div>
+      </div>
+      <div class="struct-lists">
+        <div><div class="pro-con-title pro">✓ Advantages</div><ul class="pro-con-list pros"><li>Limited liability protects personal assets</li><li>Lower tax rate than high personal income</li><li>Easier to raise finance or attract investors</li><li>Company continues regardless of ownership changes</li></ul></div>
+        <div><div class="pro-con-title con">✕ Disadvantages</div><ul class="pro-con-list cons"><li>Higher setup and annual compliance costs</li><li>Must lodge a separate company tax return</li><li>Dividends paid to yourself still attract personal tax</li><li>Directors have clear legal obligations and can face fines</li></ul></div>
+      </div>
+      <div class="struct-best"><strong>Best for:</strong> Higher earners (profit over $80K/yr), owners who need asset protection, businesses planning to hire, or those bidding on contracts.</div>
+    </div>
+  </div>
+
+  <div class="tab-panel" id="tab-partnership">
+    <div class="struct-card">
+      <div class="struct-header">
+        <span class="struct-icon">🤝</span>
+        <div class="struct-name">Partnership</div>
+        <div class="struct-en">Two or more people running a business together</div>
+        <div class="struct-tagline">Profits and losses are split by agreement; each partner pays tax individually. A partnership agreement isn't legally required, but is strongly recommended.</div>
+      </div>
+      <div class="struct-body">
+        <div><div class="fact-label">Registration Cost</div><div class="fact-val" style="color:var(--green)">$0+</div><div class="fact-note">Free ABN. A legally drafted partnership agreement costs ~$500–$1,500.</div></div>
+        <div><div class="fact-label">Tax Rate</div><div class="fact-val" style="color:var(--yellow)">19–47%</div><div class="fact-note">Partnership itself doesn't pay tax. Each partner reports their share in their personal return.</div></div>
+        <div><div class="fact-label">Personal Liability</div><div class="fact-val" style="color:var(--red)">Joint &amp; Unlimited</div><div class="fact-note">Each partner is liable for all partnership debts, including those caused by the other partner.</div></div>
+        <div><div class="fact-label">Complexity</div><div class="fact-val" style="color:var(--green)">⭐ Simple</div><div class="fact-note">Register an ABN for the partnership. Agreement is critical.</div></div>
+      </div>
+      <div class="struct-lists">
+        <div><div class="pro-con-title pro">✓ Advantages</div><ul class="pro-con-list pros"><li>Share resources, skills, and risk</li><li>Flexible profit-sharing arrangements</li><li>No double taxation — transparent structure</li><li>Simpler to set up than a company</li></ul></div>
+        <div><div class="pro-con-title con">✕ Disadvantages</div><ul class="pro-con-list cons"><li>One partner's mistake can cost everyone</li><li>Departure of a partner can dissolve the business</li><li>Personal assets remain at risk</li><li>Disputes can be complex and costly</li></ul></div>
+      </div>
+      <div class="struct-best"><strong>Best for:</strong> Couples running a business together, friends co-founding a small venture, or professional pairs (designers, consultants) — provided there's trust and a clear written agreement.</div>
+    </div>
+  </div>
+
+  <div class="tab-panel" id="tab-trust">
+    <div class="struct-card">
+      <div class="struct-header">
+        <span class="struct-icon">🏛️</span>
+        <div class="struct-name">Trust</div>
+        <div class="struct-en">A legal arrangement for holding and distributing assets</div>
+        <div class="struct-tagline">A trustee manages assets for the benefit of beneficiaries. Common in family businesses; allows flexible income distribution to members on lower tax rates.</div>
+      </div>
+      <div class="struct-body">
+        <div><div class="fact-label">Setup Cost</div><div class="fact-val" style="color:var(--purple)">$500+</div><div class="fact-note">Trust deed drafting ~$500–$1,500; plus $636 if you use a corporate trustee.</div></div>
+        <div><div class="fact-label">Tax Rate</div><div class="fact-val" style="color:var(--yellow)">Flexible</div><div class="fact-note">Distributed to beneficiaries at their personal rates. Undistributed income taxed at 47%.</div></div>
+        <div><div class="fact-label">Personal Liability</div><div class="fact-val" style="color:var(--yellow)">Varies</div><div class="fact-note">Assets held in trust offer some personal protection, but trustee liability depends on structure type.</div></div>
+        <div><div class="fact-label">Complexity</div><div class="fact-val" style="color:var(--red)">⭐⭐⭐ Complex</div><div class="fact-note">Requires solicitor and accountant; ongoing compliance costs are high.</div></div>
+      </div>
+      <div class="struct-lists">
+        <div><div class="pro-con-title pro">✓ Advantages</div><ul class="pro-con-list pros"><li>Distribute income to lower-tax-rate family members</li><li>Asset protection from personal creditors</li><li>Effective for estate planning and wealth succession</li><li>Access to CGT discount for assets held &gt;12 months</li></ul></div>
+        <div><div class="pro-con-title con">✕ Disadvantages</div><ul class="pro-con-list cons"><li>Highest setup and ongoing management costs</li><li>Losses cannot be distributed to beneficiaries</li><li>ATO scrutiny of Section 100A arrangements increasing</li><li>Not suitable for businesses seeking external investment</li></ul></div>
+      </div>
+      <div class="struct-best"><strong>Best for:</strong> Family businesses involving multiple members, those focused on asset protection and estate planning — but only with an experienced accountant.</div>
+    </div>
+  </div>
+</div>
+
+<hr class="divider" style="margin:0 24px 48px">
+
+<div class="wrap">
+  <p class="section-label">Quick Comparison</p>
+  <h2 class="section-title">All four structures at a glance</h2>
+  <p class="section-sub">Data: ATO · ASIC 2026–27 financial year</p>
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>Feature</th><th>👤 Sole Trader</th><th>🤝 Partnership</th><th>🏢 Pty Ltd</th><th>🏛️ Trust</th></tr></thead>
+      <tbody>
+        <tr><td class="row-label">Registration cost</td><td><span class="chip chip-green">$0</span></td><td><span class="chip chip-green">$0+</span></td><td><span class="chip chip-yellow">$636</span></td><td><span class="chip chip-yellow">$500+</span></td></tr>
+        <tr><td class="row-label">Tax rate</td><td>Personal rate<br>19–47%</td><td>Each partner's personal rate</td><td>Company rate<br>25–30%</td><td>Flexible<br>per beneficiary</td></tr>
+        <tr><td class="row-label">Personal liability</td><td><span class="chip chip-red">Unlimited</span></td><td><span class="chip chip-red">Joint &amp; unlimited</span></td><td><span class="chip chip-green">Limited</span></td><td><span class="chip chip-yellow">Varies</span></td></tr>
+        <tr><td class="row-label">Complexity</td><td><span class="chip chip-green">Easiest</span></td><td><span class="chip chip-green">Simple</span></td><td><span class="chip chip-yellow">Moderate</span></td><td><span class="chip chip-red">Complex</span></td></tr>
+        <tr><td class="row-label">Annual compliance</td><td>Low<br>(in personal return)</td><td>Low–Med<br>(partnership return)</td><td>Med–High<br>($342/yr + accountant)</td><td>High<br>(professional required)</td></tr>
+        <tr><td class="row-label">Best stage</td><td>Starting out<br>Side project</td><td>Small joint venture<br>Couple business</td><td>Growing<br>Profitable</td><td>Family business<br>Asset planning</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<hr class="divider" style="margin:0 24px 48px">
+
+<div class="wrap">
+  <p class="section-label">How to Register an ABN</p>
+  <h2 class="section-title">Ready to register? Here's how</h2>
+  <p class="section-sub">Steps below are for sole trader / partnership (most common). Company registration goes through ASIC and differs slightly.</p>
+  <div class="checklist">
+    <div class="check-item"><div class="check-num">1</div><div><div class="check-title">Get your TFN (Tax File Number) ready</div><div class="check-body">You need your personal TFN to apply for an ABN. If you don't have one, apply on the ATO website first — takes up to 28 days. Available to Australian citizens and permanent residents.</div><a href="https://www.ato.gov.au/individuals-and-families/tax-file-number" target="_blank" class="check-link">→ Apply for a TFN on ATO</a></div></div>
+    <div class="check-item"><div class="check-num">2</div><div><div class="check-title">Apply for your ABN on the ABR website</div><div class="check-body">Go to abr.gov.au and click "Apply for an ABN." Enter your name, TFN, business type, and address. Takes 5–10 minutes, is free, and most applications are approved the same day.</div><a href="https://www.abr.gov.au/business-super-funds-charities/applying-for-an-abn" target="_blank" class="check-link">→ Register at abr.gov.au</a></div></div>
+    <div class="check-item"><div class="check-num">3</div><div><div class="check-title">Register a business name (optional)</div><div class="check-body">If you trade under your own name, you don't need to register one. If you want a brand name (e.g. "Zhu Digital"), register it with ASIC for $39/year or $92 for 3 years.</div><a href="https://www.asic.gov.au/for-business/registering-a-business-name/" target="_blank" class="check-link">→ Register a business name with ASIC</a></div></div>
+    <div class="check-item"><div class="check-num">4</div><div><div class="check-title">Check if you need to register for GST</div><div class="check-body">If your expected annual turnover exceeds <strong>$75,000</strong>, you must register for GST at the same time. Once registered, you'll lodge a BAS each quarter. If under the threshold, registration is optional — but compulsory once you cross it (within 21 days).</div><a href="gst-bas-en.html" class="check-link">→ Read the GST &amp; BAS guide</a></div></div>
+    <div class="check-item"><div class="check-num">5</div><div><div class="check-title">Start keeping records from day one</div><div class="check-body">The ATO requires most business records to be kept for at least 5 years from the date they were prepared. This includes invoices, receipts, bank records, and payroll. Build the habit from your very first transaction.</div><a href="record-keeping-en.html" class="check-link">→ Read the record-keeping guide</a></div></div>
+  </div>
+</div>
+
+<div class="cta-strip">
+  <h2>Still have questions?</h2>
+  <p>Your situation may be more complex than any flowchart can capture. Email us — we'll help you think it through.</p>
+  <div class="cta-btns">
+    <a href="consultant_en.html#contact" class="btn-primary">Contact Zhu Digital →</a>
+    <a href="gst-bas-en.html" class="btn-ghost">Next: GST &amp; BAS →</a>
+  </div>
+</div>
+
+<footer class="footer">
+  <div>🎋 Zhu Digital · Melbourne, Victoria · ABN 29 919 594 996</div>
+  <div style="margin-top:4px">Sources: <a href="https://www.ato.gov.au" target="_blank">ATO</a> · <a href="https://www.asic.gov.au" target="_blank">ASIC</a> · <a href="https://www.abr.gov.au" target="_blank">ABR</a> — 2026–27 (updated October 2026) · Educational information only, not legal or tax advice</div>
+</footer>
+
+<script>
+if(sessionStorage.getItem('zd_auth')!=='1'){window.location.href='index.html'}
+function switchTab(id,btn){
+  document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+  document.querySelectorAll('.tab-panel').forEach(p=>p.classList.remove('active'));
+  document.getElementById('tab-'+id).classList.add('active');
+  btn.classList.add('active');
+}
+</script>
