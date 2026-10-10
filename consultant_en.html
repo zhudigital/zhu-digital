@@ -421,6 +421,36 @@ body {
 }
 .footer a { color: var(--fg3); text-decoration: none; }
 .footer a:hover { color: var(--accent); }
+
+/* ── Ticker / scrolling announcement bar ─────────────────────── */
+.ticker-wrap {
+  overflow: hidden;
+  background: rgba(34,211,238,.05);
+  border-top: 1px solid rgba(34,211,238,.12);
+  border-bottom: 1px solid rgba(34,211,238,.12);
+  padding: 10px 0;
+}
+.ticker {
+  display: flex;
+  gap: 0;
+  white-space: nowrap;
+  animation: ticker-scroll 40s linear infinite;
+}
+.ticker span {
+  font-size: 12px;
+  color: var(--fg2);
+  padding: 0 48px;
+  display: inline-block;
+  flex-shrink: 0;
+}
+.ticker span:nth-child(odd) { color: var(--accent); }
+@keyframes ticker-scroll {
+  0%   { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .ticker { animation: none; overflow-x: auto; }
+}
 </style>
 
 <!-- ── Navigation ─────────────────────────────────────────────── -->
@@ -436,7 +466,7 @@ body {
   <p class="hero-flag">🇦🇺 Australian Business Compliance</p>
   <h1>Australian compliance rules —<br><em>explained in plain English</em></h1>
   <p class="hero-sub">Get clear, simple answers — we translate compliance into plain language for your specific situation, including the numbers, deadlines, and forms you actually need to fill in.<br><br>We help Chinese-Australian small business owners cut through the jargon around ABN, GST, Fair Work, and more.</p>
-  <a href="#contact" class="hero-cta">Book a free 15-min chat →</a>
+  <a href="#services" class="hero-cta">Start learning →</a>
 </header>
 
 <!-- ── Trust bar ──────────────────────────────────────────────── -->
@@ -445,6 +475,22 @@ body {
   <div class="trust-item">📍 <strong>Melbourne-based</strong>, advising nationally</div>
   <div class="trust-item">🗣️ English · 中文 · 廣東話</div>
   <div class="trust-item">⚖️ <strong>Not legal advice</strong> — compliance guidance</div>
+</div>
+
+<!-- Scrolling announcement bar -->
+<div class="ticker-wrap">
+  <div class="ticker">
+    <span>🔔 From 1 July 2026: Payday Super — employers must pay super within 7 business days of each payday</span>
+    <span>📢 Super Guarantee rate is now 12% for 2026–27 — the final legislated rate</span>
+    <span>⚠️ Minimum wage increased to $26.44/hr from 1 July 2026</span>
+    <span>🚫 From 30 November 2026: ATO will no longer accept credit card payments — switch to BPAY or EFT</span>
+    <span>📋 Underpaying workers is illegal — civil penalties up to $469,500 per breach</span>
+    <span>🔔 From 1 July 2026: Payday Super — employers must pay super within 7 business days of each payday</span>
+    <span>📢 Super Guarantee rate is now 12% for 2026–27 — the final legislated rate</span>
+    <span>⚠️ Minimum wage increased to $26.44/hr from 1 July 2026</span>
+    <span>🚫 From 30 November 2026: ATO will no longer accept credit card payments — switch to BPAY or EFT</span>
+    <span>📋 Underpaying workers is illegal — civil penalties up to $469,500 per breach</span>
+  </div>
 </div>
 
 <!-- ── Services ────────────────────────────────────────────────── -->
@@ -464,42 +510,42 @@ body {
         <div class="card-title">ABN &amp; Business Structure</div>
         <div class="card-body">Sole trader, company, partnership or trust — choosing the right structure affects your tax, liability and how you're paid. We explain the differences before you register.</div>
         <span class="card-tag">Starting out</span>
-        <a href="abn-structure-en.html" class="card-link">Read the guide →</a>
+        <a href="abn-structure.html" class="card-link">Read the guide →</a>
       </div>
       <div class="card">
         <span class="card-icon">🧾</span>
         <div class="card-title">GST &amp; BAS Obligations</div>
         <div class="card-body">Once your turnover reaches A$75,000 you must register for GST. We walk you through registration, when to charge GST, and how BAS lodgement works each quarter.</div>
         <span class="card-tag">Tax</span>
-        <a href="gst-bas-en.html" class="card-link">Read the guide →</a>
+        <a href="gst-bas.html" class="card-link">Read the guide →</a>
       </div>
       <div class="card">
         <span class="card-icon">👥</span>
         <div class="card-title">Fair Work &amp; Employment</div>
         <div class="card-body">Hiring staff? Understand minimum wage, pay slips, leave entitlements, and casual vs part-time rules under the Fair Work Act — before you sign anyone on.</div>
         <span class="card-tag">Employees</span>
-        <a href="fair-work-en.html" class="card-link">Read the guide →</a>
+        <a href="fair-work.html" class="card-link">Read the guide →</a>
       </div>
       <div class="card">
         <span class="card-icon">🏦</span>
         <div class="card-title">Superannuation</div>
-        <div class="card-body">Employers must contribute 11.5% super for eligible workers. We clarify who qualifies, when payments are due, and how the Superannuation Guarantee Charge works.</div>
+        <div class="card-body">Employers must contribute 12% super for eligible workers. We clarify who qualifies, when payments are due, and how the Superannuation Guarantee Charge works.</div>
         <span class="card-tag">Employees</span>
-        <a href="super-en.html" class="card-link">Read the guide →</a>
+        <a href="super.html" class="card-link">Read the guide →</a>
       </div>
       <div class="card">
         <span class="card-icon">🔄</span>
         <div class="card-title">Record Keeping</div>
         <div class="card-body">The ATO requires you to keep most business records for 5 years. We help you set up simple systems — digital receipts, invoicing standards, and payroll records.</div>
         <span class="card-tag">Ongoing</span>
-        <a href="record-keeping-en.html" class="card-link">Read the guide →</a>
+        <a href="record-keeping.html" class="card-link">Read the guide →</a>
       </div>
       <div class="card">
         <span class="card-icon">🌏</span>
         <div class="card-title">Overseas Income &amp; Importing</div>
         <div class="card-body">Receiving income from China or importing goods? Australian tax rules on foreign income, GST on imported services, and customs duty explained clearly.</div>
         <span class="card-tag">Cross-border</span>
-        <a href="overseas-income-en.html" class="card-link">Read the guide →</a>
+        <a href="overseas-income.html" class="card-link">Read the guide →</a>
       </div>
     </div>
   </div>
@@ -601,8 +647,8 @@ body {
     <div class="step">
       <div class="step-num">1</div>
       <div>
-        <div class="step-title">Tell us about your situation</div>
-        <div class="step-body">Send a quick email or book a free 15-minute call. No forms to fill — just a conversation about where you're at and what's confusing you.</div>
+        <div class="step-title">Find your topic</div>
+        <div class="step-body">Browse our topic guides to find the compliance area that applies to you. Each guide is written in plain English (and Chinese) with real numbers and deadlines.</div>
       </div>
     </div>
     <div class="step">
@@ -745,11 +791,9 @@ body {
 <!-- ── Contact ─────────────────────────────────────────────────── -->
 <section class="section" style="padding-top:0;" id="contact">
   <div class="contact-box">
-    <h2>Ready to get clarity?</h2>
-    <p>Send us a message describing your business and your biggest compliance question. We'll respond within one business day.</p>
-    <span class="contact-email">hello@zhudigital.com.au</span>
-    <div class="contact-note">Melbourne-based · English, Mandarin &amp; Cantonese · Response within 1 business day</div>
-    <button class="copy-btn" onclick="copyEmail(this)">Copy email address</button>
+    <h2>About This Site</h2>
+    <p>竹 Digital is a free educational website. We provide compliance information for learning purposes only — no commercial services, no paid consultations. All content is general in nature and does not constitute legal or financial advice. Please consult a licensed accountant or lawyer for advice specific to your situation.</p>
+    <div class="contact-note">🎓 Free learning resource · Educational purposes only · Non-commercial</div>
   </div>
 </section>
 
@@ -768,17 +812,6 @@ function toggleFaq(btn) {
   const isOpen = item.classList.contains('open');
   document.querySelectorAll('.faq-item.open').forEach(el => el.classList.remove('open'));
   if (!isOpen) item.classList.add('open');
-}
-
-function copyEmail(btn) {
-  navigator.clipboard.writeText('hello@zhudigital.com.au').then(() => {
-    btn.textContent = '✓ Copied!';
-    setTimeout(() => btn.textContent = 'Copy email address', 2000);
-  }).catch(() => {
-    // fallback: select text
-    btn.textContent = 'hello@zhudigital.com.au';
-    btn.select && btn.select();
-  });
 }
 
 // Smooth scroll for anchor links

@@ -500,6 +500,36 @@ body {
   }
   .reveal.in { opacity: 1; transform: none; }
 }
+
+/* ── Ticker / scrolling announcement bar ─────────────────────── */
+.ticker-wrap {
+  overflow: hidden;
+  background: rgba(96,165,250,.06);
+  border-top: 1px solid rgba(96,165,250,.15);
+  border-bottom: 1px solid rgba(96,165,250,.15);
+  padding: 10px 0;
+}
+.ticker {
+  display: flex;
+  gap: 0;
+  white-space: nowrap;
+  animation: ticker-scroll 40s linear infinite;
+}
+.ticker span {
+  font-size: 12px;
+  color: var(--fg2);
+  padding: 0 48px;
+  display: inline-block;
+  flex-shrink: 0;
+}
+.ticker span:nth-child(odd) { color: var(--accent); }
+@keyframes ticker-scroll {
+  0%   { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .ticker { animation: none; overflow-x: auto; }
+}
 </style>
 
 <!-- 导航 -->
@@ -515,7 +545,7 @@ body {
   <p class="hero-flag">🇦🇺 澳洲华人小企业合规指南</p>
   <h1>澳洲合规规定<br><em>我们帮你读懂</em></h1>
   <p class="hero-sub">在这里，您将会得到简单清晰的解释——我们针对您的具体情况，把合规翻译成您能读懂的文字，包括数字、截止日期、要填什么表。<br><br>很多华人小业主在ABN注册、GST报税、雇员合规上走了弯路——不是因为不努力，而是因为那些规定用英文写的，用政府语言写的，对大多数人来说并不容易理解。竹 Digital 就是为了解决这个问题而建的。</p>
-  <a href="#contact" class="hero-cta">免费咨询 15 分钟 →</a>
+  <a href="#services" class="hero-cta">开始学习 →</a>
 </header>
 
 <!-- 信任条 -->
@@ -524,6 +554,22 @@ body {
   <div class="trust-item">📍 <strong>墨尔本</strong>，全澳服务</div>
   <div class="trust-item">🗣️ 普通话 · 广东话 · English</div>
   <div class="trust-item">⚖️ <strong>合规指导</strong>，非法律意见</div>
+</div>
+
+<!-- 滚动公告栏 -->
+<div class="ticker-wrap">
+  <div class="ticker">
+    <span>🔔 2026年7月起 Payday Super 正式实施——雇主须在发薪后7个工作日内缴纳超级年金</span>
+    <span>📢 2026-27年度超级年金率已升至12%，为最终法定费率</span>
+    <span>⚠️ 最低时薪自2026年7月1日起更新为$26.44/小时</span>
+    <span>🚫 2026年11月30日起ATO停止接受信用卡缴税，请改用BPAY或EFT</span>
+    <span>📋 Fair Work少付工资属违法，个人最高罚款$93,900</span>
+    <span>🔔 2026年7月起 Payday Super 正式实施——雇主须在发薪后7个工作日内缴纳超级年金</span>
+    <span>📢 2026-27年度超级年金率已升至12%，为最终法定费率</span>
+    <span>⚠️ 最低时薪自2026年7月1日起更新为$26.44/小时</span>
+    <span>🚫 2026年11月30日起ATO停止接受信用卡缴税，请改用BPAY或EFT</span>
+    <span>📋 Fair Work少付工资属违法，个人最高罚款$93,900</span>
+  </div>
 </div>
 
 <!-- 服务范围 -->
@@ -562,7 +608,7 @@ body {
       <div class="card">
         <span class="card-icon">🏦</span>
         <div class="card-title">超级年金（Super）</div>
-        <div class="card-body">雇主须为符合条件的员工缴纳 11.5% 超级年金。谁须缴纳、什么时候缴、通过哪个基金缴——我们逐一说清楚。</div>
+        <div class="card-body">雇主须为符合条件的员工缴纳 12% 超级年金。谁须缴纳、什么时候缴、通过哪个基金缴——我们逐一说清楚。</div>
         <div class="card-footer"><span class="card-tag">雇员</span>
         <a href="super.html" class="card-link">带你读懂 →</a></div>
       </div>
@@ -705,15 +751,15 @@ body {
     <div class="step">
       <div class="step-num">1</div>
       <div>
-        <div class="step-title">告诉我们你的情况</div>
-        <div class="step-body">发一封邮件或预约一个 15 分钟免费通话，不用填表，就是聊聊你现在在哪个阶段、哪些地方不确定。普通话广东话英文都可以。</div>
+        <div class="step-title">找到你的问题</div>
+        <div class="step-body">浏览我们的各个专题页面，找到你最想了解的合规问题。每个主题都有详细的中文解释。</div>
       </div>
     </div>
     <div class="step">
       <div class="step-num">2</div>
       <div>
         <div class="step-title">得到简单清晰的解释</div>
-        <div class="step-body">我们会针对您的具体情况，把合规翻译成你能读懂的文字——包括数字、截止日期、要填什么表。</div>
+        <div class="step-body">我们把复杂的合规规定翻译成你能读懂的文字——包括数字、截止日期、要填什么表。</div>
       </div>
     </div>
     <div class="step">
@@ -856,11 +902,9 @@ body {
 <!-- 联系 -->
 <section class="section" style="padding-top:0;" id="contact">
   <div class="contact-box">
-    <h2>准备好了？我们来聊聊</h2>
-    <p>发封邮件告诉我们你的业务类型和最困扰你的问题。我们会在一个工作日内回复，用你选的语言——普通话、广东话或英文都可以。</p>
-    <span class="contact-email">hello@zhudigital.com.au</span>
-    <div class="contact-note">墨尔本 · 普通话 / 广东话 / English · 工作日内回复</div>
-    <button class="copy-btn" onclick="copyEmail(this)">复制邮箱地址</button>
+    <h2>关于本站</h2>
+    <p>竹 Digital 是一个纯粹的学习网站，免费提供澳洲合规资讯，不提供任何商业服务或收费咨询。所有内容仅供参考，不构成法律或税务建议。如需专业意见，请咨询持牌会计师或律师。</p>
+    <div class="contact-note">🎓 免费学习资源 · 教育科普用途 · 非商业网站</div>
   </div>
 </section>
 
@@ -878,14 +922,6 @@ function toggleFaq(btn) {
   const isOpen = item.classList.contains('open');
   document.querySelectorAll('.faq-item.open').forEach(el => el.classList.remove('open'));
   if (!isOpen) item.classList.add('open');
-}
-function copyEmail(btn) {
-  navigator.clipboard.writeText('hello@zhudigital.com.au').then(() => {
-    btn.textContent = '✓ 已复制！';
-    setTimeout(() => btn.textContent = '复制邮箱地址', 2000);
-  }).catch(() => {
-    btn.textContent = 'hello@zhudigital.com.au';
-  });
 }
 document.querySelectorAll('a[href^="#"]').forEach(a => {
   a.addEventListener('click', e => {
