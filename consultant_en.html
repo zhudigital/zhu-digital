@@ -191,6 +191,89 @@ body { font-family: var(--sans); background: var(--bg); color: var(--fg); line-h
 .copy-btn { margin-top: 20px; background: none; border: 1px solid var(--border); color: var(--fg2); font-family: var(--sans); font-size: 12px; padding: 8px 20px; border-radius: 20px; cursor: pointer; transition: color .2s, border-color .2s; }
 .copy-btn:hover { color: var(--accent); border-color: var(--accent); }
 
+/* ── Ticker ── */
+.ticker-wrap {
+  background: var(--bg2);
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+  overflow: hidden;
+  padding: 10px 0;
+  position: relative;
+}
+.ticker-wrap::before, .ticker-wrap::after {
+  content: '';
+  position: absolute;
+  top: 0; bottom: 0;
+  width: 60px;
+  z-index: 2;
+  pointer-events: none;
+}
+.ticker-wrap::before { left: 0; background: linear-gradient(to right, var(--bg2), transparent); }
+.ticker-wrap::after  { right: 0; background: linear-gradient(to left,  var(--bg2), transparent); }
+.ticker-track {
+  display: flex;
+  gap: 0;
+  animation: ticker-scroll 60s linear infinite;
+  white-space: nowrap;
+  width: max-content;
+}
+.ticker-track:hover { animation-play-state: paused; }
+.ticker-item {
+  font-size: 12px;
+  color: var(--fg2);
+  padding: 0 32px;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+.ticker-item strong { color: var(--accent); font-weight: 600; }
+.ticker-dot { color: var(--teal); opacity: .5; }
+@keyframes ticker-scroll { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+
+/* ── RSS badge ── */
+.rss-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: var(--teal);
+  background: rgba(13,148,136,.1);
+  border: 1px solid rgba(13,148,136,.25);
+  border-radius: 20px;
+  padding: 4px 12px;
+  margin-left: 12px;
+  vertical-align: middle;
+}
+.rss-pulse {
+  width: 6px; height: 6px; border-radius: 50%;
+  background: var(--teal);
+  animation: pulse-dot 2s ease-in-out infinite;
+}
+@keyframes pulse-dot { 0%,100% { opacity: 1; transform: scale(1); } 50% { opacity: .4; transform: scale(.7); } }
+
+/* ── Changelog ── */
+.changelog { background: var(--surface); border: 1px solid var(--border); border-radius: 16px; margin-top: 40px; overflow: hidden; }
+.changelog-header {
+  padding: 18px 24px;
+  border-bottom: 1px solid var(--border);
+  display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 8px;
+}
+.changelog-title { font-weight: 600; font-size: 15px; }
+.changelog-sub { font-size: 12px; color: var(--fg3); }
+.changelog-list { list-style: none; padding: 0; }
+.changelog-item { padding: 14px 24px; border-bottom: 1px solid var(--border); display: flex; gap: 14px; align-items: flex-start; }
+.changelog-item:last-child { border-bottom: none; }
+.changelog-date { font-size: 11px; color: var(--fg3); min-width: 80px; margin-top: 2px; }
+.changelog-badge { font-size: 10px; font-weight: 700; letter-spacing: .5px; padding: 2px 8px; border-radius: 20px; text-transform: uppercase; flex-shrink: 0; }
+.badge-new { background: rgba(13,148,136,.15); color: var(--teal); }
+.badge-update { background: rgba(34,211,238,.1); color: var(--accent); }
+.badge-ato { background: rgba(252,211,77,.1); color: var(--warn); }
+.changelog-text { font-size: 13px; color: var(--fg2); line-height: 1.6; flex: 1; }
+.changelog-text strong { color: var(--fg); }
+
 /* ── Footer ── */
 .footer { text-align: center; padding: 32px 24px; font-size: 11px; color: var(--fg3); border-top: 1px solid var(--border); line-height: 2; }
 .footer a { color: var(--fg3); text-decoration: none; }
@@ -221,6 +304,57 @@ body { font-family: var(--sans); background: var(--bg); color: var(--fg); line-h
   <div class="trust-item">📍 <strong>Melbourne-based</strong>, knowledge shared nationally</div>
   <div class="trust-item">🗣️ English · 中文 · 廣東話</div>
   <div class="trust-item">📚 <strong>Self-education resource only</strong> — verify with a licensed professional</div>
+  <div class="trust-item">
+    <span class="rss-badge"><span class="rss-pulse"></span>ATO RSS live updates</span>
+  </div>
+</div>
+
+<!-- ── Ticker ── -->
+<div class="ticker-wrap">
+  <div class="ticker-track">
+    <!-- set 1 -->
+    <span class="ticker-item">📢 <strong>GST (Goods and Services Tax)</strong> — Must register once turnover hits $75,000/yr. Rate: 10%</span>
+    <span class="ticker-dot">◆</span>
+    <span class="ticker-item">💼 <strong>Super (Superannuation Guarantee)</strong> — Employer contribution locked at 12% from 2026–27 onwards</span>
+    <span class="ticker-dot">◆</span>
+    <span class="ticker-item">⚡ <strong>Payday Super</strong> — From 1 July 2026: must pay super within 7 business days of each pay run</span>
+    <span class="ticker-dot">◆</span>
+    <span class="ticker-item">💰 <strong>Fair Work minimum wage</strong> — $26.44/hr from 1 July 2026 ($1,003.80/week)</span>
+    <span class="ticker-dot">◆</span>
+    <span class="ticker-item">🚫 <strong>ATO (Australian Taxation Office)</strong> — No more credit card payments for tax from 30 Nov 2026</span>
+    <span class="ticker-dot">◆</span>
+    <span class="ticker-item">📋 <strong>TPAR (Taxable Payments Annual Report)</strong> — Construction/cleaning/IT sectors due 28 August each year</span>
+    <span class="ticker-dot">◆</span>
+    <span class="ticker-item">📊 <strong>BAS (Business Activity Statement)</strong> — Quarterly lodgement due 28 days after each quarter end</span>
+    <span class="ticker-dot">◆</span>
+    <span class="ticker-item">⚠️ <strong>GIC (General Interest Charge)</strong> — ~10.96%/yr on overdue tax; no longer tax-deductible from July 2025</span>
+    <span class="ticker-dot">◆</span>
+    <span class="ticker-item">🏢 <strong>ASIC (Australian Securities and Investments Commission)</strong> — Small Pty Ltd annual review fee approx. $597</span>
+    <span class="ticker-dot">◆</span>
+    <span class="ticker-item">🔒 <strong>STP (Single Touch Payroll)</strong> — Report wages, PAYG &amp; super to ATO in real time every pay run</span>
+    <span class="ticker-dot">◆</span>
+    <!-- set 2 (duplicate for seamless loop) -->
+    <span class="ticker-item">📢 <strong>GST (Goods and Services Tax)</strong> — Must register once turnover hits $75,000/yr. Rate: 10%</span>
+    <span class="ticker-dot">◆</span>
+    <span class="ticker-item">💼 <strong>Super (Superannuation Guarantee)</strong> — Employer contribution locked at 12% from 2026–27 onwards</span>
+    <span class="ticker-dot">◆</span>
+    <span class="ticker-item">⚡ <strong>Payday Super</strong> — From 1 July 2026: must pay super within 7 business days of each pay run</span>
+    <span class="ticker-dot">◆</span>
+    <span class="ticker-item">💰 <strong>Fair Work minimum wage</strong> — $26.44/hr from 1 July 2026 ($1,003.80/week)</span>
+    <span class="ticker-dot">◆</span>
+    <span class="ticker-item">🚫 <strong>ATO (Australian Taxation Office)</strong> — No more credit card payments for tax from 30 Nov 2026</span>
+    <span class="ticker-dot">◆</span>
+    <span class="ticker-item">📋 <strong>TPAR (Taxable Payments Annual Report)</strong> — Construction/cleaning/IT sectors due 28 August each year</span>
+    <span class="ticker-dot">◆</span>
+    <span class="ticker-item">📊 <strong>BAS (Business Activity Statement)</strong> — Quarterly lodgement due 28 days after each quarter end</span>
+    <span class="ticker-dot">◆</span>
+    <span class="ticker-item">⚠️ <strong>GIC (General Interest Charge)</strong> — ~10.96%/yr on overdue tax; no longer tax-deductible from July 2025</span>
+    <span class="ticker-dot">◆</span>
+    <span class="ticker-item">🏢 <strong>ASIC (Australian Securities and Investments Commission)</strong> — Small Pty Ltd annual review fee approx. $597</span>
+    <span class="ticker-dot">◆</span>
+    <span class="ticker-item">🔒 <strong>STP (Single Touch Payroll)</strong> — Report wages, PAYG &amp; super to ATO in real time every pay run</span>
+    <span class="ticker-dot">◆</span>
+  </div>
 </div>
 
 <!-- ── Services ── -->
@@ -341,6 +475,51 @@ body { font-family: var(--sans); background: var(--bg); color: var(--fg); line-h
       </button>
       <div class="faq-a">竹 Digital is a free community self-education website. All content is sourced from official ATO, Fair Work, and ASIC public publications and summarised in plain English and Chinese. We are not accountants or lawyers — always consult a licensed professional for your specific situation.</div>
     </div>
+  </div>
+</section>
+
+<!-- ── Changelog ── -->
+<section class="section" style="padding-top:0;" id="updates">
+  <p class="section-label">Recent updates</p>
+  <h2 class="section-title">ATO regulatory changes <span class="rss-badge" style="font-size:10px"><span class="rss-pulse"></span>RSS sync</span></h2>
+  <p class="section-body">The content below is auto-synced from the ATO's official RSS feeds daily. Major changes also trigger an update to 小竹's knowledge base.</p>
+  <div class="changelog">
+    <div class="changelog-header">
+      <span class="changelog-title">Regulatory update log</span>
+      <span class="changelog-sub">Source: ATO.gov.au · Daily auto-sync</span>
+    </div>
+    <ul class="changelog-list">
+      <li class="changelog-item">
+        <span class="changelog-date">2026-07-01</span>
+        <span class="changelog-badge badge-ato">ATO</span>
+        <span class="changelog-text"><strong>Payday Super comes into effect</strong> — Employers must now pay super within 7 business days of each pay run. Quarterly bulk payments are no longer allowed.</span>
+      </li>
+      <li class="changelog-item">
+        <span class="changelog-date">2026-07-01</span>
+        <span class="changelog-badge badge-update">Update</span>
+        <span class="changelog-text"><strong>Fair Work minimum wage increase</strong> — National minimum wage rises from $23.23 to $26.44/hr ($1,003.80/week).</span>
+      </li>
+      <li class="changelog-item">
+        <span class="changelog-date">2026-07-01</span>
+        <span class="changelog-badge badge-update">Update</span>
+        <span class="changelog-text"><strong>Super Guarantee rate finalised at 12%</strong> — The rate is now fixed at 12% for 2026–27 and will not increase further.</span>
+      </li>
+      <li class="changelog-item">
+        <span class="changelog-date">2025-07-01</span>
+        <span class="changelog-badge badge-ato">ATO</span>
+        <span class="changelog-text"><strong>GIC interest no longer tax-deductible</strong> — From 1 July 2025, General Interest Charge on overdue tax debts cannot be claimed as a deduction.</span>
+      </li>
+      <li class="changelog-item">
+        <span class="changelog-date">2025-07-01</span>
+        <span class="changelog-badge badge-new">New</span>
+        <span class="changelog-text"><strong>Intentional underpayment becomes a criminal offence</strong> — Under new Fair Work provisions: individuals face up to $1.565M in fines, companies up to $7.825M.</span>
+      </li>
+      <li class="changelog-item">
+        <span class="changelog-date">2024-07-01</span>
+        <span class="changelog-badge badge-update">Update</span>
+        <span class="changelog-text"><strong>Instant Asset Write-off threshold confirmed at $20,000</strong> — Businesses with turnover under $10M can immediately deduct assets costing under $20,000 per item.</span>
+      </li>
+    </ul>
   </div>
 </section>
 

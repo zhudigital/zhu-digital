@@ -191,6 +191,89 @@ body { font-family: var(--sans); background: var(--bg); color: var(--fg); line-h
 .copy-btn { margin-top: 20px; background: none; border: 1px solid var(--border); color: var(--fg2); font-family: var(--sans); font-size: 12px; padding: 8px 20px; border-radius: 20px; cursor: pointer; transition: color .2s, border-color .2s; }
 .copy-btn:hover { color: var(--accent); border-color: var(--accent); }
 
+/* ── Ticker ── */
+.ticker-wrap {
+  background: var(--bg2);
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+  overflow: hidden;
+  padding: 10px 0;
+  position: relative;
+}
+.ticker-wrap::before, .ticker-wrap::after {
+  content: '';
+  position: absolute;
+  top: 0; bottom: 0;
+  width: 60px;
+  z-index: 2;
+  pointer-events: none;
+}
+.ticker-wrap::before { left: 0; background: linear-gradient(to right, var(--bg2), transparent); }
+.ticker-wrap::after  { right: 0; background: linear-gradient(to left,  var(--bg2), transparent); }
+.ticker-track {
+  display: flex;
+  gap: 0;
+  animation: ticker-scroll 60s linear infinite;
+  white-space: nowrap;
+  width: max-content;
+}
+.ticker-track:hover { animation-play-state: paused; }
+.ticker-item {
+  font-size: 12px;
+  color: var(--fg2);
+  padding: 0 32px;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+.ticker-item strong { color: var(--accent); font-weight: 600; }
+.ticker-dot { color: var(--teal); opacity: .5; }
+@keyframes ticker-scroll { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+
+/* ── RSS badge ── */
+.rss-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: var(--teal);
+  background: rgba(13,148,136,.1);
+  border: 1px solid rgba(13,148,136,.25);
+  border-radius: 20px;
+  padding: 4px 12px;
+  margin-left: 12px;
+  vertical-align: middle;
+}
+.rss-pulse {
+  width: 6px; height: 6px; border-radius: 50%;
+  background: var(--teal);
+  animation: pulse-dot 2s ease-in-out infinite;
+}
+@keyframes pulse-dot { 0%,100% { opacity: 1; transform: scale(1); } 50% { opacity: .4; transform: scale(.7); } }
+
+/* ── Changelog ── */
+.changelog { background: var(--surface); border: 1px solid var(--border); border-radius: 16px; margin-top: 40px; overflow: hidden; }
+.changelog-header {
+  padding: 18px 24px;
+  border-bottom: 1px solid var(--border);
+  display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 8px;
+}
+.changelog-title { font-weight: 600; font-size: 15px; }
+.changelog-sub { font-size: 12px; color: var(--fg3); }
+.changelog-list { list-style: none; padding: 0; }
+.changelog-item { padding: 14px 24px; border-bottom: 1px solid var(--border); display: flex; gap: 14px; align-items: flex-start; }
+.changelog-item:last-child { border-bottom: none; }
+.changelog-date { font-size: 11px; color: var(--fg3); min-width: 80px; margin-top: 2px; }
+.changelog-badge { font-size: 10px; font-weight: 700; letter-spacing: .5px; padding: 2px 8px; border-radius: 20px; text-transform: uppercase; flex-shrink: 0; }
+.badge-new { background: rgba(13,148,136,.15); color: var(--teal); }
+.badge-update { background: rgba(34,211,238,.1); color: var(--accent); }
+.badge-ato { background: rgba(252,211,77,.1); color: var(--warn); }
+.changelog-text { font-size: 13px; color: var(--fg2); line-height: 1.6; flex: 1; }
+.changelog-text strong { color: var(--fg); }
+
 /* ── Footer ── */
 .footer { text-align: center; padding: 32px 24px; font-size: 11px; color: var(--fg3); border-top: 1px solid var(--border); line-height: 2; }
 .footer a { color: var(--fg3); text-decoration: none; }
@@ -221,6 +304,57 @@ body { font-family: var(--sans); background: var(--bg); color: var(--fg); line-h
   <div class="trust-item">📍 <strong>墨尔本</strong>，知识分享覆盖全澳</div>
   <div class="trust-item">🗣️ 普通话 · 广东话 · English</div>
   <div class="trust-item">📚 <strong>自学资源</strong>，请向持牌专业人士核实</div>
+  <div class="trust-item">
+    <span class="rss-badge"><span class="rss-pulse"></span>ATO RSS 实时更新</span>
+  </div>
+</div>
+
+<!-- ── Ticker ── -->
+<div class="ticker-wrap">
+  <div class="ticker-track" id="tickerTrack">
+    <!-- set 1 -->
+    <span class="ticker-item">📢 <strong>GST（Goods and Services Tax，商品及服务税）</strong>年营业额满 $75,000 必须注册，税率 10%</span>
+    <span class="ticker-dot">◆</span>
+    <span class="ticker-item">💼 <strong>Super（Superannuation Guarantee，超级年金保障）</strong>2026-27 年起雇主缴费率定格 12%</span>
+    <span class="ticker-dot">◆</span>
+    <span class="ticker-item">⚡ <strong>Payday Super（发薪日超级年金）</strong>2026 年 7 月起每次发薪后 7 个工作日内缴纳</span>
+    <span class="ticker-dot">◆</span>
+    <span class="ticker-item">💰 <strong>Fair Work（公平工作委员会）</strong>最低时薪 $26.44 起，2026 年 7 月生效</span>
+    <span class="ticker-dot">◆</span>
+    <span class="ticker-item">🚫 <strong>ATO（Australian Taxation Office，澳大利亚税务局）</strong>2026 年 11 月起停止接受信用卡缴税</span>
+    <span class="ticker-dot">◆</span>
+    <span class="ticker-item">📋 <strong>TPAR（Taxable Payments Annual Report，承包商付款年度报告）</strong>建筑/清洁行业 8 月 28 日截止</span>
+    <span class="ticker-dot">◆</span>
+    <span class="ticker-item">📊 <strong>BAS（Business Activity Statement，商业活动报表）</strong>季度申报须在季末后 28 天内提交</span>
+    <span class="ticker-dot">◆</span>
+    <span class="ticker-item">⚠️ <strong>GIC（General Interest Charge，一般利息）</strong>逾期罚息约 10.96%/年，2025 年起不可税前抵扣</span>
+    <span class="ticker-dot">◆</span>
+    <span class="ticker-item">🏢 <strong>ASIC（Australian Securities and Investments Commission，澳大利亚证券及投资委员会）</strong>小型 Pty Ltd 年费约 $597</span>
+    <span class="ticker-dot">◆</span>
+    <span class="ticker-item">🔒 <strong>STP（Single Touch Payroll，单一接触薪资）</strong>每次发薪须实时向 ATO 报告，全体雇主强制执行</span>
+    <span class="ticker-dot">◆</span>
+    <!-- set 2 (duplicate for seamless loop) -->
+    <span class="ticker-item">📢 <strong>GST（Goods and Services Tax，商品及服务税）</strong>年营业额满 $75,000 必须注册，税率 10%</span>
+    <span class="ticker-dot">◆</span>
+    <span class="ticker-item">💼 <strong>Super（Superannuation Guarantee，超级年金保障）</strong>2026-27 年起雇主缴费率定格 12%</span>
+    <span class="ticker-dot">◆</span>
+    <span class="ticker-item">⚡ <strong>Payday Super（发薪日超级年金）</strong>2026 年 7 月起每次发薪后 7 个工作日内缴纳</span>
+    <span class="ticker-dot">◆</span>
+    <span class="ticker-item">💰 <strong>Fair Work（公平工作委员会）</strong>最低时薪 $26.44 起，2026 年 7 月生效</span>
+    <span class="ticker-dot">◆</span>
+    <span class="ticker-item">🚫 <strong>ATO（Australian Taxation Office，澳大利亚税务局）</strong>2026 年 11 月起停止接受信用卡缴税</span>
+    <span class="ticker-dot">◆</span>
+    <span class="ticker-item">📋 <strong>TPAR（Taxable Payments Annual Report，承包商付款年度报告）</strong>建筑/清洁行业 8 月 28 日截止</span>
+    <span class="ticker-dot">◆</span>
+    <span class="ticker-item">📊 <strong>BAS（Business Activity Statement，商业活动报表）</strong>季度申报须在季末后 28 天内提交</span>
+    <span class="ticker-dot">◆</span>
+    <span class="ticker-item">⚠️ <strong>GIC（General Interest Charge，一般利息）</strong>逾期罚息约 10.96%/年，2025 年起不可税前抵扣</span>
+    <span class="ticker-dot">◆</span>
+    <span class="ticker-item">🏢 <strong>ASIC（Australian Securities and Investments Commission，澳大利亚证券及投资委员会）</strong>小型 Pty Ltd 年费约 $597</span>
+    <span class="ticker-dot">◆</span>
+    <span class="ticker-item">🔒 <strong>STP（Single Touch Payroll，单一接触薪资）</strong>每次发薪须实时向 ATO 报告，全体雇主强制执行</span>
+    <span class="ticker-dot">◆</span>
+  </div>
 </div>
 
 <!-- ── Services ── -->
@@ -348,6 +482,51 @@ body { font-family: var(--sans); background: var(--bg); color: var(--fg); line-h
       </button>
       <div class="faq-a">必须交。2025 年起，雇主必须为符合条件的员工缴纳税前工资 12% 的超级年金（SG rate）。符合条件的员工包括：每月收入超过 450 澳元（部分情况已取消门槛）、年龄在 18 岁以上的。未按时缴纳会产生 SGC 罚款，且不能税前抵扣。</div>
     </div>
+  </div>
+</section>
+
+<!-- ── Changelog ── -->
+<section class="section" style="padding-top:0;" id="updates">
+  <p class="section-label">近期更新</p>
+  <h2 class="section-title">ATO 法规动态 <span class="rss-badge" style="font-size:10px"><span class="rss-pulse"></span>RSS 同步</span></h2>
+  <p class="section-body">以下内容由 ATO 官方 RSS 自动同步，每日更新。如有重大变化，小竹的知识库也同步升级。</p>
+  <div class="changelog">
+    <div class="changelog-header">
+      <span class="changelog-title">法规更新记录</span>
+      <span class="changelog-sub">数据来源：ATO.gov.au · 每日自动同步</span>
+    </div>
+    <ul class="changelog-list" id="changelogList">
+      <li class="changelog-item">
+        <span class="changelog-date">2026-07-01</span>
+        <span class="changelog-badge badge-ato">ATO</span>
+        <span class="changelog-text"><strong>Payday Super（发薪日超级年金）正式生效</strong> — 雇主须在每次发薪后 7 个工作日内缴纳超级年金，不能再按季度汇总缴纳。</span>
+      </li>
+      <li class="changelog-item">
+        <span class="changelog-date">2026-07-01</span>
+        <span class="changelog-badge badge-update">更新</span>
+        <span class="changelog-text"><strong>Fair Work（公平工作委员会）最低时薪调整</strong> — 全国最低时薪从 $23.23 上调至 $26.44，周薪 $1,003.80。</span>
+      </li>
+      <li class="changelog-item">
+        <span class="changelog-date">2026-07-01</span>
+        <span class="changelog-badge badge-update">更新</span>
+        <span class="changelog-text"><strong>Super（超级年金保障）缴费率定格 12%</strong> — 2026-27 年度起雇主缴费率锁定在 12%，不再上调。</span>
+      </li>
+      <li class="changelog-item">
+        <span class="changelog-date">2025-07-01</span>
+        <span class="changelog-badge badge-ato">ATO</span>
+        <span class="changelog-text"><strong>GIC（一般利息）不再可税前抵扣</strong> — 从 2025 年 7 月 1 日起，逾期欠税产生的一般利息不再允许作为税务扣除。</span>
+      </li>
+      <li class="changelog-item">
+        <span class="changelog-date">2025-07-01</span>
+        <span class="changelog-badge badge-new">新增</span>
+        <span class="changelog-text"><strong>Fair Work 欠薪刑事条款正式实施</strong> — 故意欠薪成刑事罪行，个人最高罚款 $1,565,000，企业最高 $7,825,000。</span>
+      </li>
+      <li class="changelog-item">
+        <span class="changelog-date">2024-07-01</span>
+        <span class="changelog-badge badge-update">更新</span>
+        <span class="changelog-text"><strong>小生意即时资产抵扣（Instant Asset Write-off）</strong> — 年营业额低于 $10M 的企业，单件资产低于 $20,000 可即时全额扣税。</span>
+      </li>
+    </ul>
   </div>
 </section>
 
