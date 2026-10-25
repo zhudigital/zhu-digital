@@ -1,0 +1,485 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>竹 Digital — 中文合规顾问</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,300&family=DM+Serif+Display:ital@0;1&display=swap">
+<style>
+:root {
+  --bg:       #0D1B2A;
+  --bg2:      #111D2C;
+  --surface:  #16253A;
+  --border:   rgba(34,211,238,.12);
+  --fg:       #F1F5F9;
+  --fg2:      #94A3B8;
+  --fg3:      #475569;
+  --accent:   #22D3EE;
+  --accent2:  #0E7490;
+  --teal:     #0D9488;
+  --teal-lit: #14B8A6;
+  --warn:     #FCD34D;
+  --serif:    "DM Serif Display", Georgia, serif;
+  --sans:     "DM Sans", "PingFang SC", "Microsoft YaHei", system-ui, sans-serif;
+  color-scheme: dark;
+}
+@media (prefers-color-scheme: light) {
+  :root:not([data-theme="dark"]) {
+    --bg: #F0F7FA; --bg2: #E2F0F5; --surface: #FFFFFF;
+    --border: rgba(13,148,136,.15); --fg: #0F172A; --fg2: #334155;
+    --fg3: #64748B; --accent: #0E7490; --teal: #0D9488; --teal-lit: #0F766E;
+    color-scheme: light;
+  }
+}
+:root[data-theme="light"] {
+  --bg: #F0F7FA; --bg2: #E2F0F5; --surface: #FFFFFF;
+  --border: rgba(13,148,136,.15); --fg: #0F172A; --fg2: #334155;
+  --fg3: #64748B; --accent: #0E7490; --teal: #0D9488; --teal-lit: #0F766E;
+  color-scheme: light;
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: var(--sans); background: var(--bg); color: var(--fg); line-height: 1.6; }
+
+/* ── Nav ── */
+.nav {
+  position: sticky; top: 0; z-index: 100;
+  background: rgba(13,27,42,.88); backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border);
+  padding: 14px 24px; display: flex; align-items: center; justify-content: space-between; gap: 16px;
+}
+.nav-brand { display: flex; align-items: center; gap: 10px; text-decoration: none; color: var(--accent); font-weight: 600; font-size: 15px; }
+.nav-brand span { color: var(--fg2); font-weight: 400; font-size: 13px; }
+.nav-back { font-size: 12px; color: var(--fg3); text-decoration: none; border: 1px solid var(--border); padding: 6px 14px; border-radius: 20px; transition: color .2s, border-color .2s; }
+.nav-back:hover { color: var(--accent); border-color: var(--accent); }
+
+/* ── Hero ── */
+.hero { padding: 72px 24px 56px; text-align: center; max-width: 680px; margin: 0 auto; }
+.hero-flag { font-size: 11px; letter-spacing: 2px; text-transform: uppercase; color: var(--teal); font-weight: 600; margin-bottom: 20px; }
+.hero h1 { font-family: var(--serif); font-size: clamp(28px, 5vw, 48px); line-height: 1.2; margin-bottom: 20px; }
+.hero h1 em { font-style: italic; color: var(--accent); }
+.hero-sub { font-size: 16px; color: var(--fg2); max-width: 500px; margin: 0 auto 36px; line-height: 1.8; }
+.hero-cta { display: inline-flex; align-items: center; gap: 8px; background: var(--teal); color: #fff; font-size: 15px; font-weight: 600; padding: 14px 28px; border-radius: 12px; text-decoration: none; border: none; cursor: pointer; transition: background .2s, transform .15s; }
+.hero-cta:hover { background: var(--teal-lit); transform: translateY(-2px); }
+
+/* ── Trust bar ── */
+.trust-bar { border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); background: var(--bg2); padding: 18px 24px; display: flex; justify-content: center; gap: 40px; flex-wrap: wrap; }
+.trust-item { font-size: 12px; color: var(--fg3); display: flex; align-items: center; gap: 6px; }
+.trust-item strong { color: var(--fg2); font-weight: 500; }
+
+/* ── Section ── */
+.section { max-width: 900px; margin: 0 auto; padding: 64px 24px; }
+.section-label { font-size: 11px; letter-spacing: 2px; text-transform: uppercase; color: var(--accent); font-weight: 600; margin-bottom: 12px; }
+.section-title { font-family: var(--serif); font-size: clamp(22px, 4vw, 34px); margin-bottom: 16px; line-height: 1.25; }
+.section-body { font-size: 15px; color: var(--fg2); max-width: 600px; line-height: 1.8; }
+
+/* ── Service cards ── */
+.cards { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 16px; margin-top: 40px; }
+.card { background: var(--surface); border: 1px solid var(--border); border-radius: 16px; padding: 28px 24px; transition: border-color .2s, transform .15s; }
+.card:hover { border-color: var(--accent); transform: translateY(-3px); }
+.card-icon { font-size: 28px; margin-bottom: 16px; display: block; }
+.card-title { font-weight: 600; font-size: 16px; margin-bottom: 8px; }
+.card-body { font-size: 13px; color: var(--fg2); line-height: 1.75; }
+.card-tag { display: inline-block; margin-top: 14px; font-size: 10px; letter-spacing: 1px; text-transform: uppercase; font-weight: 600; color: var(--teal); background: rgba(13,148,136,.1); padding: 3px 10px; border-radius: 20px; }
+
+/* ── FAQ ── */
+.faq { margin-top: 40px; }
+.faq-item { border-bottom: 1px solid var(--border); }
+.faq-q { width: 100%; background: none; border: none; color: var(--fg); font-family: var(--sans); font-size: 14px; font-weight: 500; text-align: left; padding: 18px 0; cursor: pointer; display: flex; justify-content: space-between; align-items: center; gap: 16px; }
+.faq-q:hover { color: var(--accent); }
+.faq-arrow { width: 20px; height: 20px; flex-shrink: 0; color: var(--fg3); transition: transform .25s; }
+.faq-item.open .faq-arrow { transform: rotate(180deg); color: var(--accent); }
+.faq-a { font-size: 13px; color: var(--fg2); line-height: 1.8; max-height: 0; overflow: hidden; transition: max-height .35s ease, padding .3s; }
+.faq-item.open .faq-a { max-height: 400px; padding-bottom: 18px; }
+
+/* ── 🤖 AI Chat Box ── */
+.chat-section { max-width: 900px; margin: 0 auto; padding: 0 24px 64px; }
+.chat-box {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  overflow: hidden;
+}
+.chat-header {
+  background: linear-gradient(135deg, rgba(13,148,136,.2), rgba(34,211,238,.08));
+  border-bottom: 1px solid var(--border);
+  padding: 20px 24px;
+  display: flex; align-items: center; gap: 12px;
+}
+.chat-avatar {
+  width: 40px; height: 40px; border-radius: 50%;
+  background: linear-gradient(135deg, var(--teal), var(--accent));
+  display: flex; align-items: center; justify-content: center;
+  font-size: 18px; flex-shrink: 0;
+}
+.chat-name { font-weight: 600; font-size: 15px; }
+.chat-status { font-size: 12px; color: var(--teal); }
+.chat-messages {
+  padding: 24px;
+  min-height: 200px;
+  max-height: 400px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+.msg { display: flex; gap: 10px; align-items: flex-start; }
+.msg.user { flex-direction: row-reverse; }
+.msg-bubble {
+  max-width: 75%;
+  padding: 12px 16px;
+  border-radius: 16px;
+  font-size: 14px;
+  line-height: 1.7;
+}
+.msg.bot .msg-bubble { background: var(--bg2); border: 1px solid var(--border); color: var(--fg); border-radius: 4px 16px 16px 16px; }
+.msg.user .msg-bubble { background: var(--teal); color: #fff; border-radius: 16px 4px 16px 16px; }
+.msg-icon { width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 14px; flex-shrink: 0; margin-top: 2px; }
+.msg.bot .msg-icon { background: linear-gradient(135deg, var(--teal), var(--accent)); }
+.msg.user .msg-icon { background: var(--bg2); border: 1px solid var(--border); }
+.chat-input-area {
+  border-top: 1px solid var(--border);
+  padding: 16px 24px;
+  display: flex; gap: 12px; align-items: flex-end;
+}
+.chat-input {
+  flex: 1;
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 12px 16px;
+  color: var(--fg);
+  font-family: var(--sans);
+  font-size: 14px;
+  resize: none;
+  min-height: 48px;
+  max-height: 120px;
+  outline: none;
+  transition: border-color .2s;
+}
+.chat-input:focus { border-color: var(--accent); }
+.chat-input::placeholder { color: var(--fg3); }
+.send-btn {
+  background: var(--teal);
+  border: none;
+  border-radius: 12px;
+  width: 48px; height: 48px;
+  display: flex; align-items: center; justify-content: center;
+  cursor: pointer;
+  color: #fff;
+  font-size: 18px;
+  transition: background .2s, transform .15s;
+  flex-shrink: 0;
+}
+.send-btn:hover { background: var(--teal-lit); transform: scale(1.05); }
+.send-btn:disabled { background: var(--fg3); cursor: not-allowed; transform: none; }
+.typing-dots { display: flex; gap: 4px; padding: 4px 0; }
+.typing-dots span {
+  width: 6px; height: 6px; border-radius: 50%;
+  background: var(--fg3); animation: bounce 1.2s infinite;
+}
+.typing-dots span:nth-child(2) { animation-delay: .2s; }
+.typing-dots span:nth-child(3) { animation-delay: .4s; }
+@keyframes bounce { 0%,60%,100% { transform: translateY(0); } 30% { transform: translateY(-6px); } }
+.chat-disclaimer { font-size: 11px; color: var(--fg3); text-align: center; padding: 0 24px 16px; }
+
+/* ── Contact ── */
+.contact-box { background: linear-gradient(135deg, rgba(13,148,136,.12), rgba(34,211,238,.06)); border: 1px solid rgba(34,211,238,.2); border-radius: 20px; padding: 48px 32px; text-align: center; }
+.contact-box h2 { font-family: var(--serif); font-size: clamp(22px, 4vw, 32px); margin-bottom: 12px; }
+.contact-box p { font-size: 15px; color: var(--fg2); max-width: 480px; margin: 0 auto 32px; }
+.contact-email { font-size: 18px; font-weight: 600; color: var(--accent); letter-spacing: .5px; display: block; margin-bottom: 8px; }
+.contact-note { font-size: 12px; color: var(--fg3); }
+.copy-btn { margin-top: 20px; background: none; border: 1px solid var(--border); color: var(--fg2); font-family: var(--sans); font-size: 12px; padding: 8px 20px; border-radius: 20px; cursor: pointer; transition: color .2s, border-color .2s; }
+.copy-btn:hover { color: var(--accent); border-color: var(--accent); }
+
+/* ── Footer ── */
+.footer { text-align: center; padding: 32px 24px; font-size: 11px; color: var(--fg3); border-top: 1px solid var(--border); line-height: 2; }
+.footer a { color: var(--fg3); text-decoration: none; }
+.footer a:hover { color: var(--accent); }
+</style>
+</head>
+<body>
+
+<!-- ── Navigation ── -->
+<nav class="nav">
+  <a href="竹Digital_向导.html" class="nav-brand">
+    🎋 竹 Digital <span>· 合规顾问</span>
+  </a>
+  <a href="consultant_en.html" class="nav-back">English →</a>
+</nav>
+
+<!-- ── Hero ── -->
+<header class="hero">
+  <p class="hero-flag">🇦🇺 澳大利亚商业合规</p>
+  <h1>用中文读懂<br><em>澳洲经营规则</em></h1>
+  <p class="hero-sub">ABN 注册、GST 申报、员工权益、超级年金……用普通话或广东话问我们，得到清晰易懂的答案。</p>
+  <a href="#chat" class="hero-cta">问小竹 →</a>
+</header>
+
+<!-- ── Trust bar ── -->
+<div class="trust-bar">
+  <div class="trust-item">🏢 <strong>ABN 29 919 594 996</strong></div>
+  <div class="trust-item">📍 <strong>墨尔本</strong>，全澳服务</div>
+  <div class="trust-item">🗣️ 普通话 · 广东话 · English</div>
+  <div class="trust-item">⚖️ <strong>合规指导</strong>，非法律意见</div>
+</div>
+
+<!-- ── Services ── -->
+<section class="section" id="services">
+  <p class="section-label">服务范围</p>
+  <h2 class="section-title">华人小生意最常遇到的合规问题</h2>
+  <p class="section-body">无论是刚起步还是已经在经营，这些领域是华人澳洲小生意主最需要搞清楚的。</p>
+  <div class="cards">
+    <div class="card">
+      <span class="card-icon">📋</span>
+      <div class="card-title">ABN 与商业结构</div>
+      <div class="card-body">个体户、公司、合伙还是信托基金？不同架构影响税务、责任和分红方式，选对了省很多麻烦。</div>
+      <span class="card-tag">起步阶段</span>
+    </div>
+    <div class="card">
+      <span class="card-icon">🧾</span>
+      <div class="card-title">GST 与 BAS 申报</div>
+      <div class="card-body">年营业额超过 75,000 澳元必须注册 GST，开发票收 10% 税，每季度申报 BAS。我们帮你搞懂流程。</div>
+      <span class="card-tag">税务</span>
+    </div>
+    <div class="card">
+      <span class="card-icon">👥</span>
+      <div class="card-title">Fair Work 雇佣法</div>
+      <div class="card-body">请员工之前必须了解：最低工资、工资单、带薪年假、病假、临时工与正式工的区别。</div>
+      <span class="card-tag">雇员</span>
+    </div>
+    <div class="card">
+      <span class="card-icon">🏦</span>
+      <div class="card-title">超级年金 Super</div>
+      <div class="card-body">雇主必须为符合条件的员工缴纳 12% 的超级年金。我们解释谁需要缴、什么时候缴、不缴的后果。</div>
+      <span class="card-tag">雇员</span>
+    </div>
+    <div class="card">
+      <span class="card-icon">🔄</span>
+      <div class="card-title">记账与单据保存</div>
+      <div class="card-body">税务局要求大多数商业记录保存 5 年。我们帮你建立简单的收据、发票和工资单管理系统。</div>
+      <span class="card-tag">日常运营</span>
+    </div>
+    <div class="card">
+      <span class="card-icon">🌏</span>
+      <div class="card-title">海外收入与进口</div>
+      <div class="card-body">从中国收款或进口商品？澳洲对境外收入和进口服务的 GST 有特别规定，不了解容易踩坑。</div>
+      <span class="card-tag">跨境</span>
+    </div>
+  </div>
+</section>
+
+<!-- ── 🤖 AI Chat ── -->
+<section class="chat-section" id="chat">
+  <p class="section-label" style="text-align:center;margin-bottom:8px">AI 助手</p>
+  <h2 class="section-title" style="text-align:center;margin-bottom:8px;font-family:var(--serif)">问小竹，用中文</h2>
+  <p class="section-body" style="text-align:center;margin:0 auto 24px">小竹了解澳洲税务和合规规则，支持普通话、广东话和英文提问。</p>
+
+  <div class="chat-box">
+    <div class="chat-header">
+      <div class="chat-avatar">🎋</div>
+      <div>
+        <div class="chat-name">小竹 · Xiǎo Zhú</div>
+        <div class="chat-status">● 在线 — 澳洲商业合规助手</div>
+      </div>
+    </div>
+
+    <div class="chat-messages" id="chatMessages">
+      <div class="msg bot">
+        <div class="msg-icon">🎋</div>
+        <div class="msg-bubble">
+          你好！我是小竹，你的澳洲商业合规助手。我可以帮你了解 ABN、GST、BAS、Fair Work、超级年金等方面的知识。<br><br>
+          用普通话、广东话或英文问我都可以。例如：<em>"我需要注册 GST 吗？"</em> 或 <em>"员工最低工资是多少？"</em>
+        </div>
+      </div>
+    </div>
+
+    <div class="chat-input-area">
+      <textarea
+        class="chat-input"
+        id="chatInput"
+        placeholder="用中文或英文提问，例如：年营业额多少才需要注册 GST？"
+        rows="1"
+        onkeydown="handleKey(event)"
+        oninput="autoResize(this)"
+      ></textarea>
+      <button class="send-btn" id="sendBtn" onclick="sendMessage()" title="发送">➤</button>
+    </div>
+    <div class="chat-disclaimer">ℹ️ 小竹提供的是一般性合规知识，不构成法律或税务建议。具体情况请咨询持牌专业人士。</div>
+  </div>
+</section>
+
+<!-- ── FAQ ── -->
+<section class="section" style="padding-top:0;" id="faq">
+  <p class="section-label">常见问题</p>
+  <h2 class="section-title">华人小生意主最常问的问题</h2>
+  <div class="faq">
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)">
+        我只是做兼职副业，需要 ABN 吗？
+        <svg class="faq-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+      </button>
+      <div class="faq-a">如果你在经营一门生意（即使是兼职或在家），通常需要 ABN。税务局的判断标准是：你是否有盈利意图并且重复从事该活动。个体户可以在 abr.gov.au 免费注册 ABN。没有 ABN 的话，付款方可能会从你的收入中扣留 47% 的预扣税。</div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)">
+        什么情况下必须注册 GST？
+        <svg class="faq-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+      </button>
+      <div class="faq-a">当你的 GST 营业额达到或预计在 12 个月内达到 75,000 澳元时，必须注册 GST。网约车和出租车司机从第一分钱收入开始就必须注册。注册后，大多数商品和服务需加收 10% GST，并按季度申报商业活动报表（BAS）。</div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)">
+        我可以把员工当承包商来雇吗？
+        <svg class="faq-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+      </button>
+      <div class="faq-a">不能随便这样做。税务局和 Fair Work 有严格的判断标准来区分真正的承包商和实际上的雇员。如果把雇员错误分类为承包商，可能面临补发工资、补缴 Super 和罚款的风险。</div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)">
+        竹 Digital 是持牌会计师或律师吗？
+        <svg class="faq-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+      </button>
+      <div class="faq-a">不是。我们提供的是合规知识和教育，不是法律或税务建议。我们帮助你用通俗易懂的语言理解自己的义务，并在你的情况需要持牌专业人士时为你指引方向。</div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)">
+        超级年金一定要交吗？交多少？
+        <svg class="faq-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+      </button>
+      <div class="faq-a">必须交。2025 年起，雇主必须为符合条件的员工缴纳税前工资 12% 的超级年金（SG rate）。符合条件的员工包括：每月收入超过 450 澳元（部分情况已取消门槛）、年龄在 18 岁以上的。未按时缴纳会产生 SGC 罚款，且不能税前抵扣。</div>
+    </div>
+  </div>
+</section>
+
+<!-- ── Contact ── -->
+<section class="section" style="padding-top:0;" id="contact">
+  <div class="contact-box">
+    <h2>准备好了解更多？</h2>
+    <p>发邮件告诉我们你的生意情况和最想搞清楚的合规问题，我们会在一个工作日内回复。</p>
+    <span class="contact-email">hello@zhudigital.com.au</span>
+    <div class="contact-note">墨尔本 · 普通话、广东话、英文均可 · 一个工作日内回复</div>
+    <button class="copy-btn" onclick="copyEmail(this)">复制邮箱地址</button>
+  </div>
+</section>
+
+<!-- ── Footer ── -->
+<footer class="footer">
+  <div>🎋 竹 Digital · 墨尔本，维多利亚州 · ABN 29 919 594 996</div>
+  <div style="margin-top:6px;">
+    本站内容仅供教育参考，不构成法律或财务建议 ·
+    <a href="consultant_en.html">English →</a>
+  </div>
+</footer>
+
+<script>
+// ── API 地址 ── 正式版：Render 服务器
+const API_URL = 'https://zhu-digital-rag.onrender.com/ask';
+
+// ── 发送消息 ──
+async function sendMessage() {
+  const input = document.getElementById('chatInput');
+  const question = input.value.trim();
+  if (!question) return;
+
+  addMessage('user', question);
+  input.value = '';
+  autoResize(input);
+
+  const loadingId = addLoading();
+  document.getElementById('sendBtn').disabled = true;
+
+  try {
+    const response = await fetch(API_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ question })
+    });
+
+    const data = await response.json();
+    removeLoading(loadingId);
+
+    if (data.answer) {
+      addMessage('bot', data.answer);
+    } else if (data.error) {
+      addMessage('bot', '⚠️ 出现错误：' + data.error);
+    }
+  } catch (err) {
+    removeLoading(loadingId);
+    addMessage('bot', '⚠️ 无法连接到服务器。免费服务器可能正在唤醒（首次请求约需 50 秒）。请稍候再试。');
+  }
+
+  document.getElementById('sendBtn').disabled = false;
+  input.focus();
+}
+
+function addMessage(role, text) {
+  const container = document.getElementById('chatMessages');
+  const div = document.createElement('div');
+  div.className = 'msg ' + role;
+  div.innerHTML = `
+    <div class="msg-icon">${role === 'bot' ? '🎋' : '👤'}</div>
+    <div class="msg-bubble">${escapeHtml(text).replace(/\n/g, '<br>')}</div>
+  `;
+  container.appendChild(div);
+  container.scrollTop = container.scrollHeight;
+}
+
+function addLoading() {
+  const container = document.getElementById('chatMessages');
+  const id = 'loading-' + Date.now();
+  const div = document.createElement('div');
+  div.className = 'msg bot';
+  div.id = id;
+  div.innerHTML = `
+    <div class="msg-icon">🎋</div>
+    <div class="msg-bubble"><div class="typing-dots"><span></span><span></span><span></span></div></div>
+  `;
+  container.appendChild(div);
+  container.scrollTop = container.scrollHeight;
+  return id;
+}
+
+function removeLoading(id) {
+  const el = document.getElementById(id);
+  if (el) el.remove();
+}
+
+function escapeHtml(text) {
+  return text.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
+function handleKey(e) {
+  if (e.key === 'Enter' && !e.shiftKey) {
+    e.preventDefault();
+    sendMessage();
+  }
+}
+
+function autoResize(el) {
+  el.style.height = 'auto';
+  el.style.height = Math.min(el.scrollHeight, 120) + 'px';
+}
+
+function toggleFaq(btn) {
+  const item = btn.closest('.faq-item');
+  const isOpen = item.classList.contains('open');
+  document.querySelectorAll('.faq-item.open').forEach(el => el.classList.remove('open'));
+  if (!isOpen) item.classList.add('open');
+}
+
+function copyEmail(btn) {
+  navigator.clipboard.writeText('hello@zhudigital.com.au').then(() => {
+    btn.textContent = '✓ 已复制！';
+    setTimeout(() => btn.textContent = '复制邮箱地址', 2000);
+  });
+}
+
+document.querySelectorAll('a[href^="#"]').forEach(a => {
+  a.addEventListener('click', e => {
+    const target = document.querySelector(a.getAttribute('href'));
+    if (target) { e.preventDefault(); target.scrollIntoView({ behavior: 'smooth', block: 'start' }); }
+  });
+});
+</script>
+</body>
+</html>
