@@ -2,8 +2,9 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
+<meta name="robots" content="noindex, nofollow">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<title>竹 Digital — English Advisor</title>
+<title>竹 Digital — Personal Study Notes</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,300&family=DM+Serif+Display:ital@0;1&display=swap">
 <style>
 :root {
@@ -182,6 +183,16 @@ body { font-family: var(--sans); background: var(--bg); color: var(--fg); line-h
 @keyframes bounce { 0%,60%,100% { transform: translateY(0); } 30% { transform: translateY(-6px); } }
 .chat-disclaimer { font-size: 11px; color: var(--fg3); text-align: center; padding: 0 24px 16px; }
 
+/* ── Access gate ── */
+.gate { border-top: 1px solid var(--border); padding: 20px 24px; display: flex; flex-wrap: wrap; gap: 12px; align-items: center; }
+.gate-label { font-size: 13px; color: var(--fg2); flex: 1 1 100%; }
+.gate-input { flex: 1 1 180px; min-width: 0; background: var(--bg2); border: 1px solid var(--border); border-radius: 12px; padding: 12px 16px; color: var(--fg); font-family: var(--sans); font-size: 14px; outline: none; transition: border-color .2s; }
+.gate-input:focus { border-color: var(--accent); }
+.gate-btn { background: var(--teal); border: none; border-radius: 12px; padding: 12px 22px; color: #fff; font-family: var(--sans); font-size: 14px; font-weight: 600; cursor: pointer; transition: background .2s; }
+.gate-btn:hover { background: var(--teal-lit); }
+.gate-btn:disabled { background: var(--fg3); cursor: not-allowed; }
+.gate-msg { flex: 1 1 100%; font-size: 12px; color: var(--warn); min-height: 16px; }
+
 /* ── Contact ── */
 .contact-box { background: linear-gradient(135deg, rgba(13,148,136,.12), rgba(34,211,238,.06)); border: 1px solid rgba(34,211,238,.2); border-radius: 20px; padding: 48px 32px; text-align: center; }
 .contact-box h2 { font-family: var(--serif); font-size: clamp(22px, 4vw, 32px); margin-bottom: 12px; }
@@ -285,10 +296,10 @@ body { font-family: var(--sans); background: var(--bg); color: var(--fg); line-h
 
 <!-- ── Navigation ── -->
 <nav class="nav">
-  <a href="竹Digital_向导.html" class="nav-brand">
+  <a href="consultant_en.html" class="nav-brand">
     🎋 竹 Digital <span>· Study Notes</span>
   </a>
-  <a href="竹Digital_向导.html" class="nav-back">← Change language</a>
+  <a href="consultant_cn.html" class="nav-back">中文版 →</a>
 </nav>
 
 <!-- ── Hero ── -->
@@ -301,7 +312,6 @@ body { font-family: var(--sans); background: var(--bg); color: var(--fg); line-h
 
 <!-- ── Trust bar ── -->
 <div class="trust-bar">
-  <div class="trust-item">🏢 <strong>ABN 29 919 594 996</strong></div>
   <div class="trust-item">📍 <strong>Melbourne-based</strong>, knowledge shared nationally</div>
   <div class="trust-item">🗣️ English · 中文 · 廣東話</div>
   <div class="trust-item">📚 <strong>Self-education resource only</strong> — verify with a licensed professional</div>
@@ -373,7 +383,7 @@ body { font-family: var(--sans); background: var(--bg); color: var(--fg); line-h
     <div class="card">
       <span class="card-icon">🧾</span>
       <div class="card-title">GST &amp; BAS Obligations</div>
-      <div class="card-body">Once your turnover exceeds A$75,000 you must register for GST. We explain registration, charging GST, and quarterly BAS lodgement.</div>
+      <div class="card-body">Once your turnover exceeds A$75,000 you must register for GST. Notes on registration, charging GST, and quarterly BAS lodgement.</div>
       <span class="card-tag">Tax</span>
     </div>
     <div class="card">
@@ -385,13 +395,13 @@ body { font-family: var(--sans); background: var(--bg); color: var(--fg); line-h
     <div class="card">
       <span class="card-icon">🏦</span>
       <div class="card-title">Superannuation</div>
-      <div class="card-body">Employers must contribute 12% super for eligible workers. We clarify who qualifies, when payments are due, and how to avoid penalties.</div>
+      <div class="card-body">Employers must contribute 12% super for eligible workers. Notes on who qualifies, when payments are due, and how penalties arise.</div>
       <span class="card-tag">Employees</span>
     </div>
     <div class="card">
       <span class="card-icon">🔄</span>
       <div class="card-title">Record Keeping</div>
-      <div class="card-body">The ATO requires you to keep most business records for 5 years. We help you set up simple systems for receipts, invoicing, and payroll.</div>
+      <div class="card-body">The ATO requires you to keep most business records for 5 years. Notes on keeping receipts, invoices, and payroll records.</div>
       <span class="card-tag">Ongoing</span>
     </div>
     <div class="card">
@@ -444,7 +454,7 @@ body { font-family: var(--sans); background: var(--bg); color: var(--fg); line-h
       <div class="chat-avatar">🎋</div>
       <div>
         <div class="chat-name">小竹 · Xiǎo Zhú</div>
-        <div class="chat-status">● Online — Australian compliance assistant</div>
+        <div class="chat-status">● Online — Australian rules study assistant</div>
       </div>
     </div>
 
@@ -452,13 +462,19 @@ body { font-family: var(--sans); background: var(--bg); color: var(--fg); line-h
       <div class="msg bot">
         <div class="msg-icon">🎋</div>
         <div class="msg-bubble">
-          Hi! I'm 小竹, your Australian business compliance assistant. I can help you understand ABN, GST, BAS, Fair Work, Superannuation, and more.<br><br>
+          Hi! I'm 小竹, your study assistant for Australian business rules. I can help you understand ABN, GST, BAS, Fair Work, Superannuation, and more.<br><br>
           Ask me anything — in English or Chinese. For example: <em>"Do I need to register for GST?"</em> or <em>"What is the minimum wage?"</em>
         </div>
       </div>
     </div>
 
-    <div class="chat-input-area">
+    <div class="gate" id="gate">
+      <div class="gate-label">🔒 Enter the access code to ask 小竹</div>
+      <input class="gate-input" id="gateInput" type="password" autocomplete="off" placeholder="Access code" onkeydown="if(event.key==='Enter')unlock()">
+      <button class="gate-btn" id="gateBtn" onclick="unlock()">Unlock</button>
+      <div class="gate-msg" id="gateMsg"></div>
+    </div>
+    <div class="chat-input-area" id="inputArea" style="display:none">
       <textarea
         class="chat-input"
         id="chatInput"
@@ -476,7 +492,7 @@ body { font-family: var(--sans); background: var(--bg); color: var(--fg); line-h
 <!-- ── FAQ ── -->
 <section class="section" style="padding-top:0;" id="faq">
   <p class="section-label">Common questions</p>
-  <h2 class="section-title">Things we're asked most often</h2>
+  <h2 class="section-title">Common questions</h2>
   <div class="faq">
     <div class="faq-item">
       <button class="faq-q" onclick="toggleFaq(this)">
@@ -504,7 +520,7 @@ body { font-family: var(--sans); background: var(--bg); color: var(--fg); line-h
         What is 竹 Digital?
         <svg class="faq-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
       </button>
-      <div class="faq-a">竹 Digital is a free community self-education website. All content is sourced from official ATO, Fair Work, and ASIC public publications and summarised in plain English and Chinese. We are not accountants or lawyers — always consult a licensed professional for your specific situation.</div>
+      <div class="faq-a">竹 Digital is a personal study-notes website. All content is sourced from official ATO, Fair Work, and ASIC public publications and summarised in plain English and Chinese. We are not accountants or lawyers — always consult a licensed professional for your specific situation.</div>
     </div>
   </div>
 </section>
@@ -567,7 +583,7 @@ body { font-family: var(--sans); background: var(--bg); color: var(--fg); line-h
 
 <!-- ── Footer ── -->
 <footer class="footer">
-  <div>🎋 竹 Digital · Melbourne, Victoria · ABN 29 919 594 996</div>
+  <div>🎋 竹 Digital · Melbourne, Victoria</div>
   <div style="margin-top:6px;">
     Personal study notes · sourced from official ATO &amp; Fair Work public documents ·
     <a href="consultant_cn.html">中文版 →</a>
@@ -577,12 +593,64 @@ body { font-family: var(--sans); background: var(--bg); color: var(--fg); line-h
 <script>
 // ── API 地址 ── 正式版：Render 服务器
 const API_URL = 'https://zhu-digital-rag.onrender.com/ask';
+const CHECK_URL = 'https://zhu-digital-rag.onrender.com/check';
+
+// ── Access code: kept only for this browser session (cleared when the tab closes) ──
+const CODE_KEY = 'zhu_access_code';
+let accessCode = '';
+try { accessCode = sessionStorage.getItem(CODE_KEY) || ''; } catch (e) {}
+
+function saveCode(c) { try { sessionStorage.setItem(CODE_KEY, c); } catch (e) {} }
+function clearCode() { accessCode = ''; try { sessionStorage.removeItem(CODE_KEY); } catch (e) {} }
+
+function showChat() {
+  document.getElementById('gate').style.display = 'none';
+  document.getElementById('inputArea').style.display = 'flex';
+}
+
+function showGate(msg) {
+  document.getElementById('gate').style.display = 'flex';
+  document.getElementById('inputArea').style.display = 'none';
+  document.getElementById('gateMsg').textContent = msg || '';
+  document.getElementById('gateInput').focus();
+}
+
+function relock(msg) { clearCode(); showGate(msg); }
+
+async function unlock() {
+  const el = document.getElementById('gateInput');
+  const msg = document.getElementById('gateMsg');
+  const btn = document.getElementById('gateBtn');
+  const code = el.value.trim();
+  if (!code) { msg.textContent = 'Please enter the access code'; return; }
+  btn.disabled = true;
+  msg.textContent = 'Checking… (the server may need ~50 seconds to wake up)';
+  try {
+    const r = await fetch(CHECK_URL, { method: 'POST', headers: { 'X-Access-Code': code } });
+    if (r.ok) {
+      accessCode = code; saveCode(code);
+      el.value = ''; msg.textContent = '';
+      showChat();
+      document.getElementById('chatInput').focus();
+    } else if (r.status === 429) {
+      msg.textContent = 'Too many attempts, please try again later';
+    } else {
+      msg.textContent = 'Incorrect access code';
+    }
+  } catch (err) {
+    msg.textContent = '☕ Xiao Zhu is brewing coffee, please try again in ~50 seconds!';
+  }
+  btn.disabled = false;
+}
+
+if (accessCode) showChat();
 
 // ── 发送消息 ──
 async function sendMessage() {
   const input = document.getElementById('chatInput');
   const question = input.value.trim();
   if (!question) return;
+  if (!accessCode) { showGate('Please enter the access code first'); return; }
 
   // 显示用户消息
   addMessage('user', question);
@@ -598,10 +666,17 @@ async function sendMessage() {
   try {
     const response = await fetch(API_URL, {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      headers: { 'Content-Type': 'application/json', 'X-Access-Code': accessCode },
       body: JSON.stringify({ question })
     });
 
+    if (response.status === 401 || response.status === 429) {
+      removeLoading(loadingId);
+      input.value = question;
+      relock(response.status === 401 ? 'Incorrect access code, please try again' : 'Too many attempts, please try again later');
+      document.getElementById('sendBtn').disabled = false;
+      return;
+    }
     const data = await response.json();
     removeLoading(loadingId);
 

@@ -2,8 +2,9 @@
 <html lang="zh-Hans">
 <head>
 <meta charset="UTF-8">
+<meta name="robots" content="noindex, nofollow">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<title>竹 Digital — 中文合规顾问</title>
+<title>竹 Digital — 个人学习笔记</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,300&family=DM+Serif+Display:ital@0;1&display=swap">
 <style>
 :root {
@@ -182,6 +183,16 @@ body { font-family: var(--sans); background: var(--bg); color: var(--fg); line-h
 @keyframes bounce { 0%,60%,100% { transform: translateY(0); } 30% { transform: translateY(-6px); } }
 .chat-disclaimer { font-size: 11px; color: var(--fg3); text-align: center; padding: 0 24px 16px; }
 
+/* ── Access gate ── */
+.gate { border-top: 1px solid var(--border); padding: 20px 24px; display: flex; flex-wrap: wrap; gap: 12px; align-items: center; }
+.gate-label { font-size: 13px; color: var(--fg2); flex: 1 1 100%; }
+.gate-input { flex: 1 1 180px; min-width: 0; background: var(--bg2); border: 1px solid var(--border); border-radius: 12px; padding: 12px 16px; color: var(--fg); font-family: var(--sans); font-size: 14px; outline: none; transition: border-color .2s; }
+.gate-input:focus { border-color: var(--accent); }
+.gate-btn { background: var(--teal); border: none; border-radius: 12px; padding: 12px 22px; color: #fff; font-family: var(--sans); font-size: 14px; font-weight: 600; cursor: pointer; transition: background .2s; }
+.gate-btn:hover { background: var(--teal-lit); }
+.gate-btn:disabled { background: var(--fg3); cursor: not-allowed; }
+.gate-msg { flex: 1 1 100%; font-size: 12px; color: var(--warn); min-height: 16px; }
+
 /* ── Contact ── */
 .contact-box { background: linear-gradient(135deg, rgba(13,148,136,.12), rgba(34,211,238,.06)); border: 1px solid rgba(34,211,238,.2); border-radius: 20px; padding: 48px 32px; text-align: center; }
 .contact-box h2 { font-family: var(--serif); font-size: clamp(22px, 4vw, 32px); margin-bottom: 12px; }
@@ -285,7 +296,7 @@ body { font-family: var(--sans); background: var(--bg); color: var(--fg); line-h
 
 <!-- ── Navigation ── -->
 <nav class="nav">
-  <a href="竹Digital_向导.html" class="nav-brand">
+  <a href="consultant_cn.html" class="nav-brand">
     🎋 竹 Digital <span>· 学习笔记</span>
   </a>
   <a href="consultant_en.html" class="nav-back">English →</a>
@@ -301,7 +312,6 @@ body { font-family: var(--sans); background: var(--bg); color: var(--fg); line-h
 
 <!-- ── Trust bar ── -->
 <div class="trust-bar">
-  <div class="trust-item">🏢 <strong>ABN 29 919 594 996</strong></div>
   <div class="trust-item">📍 <strong>墨尔本</strong>，知识分享覆盖全澳</div>
   <div class="trust-item">🗣️ 普通话 · 广东话 · English</div>
   <div class="trust-item">📚 <strong>自学资源</strong>，请向持牌专业人士核实</div>
@@ -373,7 +383,7 @@ body { font-family: var(--sans); background: var(--bg); color: var(--fg); line-h
     <div class="card">
       <span class="card-icon">🧾</span>
       <div class="card-title">GST 与 BAS 申报</div>
-      <div class="card-body">年营业额超过 75,000 澳元必须注册 GST，开发票收 10% 税，每季度申报 BAS。我们帮你搞懂流程。</div>
+      <div class="card-body">年营业额超过 75,000 澳元必须注册 GST，开发票收 10% 税，每季度申报 BAS。整理注册、开票和申报的基本流程。</div>
       <span class="card-tag">税务</span>
     </div>
     <div class="card">
@@ -385,13 +395,13 @@ body { font-family: var(--sans); background: var(--bg); color: var(--fg); line-h
     <div class="card">
       <span class="card-icon">🏦</span>
       <div class="card-title">超级年金 Super</div>
-      <div class="card-body">雇主必须为符合条件的员工缴纳 12% 的超级年金。我们解释谁需要缴、什么时候缴、不缴的后果。</div>
+      <div class="card-body">雇主必须为符合条件的员工缴纳 12% 的超级年金。整理谁需要缴、什么时候缴、不缴的后果。</div>
       <span class="card-tag">雇员</span>
     </div>
     <div class="card">
       <span class="card-icon">🔄</span>
       <div class="card-title">记账与单据保存</div>
-      <div class="card-body">税务局要求大多数商业记录保存 5 年。我们帮你建立简单的收据、发票和工资单管理系统。</div>
+      <div class="card-body">税务局要求大多数商业记录保存 5 年。整理收据、发票和工资单的基本保存方法。</div>
       <span class="card-tag">日常运营</span>
     </div>
     <div class="card">
@@ -444,7 +454,7 @@ body { font-family: var(--sans); background: var(--bg); color: var(--fg); line-h
       <div class="chat-avatar">🎋</div>
       <div>
         <div class="chat-name">小竹 · Xiǎo Zhú</div>
-        <div class="chat-status">● 在线 — 澳洲商业合规助手</div>
+        <div class="chat-status">● 在线 — 澳洲规则学习助手</div>
       </div>
     </div>
 
@@ -452,13 +462,19 @@ body { font-family: var(--sans); background: var(--bg); color: var(--fg); line-h
       <div class="msg bot">
         <div class="msg-icon">🎋</div>
         <div class="msg-bubble">
-          你好！我是小竹，你的澳洲商业合规助手。我可以帮你了解 ABN、GST、BAS、Fair Work、超级年金等方面的知识。<br><br>
+          你好！我是小竹，你的澳洲经营规则学习助手。我可以帮你了解 ABN、GST、BAS、Fair Work、超级年金等方面的知识。<br><br>
           用普通话、广东话或英文问我都可以。例如：<em>"我需要注册 GST 吗？"</em> 或 <em>"员工最低工资是多少？"</em>
         </div>
       </div>
     </div>
 
-    <div class="chat-input-area">
+    <div class="gate" id="gate">
+      <div class="gate-label">🔒 请输入口令后再向小竹提问</div>
+      <input class="gate-input" id="gateInput" type="password" autocomplete="off" placeholder="口令" onkeydown="if(event.key==='Enter')unlock()">
+      <button class="gate-btn" id="gateBtn" onclick="unlock()">解锁</button>
+      <div class="gate-msg" id="gateMsg"></div>
+    </div>
+    <div class="chat-input-area" id="inputArea" style="display:none">
       <textarea
         class="chat-input"
         id="chatInput"
@@ -476,7 +492,7 @@ body { font-family: var(--sans); background: var(--bg); color: var(--fg); line-h
 <!-- ── FAQ ── -->
 <section class="section" style="padding-top:0;" id="faq">
   <p class="section-label">常见问题</p>
-  <h2 class="section-title">华人小生意主最常问的问题</h2>
+  <h2 class="section-title">常见问题整理</h2>
   <div class="faq">
     <div class="faq-item">
       <button class="faq-q" onclick="toggleFaq(this)">
@@ -574,7 +590,7 @@ body { font-family: var(--sans); background: var(--bg); color: var(--fg); line-h
 
 <!-- ── Footer ── -->
 <footer class="footer">
-  <div>🎋 竹 Digital · 墨尔本，维多利亚州 · ABN 29 919 594 996</div>
+  <div>🎋 竹 Digital · 墨尔本，维多利亚州</div>
   <div style="margin-top:6px;">
     个人学习笔记 · 内容摘自 ATO、Fair Work 官方公开文件 ·
     <a href="consultant_en.html">English →</a>
@@ -584,12 +600,64 @@ body { font-family: var(--sans); background: var(--bg); color: var(--fg); line-h
 <script>
 // ── API 地址 ── 正式版：Render 服务器
 const API_URL = 'https://zhu-digital-rag.onrender.com/ask';
+const CHECK_URL = 'https://zhu-digital-rag.onrender.com/check';
+
+// ── Access code: kept only for this browser session (cleared when the tab closes) ──
+const CODE_KEY = 'zhu_access_code';
+let accessCode = '';
+try { accessCode = sessionStorage.getItem(CODE_KEY) || ''; } catch (e) {}
+
+function saveCode(c) { try { sessionStorage.setItem(CODE_KEY, c); } catch (e) {} }
+function clearCode() { accessCode = ''; try { sessionStorage.removeItem(CODE_KEY); } catch (e) {} }
+
+function showChat() {
+  document.getElementById('gate').style.display = 'none';
+  document.getElementById('inputArea').style.display = 'flex';
+}
+
+function showGate(msg) {
+  document.getElementById('gate').style.display = 'flex';
+  document.getElementById('inputArea').style.display = 'none';
+  document.getElementById('gateMsg').textContent = msg || '';
+  document.getElementById('gateInput').focus();
+}
+
+function relock(msg) { clearCode(); showGate(msg); }
+
+async function unlock() {
+  const el = document.getElementById('gateInput');
+  const msg = document.getElementById('gateMsg');
+  const btn = document.getElementById('gateBtn');
+  const code = el.value.trim();
+  if (!code) { msg.textContent = '请输入口令'; return; }
+  btn.disabled = true;
+  msg.textContent = '验证中…（服务器休眠时可能需要约50秒唤醒）';
+  try {
+    const r = await fetch(CHECK_URL, { method: 'POST', headers: { 'X-Access-Code': code } });
+    if (r.ok) {
+      accessCode = code; saveCode(code);
+      el.value = ''; msg.textContent = '';
+      showChat();
+      document.getElementById('chatInput').focus();
+    } else if (r.status === 429) {
+      msg.textContent = '尝试次数过多，请稍后再试';
+    } else {
+      msg.textContent = '口令不正确';
+    }
+  } catch (err) {
+    msg.textContent = '☕ 小竹正在泡咖啡，请约50秒后再试一次～';
+  }
+  btn.disabled = false;
+}
+
+if (accessCode) showChat();
 
 // ── 发送消息 ──
 async function sendMessage() {
   const input = document.getElementById('chatInput');
   const question = input.value.trim();
   if (!question) return;
+  if (!accessCode) { showGate('请先输入口令'); return; }
 
   addMessage('user', question);
   input.value = '';
@@ -601,10 +669,17 @@ async function sendMessage() {
   try {
     const response = await fetch(API_URL, {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      headers: { 'Content-Type': 'application/json', 'X-Access-Code': accessCode },
       body: JSON.stringify({ question })
     });
 
+    if (response.status === 401 || response.status === 429) {
+      removeLoading(loadingId);
+      input.value = question;
+      relock(response.status === 401 ? '口令不正确，请重新输入' : '尝试次数过多，请稍后再试');
+      document.getElementById('sendBtn').disabled = false;
+      return;
+    }
     const data = await response.json();
     removeLoading(loadingId);
 
