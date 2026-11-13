@@ -75,6 +75,7 @@ body { font-family: var(--sans); background: var(--bg); color: var(--fg); line-h
 
 /* ── Service cards ── */
 .cards { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 16px; margin-top: 40px; }
+a.card { display: block; color: inherit; text-decoration: none; }
 .card { background: var(--surface); border: 1px solid var(--border); border-radius: 16px; padding: 28px 24px; transition: border-color .2s, transform .15s; }
 .card:hover { border-color: var(--accent); transform: translateY(-3px); }
 .card-icon { font-size: 28px; margin-bottom: 16px; display: block; }
@@ -340,7 +341,7 @@ body { font-family: var(--sans); background: var(--bg); color: var(--fg); line-h
     <span class="ticker-dot">◆</span>
     <span class="ticker-item">⚠️ <strong>GIC（General Interest Charge，一般利息）</strong>逾期罚息约 10.96%/年，2025 年起不可税前抵扣</span>
     <span class="ticker-dot">◆</span>
-    <span class="ticker-item">🏢 <strong>ASIC（Australian Securities and Investments Commission，澳大利亚证券及投资委员会）</strong>小型 Pty Ltd 年费约 $597</span>
+    <span class="ticker-item">🏢 <strong>ASIC（Australian Securities and Investments Commission，澳大利亚证券及投资委员会）</strong>小型 Pty Ltd 年费以 ASIC 官网为准</span>
     <span class="ticker-dot">◆</span>
     <span class="ticker-item">🔒 <strong>STP（Single Touch Payroll，单一接触薪资）</strong>每次发薪须实时向 ATO 报告，全体雇主强制执行</span>
     <span class="ticker-dot">◆</span>
@@ -361,7 +362,7 @@ body { font-family: var(--sans); background: var(--bg); color: var(--fg); line-h
     <span class="ticker-dot">◆</span>
     <span class="ticker-item">⚠️ <strong>GIC（General Interest Charge，一般利息）</strong>逾期罚息约 10.96%/年，2025 年起不可税前抵扣</span>
     <span class="ticker-dot">◆</span>
-    <span class="ticker-item">🏢 <strong>ASIC（Australian Securities and Investments Commission，澳大利亚证券及投资委员会）</strong>小型 Pty Ltd 年费约 $597</span>
+    <span class="ticker-item">🏢 <strong>ASIC（Australian Securities and Investments Commission，澳大利亚证券及投资委员会）</strong>小型 Pty Ltd 年费以 ASIC 官网为准</span>
     <span class="ticker-dot">◆</span>
     <span class="ticker-item">🔒 <strong>STP（Single Touch Payroll，单一接触薪资）</strong>每次发薪须实时向 ATO 报告，全体雇主强制执行</span>
     <span class="ticker-dot">◆</span>
@@ -374,42 +375,42 @@ body { font-family: var(--sans); background: var(--bg); color: var(--fg); line-h
   <h2 class="section-title">华人小生意最常遇到的合规问题</h2>
   <p class="section-body">无论是刚起步还是已经在经营，这些领域是华人澳洲小生意主最需要搞清楚的。</p>
   <div class="cards">
-    <div class="card">
+    <a class="card" href="abn-structure.html">
       <span class="card-icon">📋</span>
       <div class="card-title">ABN 与商业结构</div>
       <div class="card-body">个体户、公司、合伙还是信托基金？不同架构影响税务、责任和分红方式，选对了省很多麻烦。</div>
       <span class="card-tag">起步阶段</span>
-    </div>
-    <div class="card">
+    </a>
+    <a class="card" href="gst-bas.html">
       <span class="card-icon">🧾</span>
       <div class="card-title">GST 与 BAS 申报</div>
       <div class="card-body">年营业额超过 75,000 澳元必须注册 GST，开发票收 10% 税，每季度申报 BAS。整理注册、开票和申报的基本流程。</div>
       <span class="card-tag">税务</span>
-    </div>
-    <div class="card">
+    </a>
+    <a class="card" href="fair-work.html">
       <span class="card-icon">👥</span>
       <div class="card-title">Fair Work 雇佣法</div>
       <div class="card-body">请员工之前必须了解：最低工资、工资单、带薪年假、病假、临时工与正式工的区别。</div>
       <span class="card-tag">雇员</span>
-    </div>
-    <div class="card">
+    </a>
+    <a class="card" href="super.html">
       <span class="card-icon">🏦</span>
       <div class="card-title">超级年金 Super</div>
       <div class="card-body">雇主必须为符合条件的员工缴纳 12% 的超级年金。整理谁需要缴、什么时候缴、不缴的后果。</div>
       <span class="card-tag">雇员</span>
-    </div>
-    <div class="card">
+    </a>
+    <a class="card" href="record-keeping.html">
       <span class="card-icon">🔄</span>
       <div class="card-title">记账与单据保存</div>
       <div class="card-body">税务局要求大多数商业记录保存 5 年。整理收据、发票和工资单的基本保存方法。</div>
       <span class="card-tag">日常运营</span>
-    </div>
-    <div class="card">
+    </a>
+    <a class="card" href="overseas-income.html">
       <span class="card-icon">🌏</span>
       <div class="card-title">海外收入与进口</div>
       <div class="card-body">从中国收款或进口商品？澳洲对境外收入和进口服务的 GST 有特别规定，不了解容易踩坑。</div>
       <span class="card-tag">跨境</span>
-    </div>
+    </a>
     <div class="card">
       <span class="card-icon">⚡</span>
       <div class="card-title">STP 单一接触薪资</div>
@@ -431,7 +432,7 @@ body { font-family: var(--sans); background: var(--bg); color: var(--fg); line-h
     <div class="card">
       <span class="card-icon">🏢</span>
       <div class="card-title">公司注册与 ASIC</div>
-      <div class="card-body">注册 Pty Ltd 公司需向 ASIC 申请，年费约 $597。需了解董事义务、股份结构和年度申报要求。</div>
+      <div class="card-body">注册 Pty Ltd 公司需向 ASIC 申请，另有年度审查费，金额以 ASIC 官网为准。需了解董事义务、股份结构和年度申报要求。</div>
       <span class="card-tag">起步阶段</span>
     </div>
     <div class="card">
