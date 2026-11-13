@@ -75,6 +75,7 @@ body { font-family: var(--sans); background: var(--bg); color: var(--fg); line-h
 
 /* ── Service cards ── */
 .cards { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 16px; margin-top: 40px; }
+a.card { display: block; color: inherit; text-decoration: none; }
 .card { background: var(--surface); border: 1px solid var(--border); border-radius: 16px; padding: 28px 24px; transition: border-color .2s, transform .15s; }
 .card:hover { border-color: var(--accent); transform: translateY(-3px); }
 .card-icon { font-size: 28px; margin-bottom: 16px; display: block; }
@@ -374,42 +375,42 @@ body { font-family: var(--sans); background: var(--bg); color: var(--fg); line-h
   <h2 class="section-title">Notes on key business rules</h2>
   <p class="section-body">These notes are compiled from publicly available ATO, Fair Work, and ASIC documents. Always refer to the official source or a licensed professional for your specific situation.</p>
   <div class="cards">
-    <div class="card">
+    <a class="card" href="abn-structure-en.html">
       <span class="card-icon">📋</span>
       <div class="card-title">ABN &amp; Business Structure</div>
       <div class="card-body">Sole trader, company, partnership or trust — choosing the right structure affects your tax, liability and how you're paid.</div>
       <span class="card-tag">Starting out</span>
-    </div>
-    <div class="card">
+    </a>
+    <a class="card" href="gst-bas-en.html">
       <span class="card-icon">🧾</span>
       <div class="card-title">GST &amp; BAS Obligations</div>
       <div class="card-body">Once your turnover exceeds A$75,000 you must register for GST. Notes on registration, charging GST, and quarterly BAS lodgement.</div>
       <span class="card-tag">Tax</span>
-    </div>
-    <div class="card">
+    </a>
+    <a class="card" href="fair-work-en.html">
       <span class="card-icon">👥</span>
       <div class="card-title">Fair Work &amp; Employment</div>
       <div class="card-body">Hiring staff? Understand minimum wage, pay slips, leave entitlements, and casual vs part-time rules under the Fair Work Act.</div>
       <span class="card-tag">Employees</span>
-    </div>
-    <div class="card">
+    </a>
+    <a class="card" href="super-en.html">
       <span class="card-icon">🏦</span>
       <div class="card-title">Superannuation</div>
       <div class="card-body">Employers must contribute 12% super for eligible workers. Notes on who qualifies, when payments are due, and how penalties arise.</div>
       <span class="card-tag">Employees</span>
-    </div>
-    <div class="card">
+    </a>
+    <a class="card" href="record-keeping-en.html">
       <span class="card-icon">🔄</span>
       <div class="card-title">Record Keeping</div>
       <div class="card-body">The ATO requires you to keep most business records for 5 years. Notes on keeping receipts, invoices, and payroll records.</div>
       <span class="card-tag">Ongoing</span>
-    </div>
-    <div class="card">
+    </a>
+    <a class="card" href="overseas-income-en.html">
       <span class="card-icon">🌏</span>
       <div class="card-title">Overseas Income &amp; Importing</div>
       <div class="card-body">Receiving income from China or importing goods? Australian tax rules on foreign income and GST on imported services explained clearly.</div>
       <span class="card-tag">Cross-border</span>
-    </div>
+    </a>
     <div class="card">
       <span class="card-icon">⚡</span>
       <div class="card-title">STP — Single Touch Payroll</div>
