@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>竹 Digital 后台管理手册 V12</title>
+<style>
+:root {
+  --bg: #0D1B2A; --bg2: #111D2C; --surface: #16253A;
+  --border: rgba(34,211,238,.15); --fg: #F1F5F9; --fg2: #94A3B8;
+  --accent: #22D3EE; --teal: #0D9488; --warn: #FCD34D; --red: #F87171; --green: #34D399;
+  --sans: "PingFang SC","Microsoft YaHei",system-ui,sans-serif;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: var(--sans); background: var(--bg); color: var(--fg); line-height: 1.7; font-size: 14px; }
+header { background: var(--bg2); border-bottom: 2px solid var(--accent); padding: 24px 32px; display: flex; align-items: center; gap: 16px; flex-wrap: wrap; }
+header h1 { font-size: 22px; color: var(--accent); }
+header .version { background: var(--teal); color: #fff; padding: 3px 10px; border-radius: 20px; font-size: 12px; font-weight: 700; }
+header .date { color: var(--fg2); font-size: 13px; margin-left: auto; }
+nav { background: var(--bg2); border-bottom: 1px solid var(--border); padding: 0 32px; display: flex; gap: 4px; flex-wrap: wrap; }
+nav a { color: var(--fg2); text-decoration: none; padding: 12px 16px; font-size: 13px; border-bottom: 2px solid transparent; transition: .2s; }
+nav a:hover { color: var(--accent); border-bottom-color: var(--accent); }
+.container { max-width: 1100px; margin: 0 auto; padding: 32px; }
+.section { margin-bottom: 48px; }
+.section-title { font-size: 18px; color: var(--accent); margin-bottom: 20px; padding-bottom: 10px; border-bottom: 1px solid var(--border); display: flex; align-items: center; gap: 10px; }
+.card { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 20px 24px; margin-bottom: 16px; }
+.card h3 { font-size: 14px; color: var(--accent); margin-bottom: 10px; }
+.grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+@media(max-width:700px){ .grid2 { grid-template-columns: 1fr; } }
+table { width: 100%; border-collapse: collapse; }
+th { background: var(--bg2); color: var(--fg2); text-align: left; padding: 10px 14px; font-size: 12px; letter-spacing: .05em; text-transform: uppercase; }
+td { padding: 10px 14px; border-bottom: 1px solid var(--border); font-size: 13px; }
+tr:last-child td { border-bottom: none; }
+.badge { display: inline-block; padding: 2px 10px; border-radius: 20px; font-size: 11px; font-weight: 700; }
+.badge-green { background: rgba(52,211,153,.15); color: var(--green); }
+.badge-red { background: rgba(248,113,113,.15); color: var(--red); }
+.badge-warn { background: rgba(252,211,77,.15); color: var(--warn); }
+.badge-blue { background: rgba(34,211,238,.15); color: var(--accent); }
+code { background: var(--bg2); color: var(--accent); padding: 2px 8px; border-radius: 4px; font-family: "Courier New",monospace; font-size: 12px; }
+pre { background: var(--bg2); border: 1px solid var(--border); border-radius: 8px; padding: 16px; overflow-x: auto; font-family: "Courier New",monospace; font-size: 12px; color: var(--fg2); line-height: 1.6; margin: 12px 0; }
+.alert { border-radius: 8px; padding: 14px 18px; margin: 12px 0; font-size: 13px; }
+.alert-warn { background: rgba(252,211,77,.08); border-left: 3px solid var(--warn); color: var(--warn); }
+.alert-red { background: rgba(248,113,113,.08); border-left: 3px solid var(--red); color: var(--red); }
+.alert-green { background: rgba(52,211,153,.08); border-left: 3px solid var(--green); color: var(--green); }
+.alert-blue { background: rgba(34,211,238,.08); border-left: 3px solid var(--accent); color: var(--accent); }
+ul, ol { padding-left: 20px; }
+li { margin-bottom: 6px; color: var(--fg2); }
+li strong { color: var(--fg); }
+.incident { background: rgba(248,113,113,.05); border: 1px solid rgba(248,113,113,.2); border-radius: 12px; padding: 20px 24px; margin-bottom: 16px; }
+.incident-title { color: var(--red); font-size: 15px; font-weight: 700; margin-bottom: 8px; }
+.incident-date { color: var(--fg2); font-size: 12px; margin-bottom: 12px; }
+.lesson { background: rgba(52,211,153,.05); border: 1px solid rgba(52,211,153,.2); border-radius: 8px; padding: 12px 16px; margin-top: 12px; }
+.lesson-title { color: var(--green); font-size: 12px; font-weight: 700; margin-bottom: 6px; }
+.v12-new { background: rgba(34,211,238,.06); border-left: 3px solid var(--accent); border-radius: 0 8px 8px 0; padding: 4px 10px; font-size: 11px; color: var(--accent); display: inline-block; margin-left: 8px; }
+</style>
+</head>
+<body>
+
+<header>
+  <span style="font-size:28px">🎋</span>
+  <div>
+    <h1>竹 Digital 后台管理手册</h1>
+    <div style="color:var(--fg2);font-size:13px;margin-top:2px">Zhu Digital Backend Operations Manual</div>
+  </div>
+  <span class="version">V12</span>
+  <span class="date">更新：2026-11-13</span>
+</header>
+
+<nav>
+  <a href="#architecture">🏗 架构</a>
+  <a href="#git">🌿 Git工作流</a>
+  <a href="#incidents">🔥 事故记录</a>
+  <a href="#memory">🧠 记忆系统</a>
+  <a href="#api">🔑 API密钥</a>
+  <a href="#security">🔒 安全</a>
+  <a href="#checklist">✅ 开工清单</a>
+</nav>
+
+<div class="container">
+
+<!-- ── 架构总览 ── -->
+<div class="section" id="architecture">
+  <div class="section-title">🏗 系统架构总览</div>
+  <div class="grid2">
+    <div class="card">
+      <h3>前端（GitHub Pages）</h3>
+      <ul>
+        <li><strong>域名：</strong>zhudigital.com.au</li>
+        <li><strong>GitHub账号：</strong>zhudigital</li>
+        <li><strong>仓库：</strong>zhu-digital（github.com/zhudigital/zhu-digital）</li>
+        <li><strong>默认Pages URL：</strong>https://zhudigital.github.io/zhu-digital/</li>
+        <li><strong>DNS：</strong>Cloudflare（仅DNS代理，非安全代理）</li>
+        <li><strong>部署分支：</strong><span style="color:var(--red);font-weight:700">main</span>（不是master！）</li>
+        <li><strong>入口文件：</strong>index.html → 跳转 consultant_cn.html</li>
+        <li><strong>本地工作目录：</strong>C:\Users\Heidi Zhu\zhu-digital\</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3>后端（Render.com）</h3>
+      <ul>
+        <li><strong>平台：</strong>Render.com 免费tier</li>
+        <li><strong>注意：</strong>30分钟无访问会休眠，冷启动约50秒</li>
+        <li><strong>保活：</strong>UptimeRobot 每5分钟 ping /health（实际效果待核实）</li>
+        <li><strong>冷启动提示：</strong>"☕ 小竹正在泡咖啡…约50秒" → 等待后重试</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3>两个本地文件夹（注意区别！）</h3>
+      <ul>
+        <li><strong>草稿：</strong>C:\Users\Heidi Zhu\Desktop\竹digital\</li>
+        <li><strong>Git仓库：</strong>C:\Users\Heidi Zhu\zhu-digital\ ← 从这里push！</li>
+      </ul>
+      <div class="alert alert-warn" style="margin-top:10px">⚠️ 只能从 zhu-digital 文件夹 push，Desktop文件夹里的改动不会上线！</div>
+    </div>
+    <div class="card">
+      <h3>GitHub仓库文件（main branch）</h3>
+      <ul>
+        <li><strong>index.html</strong> — 入口，跳转中文页</li>
+        <li><strong>consultant_cn.html</strong> — 中文顾问页（含ticker滚条）</li>
+        <li><strong>consultant_en.html</strong> — 英文顾问页（含ticker滚条）</li>
+        <li><strong>CNAME</strong> — 自定义域名文件（内容：zhudigital.com.au）⚠️ 不能删！</li>
+      </ul>
+      <div class="alert alert-red" style="margin-top:10px">🚨 CNAME 文件必须存在！GitHub Pages凭它识别自定义域名。</div>
+    </div>
+  </div>
+
+  <div class="card" style="margin-top:16px">
+    <h3>🔧 小竹聊天功能诊断</h3>
+    <table>
+      <tr><th>现象</th><th>原因</th><th>处理</th></tr>
+      <tr>
+        <td>出现咖啡消息（约50秒）</td>
+        <td>情况A：Render冷启动</td>
+        <td>等50秒后点"重试"，正常恢复</td>
+      </tr>
+      <tr>
+        <td>重试后仍然失败</td>
+        <td>情况B：API密钥过期</td>
+        <td>去 platform.claude.com → API Keys 续期</td>
+      </tr>
+    </table>
+  </div>
+</div>
+
+<!-- ── Git工作流 ── -->
+<div class="section" id="git">
+  <div class="section-title">🌿 Git 正确工作流</div>
+
+  <div class="alert alert-red">
+    <strong>🚨 最重要的事：GitHub Pages 部署的是 main branch，不是 master！</strong><br>
+    你的本地是 master branch。每次push必须用以下命令，否则改动永远不会上线。
+  </div>
+
+  <div class="card" style="margin-top:16px">
+    <h3>✅ 正确的完整推送流程</h3>
+    <pre>cd "C:\Users\Heidi Zhu\zhu-digital"
+
+# 0. 【新增！】先拉取远程main（同步CNAME等GitHub自动提交的文件）
+git pull origin main
+
+# 1. 确认文件已复制到这个目录
+dir
+
+# 2. 添加文件
+git add consultant_cn.html consultant_en.html
+
+# 3. 提交
+git commit -m "描述改动内容"
+
+# 4. 推送到main（永远用这个命令！）
+git push origin master:main</pre>
+    <div class="alert alert-warn" style="margin-top:10px">
+      ⚠️ <strong>永远不要用</strong> <code>git push origin master</code>（少了 :main 就推错了）<br>
+      🚨 <strong>绝对不能用</strong> <code>--force</code>（会删掉CNAME，导致网站404！）
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>🚑 网站404急救步骤 <span class="v12-new">V12更正</span></h3>
+    <div class="alert alert-red" style="margin-bottom:12px">
+      ⚠️ V11的急救步骤是错的！真正的404原因不是index.html消失，而是CNAME被删导致自定义域名失效。
+    </div>
+    <ol style="margin-top:8px">
+      <li><strong>第一步（最重要）：</strong>去 GitHub → 仓库 → Settings → Pages → <strong>Custom domain</strong> → 填入 <code>zhudigital.com.au</code> → 点 Save。GitHub会自动重建CNAME文件。</li>
+      <li>等2-3分钟，GitHub重新部署。</li>
+      <li>测试 zhudigital.com.au 是否恢复。</li>
+      <li>如果仍然404，再去 GitHub Actions 查看部署状态（绿色=成功，红色=失败）。</li>
+      <li><strong>不要</strong>反复purge Cloudflare缓存——先确认Custom domain设置正确。</li>
+    </ol>
+    <div class="alert alert-blue" style="margin-top:12px">
+      💡 <strong>根本原因：</strong>--force push 会删掉main里有而本地没有的文件（如CNAME）。CNAME消失 → Pages的Custom domain设置被清空 → 自定义域名失效 → 404。解决方法是恢复Custom domain设置，不是恢复index.html。
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>⚠️ 为什么push前必须先pull</h3>
+    <p style="color:var(--fg2);margin-bottom:8px">GitHub Pages在你设置Custom domain时，会自动往main提交一个CNAME文件。如果你本地没有这个提交，直接push会被拒绝（non-fast-forward error）。如果强行--force push，CNAME就没了，网站立刻404。</p>
+    <pre># 正确做法：push前先pull
+git pull origin main   # 把GitHub上的CNAME同步到本地
+git push origin master:main   # 再push，安全</pre>
+  </div>
+
+  <div class="card">
+    <h3>📄 index.html 内容（必须保留）</h3>
+    <pre>&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;head&gt;
+&lt;meta http-equiv="refresh" content="0;url=consultant_cn.html"&gt;
+&lt;/head&gt;
+&lt;/html&gt;</pre>
+  </div>
+</div>
+
+<!-- ── 事故记录 ── -->
+<div class="section" id="incidents">
+  <div class="section-title">🔥 事故记录与复盘</div>
+
+  <div class="incident">
+    <div class="incident-title">🔴 事故 #001：知识滚条不显示 + 网站404</div>
+    <div class="incident-date">发生时间：2026-10-25 深夜 ～ 2026-10-26 凌晨 | 修复：2026-11-13</div>
+    <p style="color:var(--fg2);font-size:13px;margin-bottom:12px">
+      <strong>现象：</strong>网站正文显示正常，但知识滚条（ticker）不出现。反复purge Cloudflare缓存无效。后来出现404。
+    </p>
+    <p style="color:var(--fg2);font-size:13px;margin-bottom:12px">
+      <strong>Ticker不显示的原因：</strong>所有 git push 都推到了 master branch，但 GitHub Pages 实际部署的是 main branch。ticker代码永远没有到达生产环境。
+    </p>
+    <p style="color:var(--fg2);font-size:13px;margin-bottom:12px">
+      <strong>404的真正原因 <span class="v12-new">V12更正</span>：</strong>执行了 <code>git push origin master:main --force</code>，force push 把 main branch 里的 <strong>CNAME 文件删除了</strong>（本地master里没有CNAME）。CNAME消失 → GitHub Pages的Custom domain设置被自动清空 → 自定义域名zhudigital.com.au失效 → 404。<br>
+      <em>（V11手册错误地说是"index.html被删"，这是不准确的——真正的元凶是CNAME。）</em>
+    </p>
+    <p style="color:var(--fg2);font-size:13px;margin-bottom:12px">
+      <strong>修复方法：</strong>在 GitHub → 仓库 → Settings → Pages → Custom domain 重新填入 zhudigital.com.au → Save。GitHub自动重建CNAME，Pages重新部署，网站恢复。
+    </p>
+    <div class="lesson">
+      <div class="lesson-title">✅ 教训</div>
+      <ol>
+        <li><strong>永远不用 --force：</strong>会删掉GitHub有而本地没有的文件（CNAME！）</li>
+        <li><strong>push前先pull：</strong><code>git pull origin main</code> 同步远程提交</li>
+        <li><strong>404急救先看Custom domain：</strong>不是index.html，是CNAME/自定义域名设置</li>
+        <li><strong>Cloudflare不是万能药：</strong>purge缓存解决不了branch/CNAME问题</li>
+        <li><strong>三思而后行：</strong>每个git命令执行前想清楚后果，特别是--force</li>
+      </ol>
+    </div>
+  </div>
+
+  <div class="incident">
+    <div class="incident-title">🟡 事故 #002：Claude模型费用超预期</div>
+    <div class="incident-date">发生时间：2026-11-13</div>
+    <p style="color:var(--fg2);font-size:13px;margin-bottom:12px">
+      <strong>现象：</strong>将Claude模型切换到Fable 5.2，几句话之后发现API credits余额减少约$4-5 USD。
+    </p>
+    <p style="color:var(--fg2);font-size:13px;margin-bottom:12px">
+      <strong>原因：</strong>Fable 5.2不在Pro套餐限额内，按token计费，价格远高于Sonnet 4.6。
+    </p>
+    <div class="lesson">
+      <div class="lesson-title">✅ 教训与决策</div>
+      <ol>
+        <li><strong>竹项目用 Sonnet 4.6：</strong>已回切，包含在Pro月费内，不另外计费</li>
+        <li><strong>Fable/Opus类高级模型：</strong>仅在必要时短暂使用，用完立刻切回</li>
+        <li><strong>platform.claude.com → Usage</strong> 可查本月消费，每月1日重置</li>
+        <li><strong>API credits余额：</strong>US$4.61（2026-11-13，扣费后）</li>
+      </ol>
+    </div>
+  </div>
+</div>
+
+<!-- ── 记忆系统 ── -->
+<div class="section" id="memory">
+  <div class="section-title">🧠 Claude记忆系统（重要！）</div>
+
+  <div class="alert alert-red">
+    <strong>🚨 根本问题：Claude每次对话/容器重置后完全失忆，所有临时文件消失。</strong><br>
+    多个项目同时进行时，这个问题会导致严重的效率损失和重复劳动。
+  </div>
+
+  <div class="card" style="margin-top:16px">
+    <h3>✅ 解决方案：建立"外部大脑"</h3>
+    <p style="color:var(--fg2);margin-bottom:12px">所有重要文档存到 GitHub repo 或 Google Drive，而不是依赖Claude的临时存储。</p>
+    <ul>
+      <li><strong>后台管理手册</strong> → 存进GitHub repo（每次更新就commit）</li>
+      <li><strong>项目状态文档</strong> → 同一个地方</li>
+      <li><strong>每次开新对话</strong> → 把文件链接/文件直接给Claude，立刻恢复上下文</li>
+    </ul>
+    <div class="alert alert-blue" style="margin-top:12px">
+      💡 开始新对话时说：<br>
+      "这是我们的项目手册：[附上此文件]，我们继续做XXX"<br>
+      Claude会立刻知道所有背景，不需要重新解释。
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>📋 开始新对话的标准流程</h3>
+    <ol>
+      <li>附上本手册（竹Digital_后台管理手册_V12.html）</li>
+      <li>附上相关的 consultant_cn.html / consultant_en.html（如果要改前端）</li>
+      <li>说明今天要做什么</li>
+      <li>Claude 读完文件后开始工作，无需重新解释背景</li>
+    </ol>
+  </div>
+
+  <div class="card">
+    <h3>📌 待完成：手册存入GitHub</h3>
+    <pre># 把手册文件复制到git目录后：
+git add 竹Digital_后台管理手册_V12.html
+git commit -m "添加后台管理手册V12"
+git push origin master:main</pre>
+    <p style="color:var(--fg2);font-size:12px;margin-top:8px">存入GitHub后，新对话只需把GitHub文件链接发给Claude即可恢复上下文，无需重复上传。</p>
+  </div>
+</div>
+
+<!-- ── API密钥 ── -->
+<div class="section" id="api">
+  <div class="section-title">🔑 API 密钥管理</div>
+  <div class="card">
+    <table>
+      <tr><th>密钥名称</th><th>用途</th><th>创建日</th><th>到期日</th><th>状态</th></tr>
+      <tr>
+        <td>dev-key</td>
+        <td>开发测试</td>
+        <td>2026-10-25</td>
+        <td>2026-11-24</td>
+        <td><span class="badge badge-warn">⚠️ 11天后到期</span></td>
+      </tr>
+      <tr>
+        <td>reg-key</td>
+        <td>RAG/生产</td>
+        <td>2026-10-25</td>
+        <td>2026-11-24</td>
+        <td><span class="badge badge-warn">⚠️ 11天后到期</span></td>
+      </tr>
+    </table>
+    <div class="alert alert-warn" style="margin-top:12px">
+      ⚠️ <strong>两个密钥均于 2026-11-24 到期，请在11月23日之前续期！</strong>
+    </div>
+    <pre style="margin-top:12px">续期步骤：
+1. 打开 platform.claude.com → API Keys（用Gmail登录）
+2. 找到即将到期的key → 点 Delete/Revoke
+3. Create new API key → 命名（如 dev-key-v2）→ 选90天有效期
+4. 复制新key（只显示一次！立刻保存）
+5. 更新后端服务器的 .env 文件：ANTHROPIC_API_KEY=新key
+6. 重启Render后端服务</pre>
+  </div>
+</div>
+
+<!-- ── 安全 ── -->
+<div class="section" id="security">
+  <div class="section-title">🔒 安全与合规</div>
+  <div class="card">
+    <h3>绝对不能做的事</h3>
+    <ul>
+      <li><strong>.env 文件永远不进 git</strong>（已加入 .gitignore）</li>
+      <li>API Key 不能出现在任何 HTML/JS 文件里</li>
+      <li>不能 commit 包含真实Key的文件</li>
+      <li><strong>git push 永远不加 --force</strong>（会删CNAME，直接404）</li>
+    </ul>
+  </div>
+  <div class="card">
+    <h3>APS 利益冲突申报</h3>
+    <div class="alert alert-warn">
+      在竹 Digital 产生任何商业收入之前，必须向 Fotios 申报。<br>
+      目前网站定位为"纯属学习网站"，无商业活动，暂不需申报。<br>
+      <strong>一旦产生收入立即申报。</strong>
+    </div>
+    <p style="color:var(--fg2);font-size:12px;margin-top:8px">所有文档用词不得涉及APS利益冲突，Fotios 是主要经济来源，必须保持良好关系。</p>
+  </div>
+</div>
+
+<!-- ── 开工清单 ── -->
+<div class="section" id="checklist">
+  <div class="section-title">✅ 每次开工前检查清单</div>
+  <div class="card">
+    <table>
+      <tr><th>序号</th><th>检查项目</th><th>怎么确认</th></tr>
+      <tr><td>1</td><td>附上本手册给Claude</td><td>上传此HTML文件</td></tr>
+      <tr><td>2</td><td>确认在正确的git目录</td><td><code>cd "C:\Users\Heidi Zhu\zhu-digital"</code></td></tr>
+      <tr><td>3</td><td>push前先pull</td><td><code>git pull origin main</code></td></tr>
+      <tr><td>4</td><td>确认main branch有四个文件</td><td>GitHub → repo → Code → main branch（index.html / consultant_cn.html / consultant_en.html / CNAME）</td></tr>
+      <tr><td>5</td><td>API Key未过期</td><td>platform.claude.com → API Keys（Gmail登录）</td></tr>
+      <tr><td>6</td><td>网站可以访问</td><td>浏览器打开 zhudigital.com.au</td></tr>
+    </table>
+  </div>
+
+  <div class="card" style="margin-top:16px">
+    <h3>📋 待完成事项</h3>
+    <table>
+      <tr><th>优先级</th><th>任务</th><th>截止/备注</th></tr>
+      <tr>
+        <td><span class="badge badge-red">紧急</span></td>
+        <td>API Key续期（dev-key + reg-key 11-24到期）</td>
+        <td>11月23日前完成</td>
+      </tr>
+      <tr>
+        <td><span class="badge badge-red">紧急</span></td>
+        <td>本地执行 git pull origin main（同步CNAME）</td>
+        <td>下次push前必做</td>
+      </tr>
+      <tr>
+        <td><span class="badge badge-warn">重要</span></td>
+        <td>把此手册存入GitHub repo</td>
+        <td>这样Claude失忆也能恢复</td>
+      </tr>
+      <tr>
+        <td><span class="badge badge-warn">重要</span></td>
+        <td>调查UptimeRobot保活是否有效</td>
+        <td>Render经常仍处冷启动状态</td>
+      </tr>
+      <tr>
+        <td><span class="badge badge-blue">计划</span></td>
+        <td>响应式设计（手机版）</td>
+        <td>下个阶段</td>
+      </tr>
+    </table>
+  </div>
+</div>
+
+<div style="text-align:center;padding:32px;color:var(--fg2);font-size:12px;border-top:1px solid var(--border);margin-top:32px">
+  🎋 竹 Digital 后台管理手册 V12 · 更新于 2026-11-13 · 下次更新时版本号+1
+</div>
+
+</div>
+
+<script>
+const sections = document.querySelectorAll('.section');
+const navLinks = document.querySelectorAll('nav a');
+window.addEventListener('scroll', () => {
+  let current = '';
+  sections.forEach(s => {
+    if (window.scrollY >= s.offsetTop - 80) current = s.id;
+  });
+  navLinks.forEach(a => {
+    a.style.color = a.getAttribute('href') === '#'+current ? 'var(--accent)' : '';
+    a.style.borderBottomColor = a.getAttribute('href') === '#'+current ? 'var(--accent)' : 'transparent';
+  });
+});
+</script>
+</body>
+</html>
